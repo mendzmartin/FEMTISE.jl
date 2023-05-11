@@ -21,6 +21,7 @@ end
 # https://github.com/JuliaLinearAlgebra/Arpack.jl/blob/master/docs/src/eigs.md
 # https://github.com/JuliaPDE/SurveyofPDEPackages#mm
 
+export EigenProblem
 """
     function EigenProblem(weakformₖ,weakformₘ,trial,test;nev,which,explicittransform,tol,maxiter,sigma)\n
     weakformₖ::Function,  (Forma bilineal lado izquierdo de la formulación débil) \n
@@ -43,7 +44,6 @@ end
     maxiter::Int64=100, \n
     sigma=0.0 nothing or a number) \n
 """
-export EigenProblem
 function EigenProblem(weakformₖ::Function,weakformₘ::Function,test::FESpace,trial::FESpace;
     nev::Int64=10,which::Symbol=:LM,explicittransform::Symbol=:none,tol::Float64=10^(-6),
     maxiter::Int64=100,sigma=0.0)
@@ -56,12 +56,12 @@ function EigenProblem(weakformₖ::Function,weakformₘ::Function,test::FESpace,
     return EigenProblem(trial,test,op,nev,which,explicittransform,tol,maxiter,sigma)
 end
 
+export solve
 """
     solve(prob::EigenProblem)
     \n Función para resolver el problema de autovalores
     \n Retorna autovalores y autovectores
 """
-export solve
 function solve(prob::EigenProblem)
     K = prob.op.stima
     M = prob.op.massma

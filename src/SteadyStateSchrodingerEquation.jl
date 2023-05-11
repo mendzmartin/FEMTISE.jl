@@ -1,8 +1,8 @@
 module SteadyStateSchrodingerEquation
 
-using Pkg
-Pkg.instantiate()
-Pkg.resolve()
+# using Pkg
+# Pkg.instantiate()
+# Pkg.resolve()
 
 using Gridap
 using GridapGmsh

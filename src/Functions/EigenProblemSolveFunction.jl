@@ -1,7 +1,7 @@
+export EigenValuesAndEigenVectors
 """
     params=(nev,tol,maxiter,explicittransform,sigma)
 """
-export EigenValuesAndEigenVectors
 function EigenValuesAndEigenVectors(p,q,r,dΩ,USpace,VSpace;params=(10,10e-9,100,:none,1.0))
     a,b=bilineal_forms(p,q,r,dΩ);   # Define bilinear forms and FE spaces
     # solve eigenvalue problem

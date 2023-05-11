@@ -1,5 +1,8 @@
 module SteadyStateSchrodingerEquation
 
+Pkg.instantiate()
+Pkg.resolve()
+
 using Gridap
 using GridapGmsh
 using Gmsh

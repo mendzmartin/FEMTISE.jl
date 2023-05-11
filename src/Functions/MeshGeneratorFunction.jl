@@ -1,7 +1,7 @@
 #=
     utils links: https://gitlab.onelab.info/gmsh/gmsh/blob/master/api/gmsh.jl
 =#
-
+export make_model
 function make_model(grid_type::String,params::Tuple)
     gmsh.initialize()
     gmsh.option.setNumber("General.Terminal",1)

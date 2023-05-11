@@ -1,3 +1,4 @@
+export make_boundary_conditions
 function make_boundary_conditions(grid_type::String,BC_type::String,TypeData::Type)
     if (grid_type == "simple_line")
         if (BC_type == "FullDirichlet")

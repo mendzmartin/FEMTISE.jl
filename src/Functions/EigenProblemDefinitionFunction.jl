@@ -43,6 +43,7 @@ end
     maxiter::Int64=100, \n
     sigma=0.0 nothing or a number) \n
 """
+export EigenProblem
 function EigenProblem(weakformₖ::Function,weakformₘ::Function,test::FESpace,trial::FESpace;
     nev::Int64=10,which::Symbol=:LM,explicittransform::Symbol=:none,tol::Float64=10^(-6),
     maxiter::Int64=100,sigma=0.0)
@@ -60,6 +61,7 @@ end
     \n Función para resolver el problema de autovalores
     \n Retorna autovalores y autovectores
 """
+export solve
 function solve(prob::EigenProblem)
     K = prob.op.stima
     M = prob.op.massma

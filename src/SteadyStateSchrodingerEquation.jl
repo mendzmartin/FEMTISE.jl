@@ -4,6 +4,7 @@ module SteadyStateSchrodingerEquation
 # Pkg.instantiate()
 # Pkg.resolve()
 
+
 using Gridap
 using GridapGmsh
 using Gmsh
@@ -15,6 +16,7 @@ using LinearAlgebra
 using SparseArrays
 using SuiteSparse
 using Arpack
+
 
 include("Functions/MeshGeneratorFunction.jl")
 include("Functions/BoundaryConditionsFunction.jl")

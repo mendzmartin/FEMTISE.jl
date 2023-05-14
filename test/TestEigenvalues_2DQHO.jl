@@ -29,7 +29,7 @@ VSpace,USpace = FESpaces(model2D,reff,grid_type;BC_type=BC_type,TypeData=Complex
 
 const ħ=1.0;
 const m=1.0;
-function eigenvalue_problem_functions(params;switch_potential = "QHO_1D")
+function eigenvalue_problem_functions(params;switch_potential::String = "QHO_1D")
     if (switch_potential == "QHO_1D")
         # caso de potencial tipo quantum harmonic oscillator 1D (QHO)
         println("Set quantum harmonic oscillator 1D potential");
@@ -54,8 +54,8 @@ p,q,r = eigenvalue_problem_functions((1.0,0.0,0.0);switch_potential = "QHO_2D")
 ϵ,ϕ = EigenValuesAndEigenVectors(p,q,r,dΩ,USpace,VSpace;params=(4,10e-9,500,:none,0.0))
 
 function exactly_eigenvalues_2DQHO(num_eigval::Integer)
-    ϵ_real_aux=Array{Float64}(undef, num_eigval^2)
-    index=1
+    ϵ_real_aux=Array{Float64}(undef, num_eigval*num_eigval)
+    index::Int64=1
     for i in 1:num_eigval
         for j in 1:num_eigval
             ϵ_real_aux[index]=((i-1)+(j-1)+1)

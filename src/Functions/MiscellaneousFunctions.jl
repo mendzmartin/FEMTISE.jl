@@ -24,7 +24,7 @@ end
 
 # Formas bilineales para problema de autovalores
 export bilineal_forms
-function bilineal_forms(p,q,r,dΩ)
+function bilineal_forms(p::Function,q::Function,r::Function,dΩ)
     a(u,v) = ∫(p*(∇(v)⋅∇(u))+q*v*u)*dΩ;
     b(u,v) = ∫(r*u*v)*dΩ;
     return a,b;

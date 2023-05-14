@@ -1,6 +1,6 @@
 name = "SteadyStateSchrodingerEquation"
 uuid = "0bd82848-28f8-4e57-bc39-0a3ec24854bf"
-authors = ["Mendez martinmendez@mi.unc.edu.ar"]
+authors = ["Martín Méndez <martinmendez@mi.unc.edu.ar>"]
 version = "1.0.0-DEV"
 
 [deps]

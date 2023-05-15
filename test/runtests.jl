@@ -5,10 +5,9 @@ using Test
     # Write your tests here.
 end =#
 
-# using SteadyStateSchrodingerEquation
 using Test
 
 @testset "TestEigenvalues_2DQHO" begin
-    include("TestEigenvalues_2DQHO.jl")
+    include("Test_2DQHO/QuantumHarmonicOscillator2D.jl")
 end
 

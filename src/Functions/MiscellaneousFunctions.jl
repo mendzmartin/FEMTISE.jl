@@ -24,7 +24,7 @@ end
 
 # Formas bilineales para problema de autovalores
 export bilineal_forms
-function bilineal_forms(p::Function,q::Function,r::Function,dΩ)
+function bilineal_forms(p::Function,q::Function,r::Function,dΩ::Gridap.CellData.GenericMeasure)
     a(u,v) = ∫(p*(∇(v)⋅∇(u))+q*v*u)*dΩ;
     b(u,v) = ∫(r*u*v)*dΩ;
     return a,b;
@@ -35,7 +35,7 @@ export FESpaces
     dom=(x₁,x₂,y₁,y₂)
     n=(nx,ny)
 """
-function FESpaces(model,reff,grid_type::String;BC_type::String="FullDirichlet",TypeData::Type=ComplexF64)
+function FESpaces(model,reff::Tuple,grid_type::String;BC_type::String="FullDirichlet",TypeData::Type=ComplexF64)
     BC_values,BC_tags = make_boundary_conditions(grid_type,BC_type,TypeData);
     VSpace=TestFESpace(model,reff;vector_type=Vector{TypeData},conformity=:H1,dirichlet_tags=BC_tags);
     USpace=TrialFESpace(VSpace,BC_values);

@@ -1,7 +1,7 @@
 # Taken from:  https://gist.github.com/Balaje/102485bb14ec6daf677f938fbd8f3ebb
 # Useful link: https://docs.scipy.org/doc/scipy/tutorial/arpack.html
 
-struct EigenOperator{K<:AbstractMatrix,M<:AbstractMatrix} <: NonlinearOperator
+struct EigenOperator{K<:AbstractMatrix,M<:AbstractMatrix} #<: NonlinearOperator
     stima::K
     massma::M
 end

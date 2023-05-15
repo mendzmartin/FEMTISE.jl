@@ -1,22 +1,7 @@
 module SteadyStateSchrodingerEquation
 
-# using Pkg
-# Pkg.instantiate()
-# Pkg.resolve()
-
-
-using Gridap
-using GridapGmsh
-using Gmsh
-using Gridap.CellData  # para construir condición inicial interpolando una función conocida
-using Gridap.FESpaces  # para crear matrices afines a partir de formas bilineales
-using Gridap.Algebra   # para utilizar operaciones algebraicas con Gridap
-using FileIO
-using LinearAlgebra
-using SparseArrays
-using SuiteSparse
-using Arpack
-
+using Gridap,GridapGmsh,Gmsh,FileIO
+using LinearAlgebra,SparseArrays,Arpack
 
 include("Functions/MeshGeneratorFunction.jl")
 include("Functions/BoundaryConditionsFunction.jl")

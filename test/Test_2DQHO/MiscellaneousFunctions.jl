@@ -32,3 +32,18 @@ function exactly_eigenvalues_2DQHO(num_eigval::Integer)
     ϵ_real = ϵ_real_aux[1:num_eigval];
     return ϵ_real
 end
+
+function OrthoCheck_v2(ϕ::Vector{CellField},TrialSpace::FESpace,dΩ::Gridap.CellData.GenericMeasure)
+    nev=length(ϕ)
+    OrthoVector=zeros(Float64,round(Int,(nev^2-nev)/2));
+    index::Int64=1
+    for i in 2:nev
+        ϕᵢ=interpolate_everywhere(ϕ[i],TrialSpace);
+        for j in 1:(i-1)
+            ϕⱼ=interpolate_everywhere(ϕ[j],TrialSpace);
+            OrthoVector[index]=abs(sum(∫(ϕⱼ'*ϕᵢ)*dΩ))
+            index+=1
+        end
+    end
+    return OrthoVector;
+end

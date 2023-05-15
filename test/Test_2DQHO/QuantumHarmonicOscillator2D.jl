@@ -3,12 +3,9 @@ module QuantumHarmonicOscillator2D
 using Pkg
 Pkg.activate("../")
 
-using Gridap,GridapGmsh,Gmsh,FileIO
-using LinearAlgebra,SparseArrays,SuiteSparse,Arpack
-using Test
+using SteadyStateSchrodingerEquation
 
-include("../../src/SteadyStateSchrodingerEquation.jl")
-using .SteadyStateSchrodingerEquation
+using Gridap,Test
 
 include("MiscellaneousFunctions.jl")
 

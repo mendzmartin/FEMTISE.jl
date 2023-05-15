@@ -5,6 +5,10 @@ using Test
     # Write your tests here.
 end =#
 
+using Pkg
+Pkg.activate("../")
+
+using SteadyStateSchrodingerEquation
 using Test
 
 @testset "TestEigenvalues_2DQHO" begin

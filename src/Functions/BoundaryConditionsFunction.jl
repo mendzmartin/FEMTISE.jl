@@ -2,7 +2,7 @@ export make_boundary_conditions
 function make_boundary_conditions(grid_type::String,BC_type::String,TypeData::Type)
     if (grid_type == "simple_line")
         if (BC_type == "FullDirichlet")
-            BC_values = [zero(TypeData),zero(TypeData)];
+            BC_values = [zero(TypeData),zero(TypeData)]
             BC_tags = ["left_point","right_point"];
         end
     elseif grid_type == "simple_rectangle_v1"

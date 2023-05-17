@@ -28,7 +28,7 @@ function exactly_eigenvalues_2DQHO(num_eigval::Integer)
             index+=1
         end
     end
-    ϵ_real_aux=sort(ϵ_real_aux);
+    ϵ_real_aux=sort(ϵ_real_aux)
     ϵ_real = ϵ_real_aux[1:num_eigval];
     return ϵ_real
 end

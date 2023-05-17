@@ -1,10 +1,3 @@
-#= using SteadyStateSchrodingerEquation
-using Test
-
-@testset "SteadyStateSchrodingerEquation.jl" begin
-    # Write your tests here.
-end =#
-
 using Pkg
 Pkg.activate("../")
 

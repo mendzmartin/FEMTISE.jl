@@ -4,7 +4,6 @@ using Pkg
 Pkg.activate("../")
 
 using SteadyStateSchrodingerEquation
-
 using Gridap,Test
 
 include("MiscellaneousFunctions.jl")

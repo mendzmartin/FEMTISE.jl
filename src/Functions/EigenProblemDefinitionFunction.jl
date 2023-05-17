@@ -1,5 +1,10 @@
-# Taken from:  https://gist.github.com/Balaje/102485bb14ec6daf677f938fbd8f3ebb
-# Useful link: https://docs.scipy.org/doc/scipy/tutorial/arpack.html
+#=
+References:
+    https://gist.github.com/Balaje/102485bb14ec6daf677f938fbd8f3ebb
+    https://docs.scipy.org/doc/scipy/tutorial/arpack.html
+    https://github.com/JuliaLinearAlgebra/Arpack.jl/blob/master/docs/src/eigs.md
+    https://github.com/JuliaPDE/SurveyofPDEPackages#mm
+=#
 
 struct EigenOperator{K<:AbstractMatrix,M<:AbstractMatrix} #<: NonlinearOperator
     stima::K
@@ -17,9 +22,6 @@ struct EigenProblem <: FEOperator
     maxiter::Int64
     sigma
 end
-
-# https://github.com/JuliaLinearAlgebra/Arpack.jl/blob/master/docs/src/eigs.md
-# https://github.com/JuliaPDE/SurveyofPDEPackages#mm
 
 export EigenProblem
 """

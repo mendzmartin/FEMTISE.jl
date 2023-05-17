@@ -1,5 +1,6 @@
 #=
-    utils links: https://gitlab.onelab.info/gmsh/gmsh/blob/master/api/gmsh.jl
+    References:
+        https://gitlab.onelab.info/gmsh/gmsh/blob/master/api/gmsh.jl
 =#
 export make_model
 function make_model(grid_type::String,params::Tuple)

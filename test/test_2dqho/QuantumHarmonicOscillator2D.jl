@@ -9,7 +9,7 @@ using Gridap,Test
 include("../useful_functions_to_FEM.jl")
 include("miscellaneous_functions.jl")
 
-dom2D=(-25.0,25.0,-25.0,25.0);nxy=(50,50);params_model=((dom2D,nxy));
+dom2D=(-30.0,30.0,-30.0,30.0);nxy=(100,100);params_model=((dom2D,nxy));
 grid_type="Cartesian2D";
 
 model2D=make_model(grid_type,params_model);
@@ -41,7 +41,7 @@ end
 
 @testset "Check orthogonalization" begin
     for i in eachindex(ϕ)
-        @test Float64(ortho_check_v2(ϕ,USpace,dΩ)[i]) ≈ zero(Float64) atol=Float64(1e-1)
+        @test Float64(ortho_check_v2(ϕ,dΩ)[i]) ≈ zero(Float64) atol=Float64(0.1)
     end
 end
 

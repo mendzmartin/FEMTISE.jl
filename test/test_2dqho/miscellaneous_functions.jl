@@ -19,7 +19,7 @@ function eigenvalue_problem_functions(params;switch_potential = "QHO_1D")
     end
 end
 
-function exactly_eigenvalues_2DQHO(num_eigval::Integer)
+function exactly_eigenvalues_2dqho(num_eigval::Integer)
     ϵ_real_aux=Array{Float64}(undef, num_eigval^2)
     index::Int64=1
     for i in 1:num_eigval
@@ -33,7 +33,7 @@ function exactly_eigenvalues_2DQHO(num_eigval::Integer)
     return ϵ_real
 end
 
-function OrthoCheck_v2(ϕ::Vector{CellField},TrialSpace::FESpace,dΩ::Gridap.CellData.GenericMeasure)
+function ortho_check_v2(ϕ::Vector{CellField},TrialSpace::FESpace,dΩ::Gridap.CellData.GenericMeasure)
     nev=length(ϕ)
     OrthoVector=zeros(Float64,round(Int,(nev^2-nev)/2));
     index::Int64=1

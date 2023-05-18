@@ -1,10 +1,10 @@
 using Pkg
 Pkg.activate("../")
 
-using SteadyStateSchrodingerEquation
+using TimeIndependentSchrodingerEquation
 using Test
 
-@testset "TestEigenvalues_2DQHO" begin
-    include("Test_2DQHO/QuantumHarmonicOscillator2D.jl")
+@testset "Test Eigenvalues 2DQHO" begin
+    include("test_2dqho/QuantumHarmonicOscillator2D.jl")
 end
 

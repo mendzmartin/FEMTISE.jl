@@ -4,7 +4,7 @@ Pkg.activate("../")
 using TimeIndependentSchrodingerEquation
 using Test
 
-@testset "Test Eigenvalues 2DQHO" begin
+@testset "Test eigenvalue problem of 2Dqho" begin
     include("test_2dqho/QuantumHarmonicOscillator2D.jl")
 end
 

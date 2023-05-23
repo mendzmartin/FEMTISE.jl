@@ -32,12 +32,20 @@ end
 
 export fe_spaces
 """
-    dom=(x₁,x₂,y₁,y₂)
-    n=(nx,ny)
+    fe_spaces(model,reff,grid_type; <keyword arguments>)
+
+Create finite element (FE) spaces (Trial and Test spaces).
+
+...
+# Arguments
+- `BC_type::String="FullDirichlet"`: the type of boundary condition.
+- `TypeData::Type=ComplexF64`: the type of data to define FE spaces.
+- `conf_type::Symbol=:H1`: the regularity of the interpolation at the boundaries of cells in the mesh. (e.g.:L2,:H1,:C0,:Hgrad,)
+...
 """
-function fe_spaces(model,reff::Tuple,grid_type::String;BC_type::String="FullDirichlet",TypeData::Type=ComplexF64)
+function fe_spaces(model,reff::Tuple,grid_type::String;BC_type::String="FullDirichlet",TypeData::Type=ComplexF64,conf_type::Symbol=:H1)
     BC_values,BC_tags = make_boundary_conditions(grid_type,BC_type,TypeData);
-    VSpace=TestFESpace(model,reff;vector_type=Vector{TypeData},conformity=:H1,dirichlet_tags=BC_tags);
+    VSpace=TestFESpace(model,reff;vector_type=Vector{TypeData},conformity=conf_type,dirichlet_tags=BC_tags);
     USpace=TrialFESpace(VSpace,BC_values);
     return VSpace,USpace;
 end

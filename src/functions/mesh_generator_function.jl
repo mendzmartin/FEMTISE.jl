@@ -31,9 +31,7 @@ function make_model(grid_type::String,params::Tuple)
         gmsh.model.geo.synchronize()
 
         gmsh.model.mesh.generate(1)
-        if (path ≠ " ")
-            gmsh.write(path*name*".msh")
-        end
+        gmsh.write(path*name*".msh")
         gmsh.finalize()
         model=GmshDiscreteModel(path*name*".msh")
     # 2D simple rectangle grid
@@ -91,9 +89,7 @@ function make_model(grid_type::String,params::Tuple)
 
         # gmsh.model.mesh.generate(dim=3)
         gmsh.model.mesh.generate(2)
-        if (path ≠ " ")
-            gmsh.write(path*name*".msh")
-        end
+        gmsh.write(path*name*".msh")
         gmsh.finalize()
         model=GmshDiscreteModel(path*name*".msh")
     #= ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

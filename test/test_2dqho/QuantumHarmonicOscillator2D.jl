@@ -21,7 +21,7 @@ FullDirichlet_values,FullDirichlet_tags=make_boundary_conditions(grid_type,BC_ty
 
 reff = ReferenceFE(lagrangian,Float64,2)
 
-VSpace,USpace = fe_spaces(model2D,reff,grid_type;BC_type=BC_type,TypeData=ComplexF64)
+VSpace,USpace = fe_spaces(model2D,reff,grid_type;BC_type=BC_type,TypeData=ComplexF64,conf_type=:H1)
 
 p,q,r = eigenvalue_problem_functions((1.0,0.0,0.0))
 

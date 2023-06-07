@@ -3,7 +3,8 @@
 [![Build Status](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml?query=branch%3Amain)
 
 
-Repository to resolve Time-Independent Schrödinger equation
+Julia package repository to resolve Time-Independent Schrödinger equation by (F)init (E)lement (M)ethod.
 
-* [Faculty of Mathematic, Astronomy, Physics and Computation (FaMAF)](https://www.famaf.unc.edu.ar/)
+Project carried out in my PhD studies of Physics at:
+* [Faculty of Mathematics, Astronomy, Physics and Computation (FaMAF)](https://www.famaf.unc.edu.ar/)
 * The Enrique Gaviola Institute of Physics (IFEG)

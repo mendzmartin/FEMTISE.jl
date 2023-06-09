@@ -25,32 +25,37 @@ end
 
 export eigen_problem
 """
-    function EigenProblem(weakformₖ,weakformₘ,trial,test;nev,which,explicittransform,tol,maxiter,sigma)\n
-    weakformₖ::Function,  (Forma bilineal lado izquierdo de la formulación débil) \n
-    weakformₘ::Function,  (Forma bilineal lado derecho de la formulación débil) \n
-    test::FESpace,  (Espacio de prueba, puede ser MultiFieldFESpace) \n
-    trial::FESpace; (Espacio de solución, puede ser MultiFieldFESpace) \n
-    nev::Int64=10,  (Número de autovalores requeridos) \n
-    which::Symbol=:LM, \n
-    #:LM	eigenvalues of largest magnitude (default) \n
-    #:SM	eigenvalues of smallest magnitude \n
-    #:LR	eigenvalues of largest real part \n
-    #:SR	eigenvalues of smallest real part \n
-    #:LI	eigenvalues of largest imaginary part (nonsymmetric or complex A only) \n
-    #:SI	eigenvalues of smallest imaginary part (nonsymmetric or complex A only) \n
-    :BE	compute half of the eigenvalues from each end of the spectrum, biased in favor of the high end. (real symmetric A only) \n
-    explicittransform=:auto, \n
-    :auto \n
-    :none or :shiftinvert, specifying if shift and invert should be explicitly invoked in julia code \n
-    tol::Float64=10^(-6), \n
-    maxiter::Int64=100, \n
-    sigma=0.0 nothing or a number) \n
+    eigen_problem(weakformₖ,weakformₘ,test,trial;; <keyword arguments>)
+
+Define eigen problem as an input to solve function where we compute eigen problem by Arpack eigs function.
+
+    ...
+    # Arguments
+    - `weakformₖ`::Function: forma bilineal lado izquierdo de la formulación débil
+    - `weakformₘ`::Function: forma bilineal lado derecho de la formulación débil
+    - `test`::FESpace: espacio de prueba, puede ser MultiFieldFESpace
+    - `trial`::FESpace: espacio de solución, puede ser MultiFieldFESpace
+    - `nev`::Int64=10: número de autovalores requeridos
+    - `tol`::Float64=10e-6: relative tolerance for convergence of Ritz values
+    - `maxiter`::Integer=100: maximum number of iterations
+    - `explicittransform`::Symbol=:none: shift and invert should be explicitly invoked in julia code
+        =:auto
+        =:shiftinvert
+    - `sigma`::Float64=1.0: the level shift used in inverse iteration.
+    - `which`::Symbol=:LM: eigenvalues of largest magnitude (default)
+        =:SM: eigenvalues of smallest magnitude
+        =:LR: eigenvalues of largest real part
+        =:SR: eigenvalues of smallest real part
+        =:LI: eigenvalues of largest imaginary part (nonsymmetric or complex matrix only)
+        =:SI: eigenvalues of smallest imaginary part (nonsymmetric or complex matrix only)
+        =:BE: compute half of the eigenvalues from each end of the spectrum, biased in favor of the high end. (real symmetric matrix only)
+    ...
 """
 function eigen_problem(weakformₖ::Function,weakformₘ::Function,test::FESpace,trial::FESpace;
     nev::Int64=10,which::Symbol=:LM,explicittransform::Symbol=:none,tol::Float64=10^(-6),
     maxiter::Int64=100,sigma=0.0)
     # source vector (always need to be zero for eigen problems)
-    F(v) = 0.0; 
+    F(v) = 0.0;
     opH = AffineFEOperator(weakformₖ, F, test, trial)
     opE = AffineFEOperator(weakformₘ, F, test, trial)
     H = opH.op.matrix
@@ -61,9 +66,14 @@ end
 
 export solve
 """
-    solve(prob::EigenProblem)
-    \n Función para resolver el problema de autovalores
-    \n Retorna autovalores y autovectores
+    solve(prob)
+
+Compute eigen problem by Arpack eigs function and return eigenvalues and eigenvectors.
+
+    ...
+    # Arguments
+    ...
+    pron::EigenProblem: problem deinition
 """
 function solve(prob::EigenProblem)
     H = prob.op.hamiltonian

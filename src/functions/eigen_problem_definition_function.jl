@@ -6,9 +6,9 @@ References:
     https://github.com/JuliaPDE/SurveyofPDEPackages#mm
 =#
 
-struct EigenOperator{K<:AbstractMatrix,M<:AbstractMatrix} #<: NonlinearOperator
-    stima::K
-    massma::M
+struct EigenOperator{H<:AbstractMatrix,E<:AbstractMatrix} #<: NonlinearOperator
+    hamiltonian::H
+    energy::E
 end
 
 struct EigenProblem <: FEOperator
@@ -49,12 +49,13 @@ export eigen_problem
 function eigen_problem(weakformₖ::Function,weakformₘ::Function,test::FESpace,trial::FESpace;
     nev::Int64=10,which::Symbol=:LM,explicittransform::Symbol=:none,tol::Float64=10^(-6),
     maxiter::Int64=100,sigma=0.0)
-    L(v) = 0.0
-    opK = AffineFEOperator(weakformₖ, L, test, trial)
-    opM = AffineFEOperator(weakformₘ, L, test, trial)
-    K = opK.op.matrix
-    M = opM.op.matrix
-    op = EigenOperator(K, M)
+    # source vector (always need to be zero for eigen problems)
+    F(v) = 0.0; 
+    opH = AffineFEOperator(weakformₖ, F, test, trial)
+    opE = AffineFEOperator(weakformₘ, F, test, trial)
+    H = opK.op.matrix
+    E = opM.op.matrix
+    op = EigenOperator(H,E)
     return EigenProblem(trial,test,op,nev,which,explicittransform,tol,maxiter,sigma)
 end
 
@@ -65,14 +66,14 @@ export solve
     \n Retorna autovalores y autovectores
 """
 function solve(prob::EigenProblem)
-    K = prob.op.stima
-    M = prob.op.massma
-    ξ,Vec = eigs(K,M;nev=prob.nev,which=prob.which,explicittransform=prob.explicittransform,
+    H = prob.op.hamiltonian
+    E = prob.op.energy
+    ϵ,eigenvecs = eigs( H,E;nev=prob.nev,which=prob.which,explicittransform=prob.explicittransform,
         tol=prob.tol,maxiter=prob.maxiter,sigma=prob.sigma)
-    fₕs = Vector{CellField}(undef, prob.nev)
+    ϕ = Vector{CellField}(undef, prob.nev)
     Threads.@threads for m=1:prob.nev
-        fₕ = FEFunction(prob.trial, Vec[:,m])
-        fₕs[m] = fₕ
+        ϕₙ = FEFunction(prob.trial, eigenvecs[:,m])
+        ϕ[m] = ϕₙ
     end
-    return ξ,fₕs
+    return ϵ,ϕ
 end

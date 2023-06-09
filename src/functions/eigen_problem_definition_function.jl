@@ -53,8 +53,8 @@ function eigen_problem(weakformₖ::Function,weakformₘ::Function,test::FESpace
     F(v) = 0.0; 
     opH = AffineFEOperator(weakformₖ, F, test, trial)
     opE = AffineFEOperator(weakformₘ, F, test, trial)
-    H = opK.op.matrix
-    E = opM.op.matrix
+    H = opH.op.matrix
+    E = opE.op.matrix
     op = EigenOperator(H,E)
     return EigenProblem(trial,test,op,nev,which,explicittransform,tol,maxiter,sigma)
 end

@@ -1,5 +1,10 @@
-function kronig_penney_sturm_liouville(params::Tuple)
-    num_ions,a,b,V₀=params;
+function kronig_penney_sturm_liouville(params::Tuple;fwp::Bool=false)
+    if fwp # finite well potential as specific case of Kronig-Penney potential
+        num_ions,a,V₀=params
+        b=1.0; # could be any number
+    else
+        num_ions,a,b,V₀=params
+    end
     ħ=1.0;m=1.0;
     p(x) = 0.5*(ħ*ħ)*(1.0/m);
     q(x) = symetric_kronig_penney(x[1],num_ions,a,b,V₀)
@@ -8,7 +13,7 @@ function kronig_penney_sturm_liouville(params::Tuple)
 end
 
 function heaviside(x)
-    return 0.5*(sign(x)+1)
+    return 0.5*(sign(x)+1)==true
  end
 
 """

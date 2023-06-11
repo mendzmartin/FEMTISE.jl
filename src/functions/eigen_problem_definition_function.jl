@@ -31,24 +31,24 @@ Define eigen problem as an input to solve function where we compute eigen proble
 
     ...
     # Arguments
-    - `weakformₖ`::Function: forma bilineal lado izquierdo de la formulación débil
-    - `weakformₘ`::Function: forma bilineal lado derecho de la formulación débil
-    - `test`::FESpace: espacio de prueba, puede ser MultiFieldFESpace
-    - `trial`::FESpace: espacio de solución, puede ser MultiFieldFESpace
-    - `nev`::Int64=10: número de autovalores requeridos
-    - `tol`::Float64=10e-6: relative tolerance for convergence of Ritz values
-    - `maxiter`::Integer=100: maximum number of iterations
-    - `explicittransform`::Symbol=:none: shift and invert should be explicitly invoked in julia code
-        =:auto
-        =:shiftinvert
-    - `sigma`::Float64=1.0: the level shift used in inverse iteration.
-    - `which`::Symbol=:LM: eigenvalues of largest magnitude (default)
-        =:SM: eigenvalues of smallest magnitude
-        =:LR: eigenvalues of largest real part
-        =:SR: eigenvalues of smallest real part
-        =:LI: eigenvalues of largest imaginary part (nonsymmetric or complex matrix only)
-        =:SI: eigenvalues of smallest imaginary part (nonsymmetric or complex matrix only)
-        =:BE: compute half of the eigenvalues from each end of the spectrum, biased in favor of the high end. (real symmetric matrix only)
+    - `weakformₖ::Function`: forma bilineal lado izquierdo de la formulación débil
+    - `weakformₘ::Function`: forma bilineal lado derecho de la formulación débil
+    - `test::FESpace`: espacio de prueba, puede ser MultiFieldFESpace
+    - `trial::FESpace`: espacio de solución, puede ser MultiFieldFESpace
+    - `nev::Int64=10`: número de autovalores requeridos
+    - `tol::Float64=10e-6`: relative tolerance for convergence of Ritz values
+    - `maxiter::Integer=100`: maximum number of iterations
+    - `explicittransform::Symbol=:none`: shift and invert should be explicitly invoked in julia code
+                               `=:auto`:
+                               `=:shiftinvert`:
+    - `sigma::Float64=1.0`: the level shift used in inverse iteration.
+    - `which::Symbol=:LM`: eigenvalues of largest magnitude (default)
+                   `=:SM`: eigenvalues of smallest magnitude
+                   `=:LR`: eigenvalues of largest real part
+                   `=:SR`: eigenvalues of smallest real part
+                   `=:LI`: eigenvalues of largest imaginary part (nonsymmetric or complex matrix only)
+                   `=:SI`: eigenvalues of smallest imaginary part (nonsymmetric or complex matrix only)
+                   `=:BE`: compute half of the eigenvalues from each end of the spectrum, biased in favor of the high end. (real symmetric matrix only)
     ...
 """
 function eigen_problem(weakformₖ::Function,weakformₘ::Function,test::FESpace,trial::FESpace;
@@ -73,7 +73,7 @@ Compute eigen problem by Arpack eigs function and return eigenvalues and eigenve
     ...
     # Arguments
     ...
-    pron::EigenProblem: problem deinition
+    `prob::EigenProblem`: problem deinition
 """
 function solve(prob::EigenProblem)
     H = prob.op.hamiltonian

@@ -1,7 +1,6 @@
+# 2D quantum harmonic oscillator potential
 function eigenvalue_problem_functions(params::Tuple)
     ħ::Float64=1.0; m::Float64=1.0;
-    # 2D quantum harmonic oscillator potential
-    println("Set quantum harmonic oscillator 2D potential");
     ω,x₁,y₁=params;
     p(x) = 0.5*(ħ*ħ)*(1.0/m);                                       # kinetic energy
     q(x) = 0.5*m*(ω*ω)*((x[1]-x₁)*(x[1]-x₁)+(x[2]-y₁)*(x[2]-y₁));   # 2D harmonic osicllator centered in (x₁,y₁)

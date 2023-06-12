@@ -36,7 +36,7 @@ reff = ReferenceFE(lagrangian,Float64,2)
 
 VSpace,USpace = fe_spaces(model1D,reff,grid_type;BC_type=BC_type,TypeData=ComplexF64)
 
-p,q,r = kronig_penney_sturm_liouville((1,a,V₀);fwp=true)
+p,q,r = kronig_penney_sturm_liouville((a,V₀);fwp=true)
 
 ϵ,ϕ = eigen_values_and_eigen_vectors(p,q,r,dΩ,USpace,VSpace;params=(10,1e-9,500,:none,V₀))
 

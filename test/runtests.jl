@@ -15,3 +15,7 @@ end
 @testset "Test eigenvalue problem for Finite Well Potential 1D" begin
     include("test_1d_fwp/FiniteWellPotential1D.jl")
 end
+
+@testset "Test eigenvalue problem for default potentials" begin
+    include("test_default_eigen_problem/DefaultEigenProblem.jl")
+end

@@ -1,4 +1,22 @@
-function kronig_penney_sturm_liouville(params::Tuple;fwp::Bool=false)
+function default_qho2d_sturm_liouville(params::Tuple)
+    ħ::Float64=1.0; m::Float64=1.0;
+    ω,x₁,y₁=params;
+    p(x) = 0.5*(ħ*ħ)*(1.0/m);                                       # kinetic energy
+    q(x) = 0.5*m*(ω*ω)*((x[1]-x₁)*(x[1]-x₁)+(x[2]-y₁)*(x[2]-y₁));   # 2D harmonic osicllator centered in (x₁,y₁)
+    r(x) = 1.0;
+    return p,q,r
+end
+
+function default_qho1d_sturm_liouville(params::Tuple)
+    ħ::Float64=1.0; m::Float64=1.0;
+    ω,x₁=params;
+    p(x) = 0.5*(ħ*ħ)*(1.0/m);                   # kinetic energy
+    q(x) = 0.5*m*(ω*ω)*((x[1]-x₁)*(x[1]-x₁));   # 1D harmonic osicllator centered in (x₁,y₁)
+    r(x) = 1.0;
+    return p,q,r
+end
+
+function default_kronig_penney_sturm_liouville(params::Tuple;fwp::Bool=false)
     if fwp # finite well potential as specific case of Kronig-Penney potential
         a,V₀=params
         num_ions=1; # need to be only one
@@ -12,6 +30,8 @@ function kronig_penney_sturm_liouville(params::Tuple;fwp::Bool=false)
     r(x) = 1.0;
     return p,q,r;
 end
+
+# auxiliary functions to define potentials
 
 function heaviside(x)
     return 0.5*(sign(x)+1)==true

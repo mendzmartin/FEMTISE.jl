@@ -1,3 +1,4 @@
+export default_qho2d_sturm_liouville
 function default_qho2d_sturm_liouville(params::Tuple)
     ħ::Float64=1.0; m::Float64=1.0;
     ω,x₁,y₁=params;
@@ -7,6 +8,7 @@ function default_qho2d_sturm_liouville(params::Tuple)
     return p,q,r
 end
 
+export default_qho1d_sturm_liouville
 function default_qho1d_sturm_liouville(params::Tuple)
     ħ::Float64=1.0; m::Float64=1.0;
     ω,x₁=params;
@@ -16,6 +18,7 @@ function default_qho1d_sturm_liouville(params::Tuple)
     return p,q,r
 end
 
+export default_kronig_penney_sturm_liouville
 function default_kronig_penney_sturm_liouville(params::Tuple;fwp::Bool=false)
     if fwp # finite well potential as specific case of Kronig-Penney potential
         a,V₀=params

@@ -1,3 +1,4 @@
+export default_potential_sturm_liouville
 function default_potential_sturm_liouville(type_potential::String,params::Tuple)
     if type_potential=="qho_1d"
         p,q,r=default_qho1d_sturm_liouville(params)
@@ -11,6 +12,7 @@ function default_potential_sturm_liouville(type_potential::String,params::Tuple)
     return p,q,r;
 end
 
+export default_solver_eigen_problem
 function default_solver_eigen_problem(type_potential::String,params::Tuple)
 
     if type_potential=="qho_1d"

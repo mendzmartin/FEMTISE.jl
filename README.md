@@ -9,6 +9,5 @@ Project carried out in my PhD studies of Physics at:
 * The Enrique Gaviola Institute of Physics (IFEG)
 
 
-aa## Warning!
+## Warning!
 ->> The package is under construction <<-
-

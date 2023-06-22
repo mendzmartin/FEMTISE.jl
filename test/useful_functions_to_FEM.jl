@@ -1,7 +1,9 @@
+export norm_l2
 function norm_l2(𝜳::CellField,dΩ::Gridap.CellData.GenericMeasure)
     return sqrt(real(sum(∫(𝜳'*𝜳)*dΩ)));
 end
 
+export orthogonality_check
 function orthogonality_check(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure)
     nev::Integer=length(ϕ);
     orthogonality_vector=zeros(Float64,round(Int,(nev^2-nev)/2));
@@ -15,6 +17,7 @@ function orthogonality_check(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericM
     return orthogonality_vector;
 end
 
+export multifield_orthogonality_check
 function multifield_orthogonality_check(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure,TrialSpace::FESpace)
     nev::Integer=length(ϕ);
     orthogonality_vector=zeros(Float64,round(Int,(nev^2-nev)/2));
@@ -32,6 +35,7 @@ function multifield_orthogonality_check(ϕ::Vector{CellField},dΩ::Gridap.CellDa
     return orthogonality_vector;
 end
 
+export eigenstates_normalization
 function eigenstates_normalization(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure)
     nom_vector=zeros(Float64,length(ϕ));
     Threads.@threads for i in eachindex(ϕ)
@@ -40,6 +44,7 @@ function eigenstates_normalization(ϕ::Vector{CellField},dΩ::Gridap.CellData.Ge
     return nom_vector;
 end
 
+export multifield_eigenstates_normalization
 function multifield_eigenstates_normalization(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure,TrialSpace::FESpace)
     nom_vector=zeros(Float64,length(ϕ));
     Threads.@threads for i in eachindex(ϕ)

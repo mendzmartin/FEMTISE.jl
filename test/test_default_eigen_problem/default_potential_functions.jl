@@ -21,9 +21,9 @@ end
 export default_kronig_penney_sturm_liouville
 function default_kronig_penney_sturm_liouville(params::Tuple;fwp::Bool=false)
     if fwp # finite well potential as specific case of Kronig-Penney potential
-        a,V₀=params
+        b,V₀=params
         num_ions=1; # need to be only one
-        b=1.0;      # could be any number
+        a=1.0;      # could be any number
     else
         num_ions,a,b,V₀=params
     end

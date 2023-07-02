@@ -36,8 +36,8 @@ function default_solver_eigen_problem(type_potential::String,params::Tuple)
         params_model=("./","model1D",(-0.5*L,0.5*L),Δx);
         dimension="1D"
     elseif type_potential=="finite_well_1d"
-        L,V₀,a,Δx,nev,sigma=params
-        params_sturm_liouville=(a,V₀)
+        L,V₀,b,Δx,nev,sigma=params
+        params_sturm_liouville=(b,V₀)
         grid_type="simple_line";
         params_model=("./","model1D",(-0.5*L,0.5*L),Δx);
         dimension="1D"

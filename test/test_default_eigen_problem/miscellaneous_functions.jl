@@ -8,6 +8,8 @@ function default_potential_sturm_liouville(type_potential::String,params::Tuple)
         p,q,r=default_kronig_penney_sturm_liouville(params;fwp=false)
     elseif type_potential=="finite_well_1d"
         p,q,r=default_kronig_penney_sturm_liouville(params;fwp=true)
+    elseif type_potential=="adhoc"
+        p,q,r=adhoc_potential_sturm_liouville(params[1],params[2:end])
     end
     return p,q,r;
 end
@@ -41,7 +43,22 @@ function default_solver_eigen_problem(type_potential::String,params::Tuple)
         grid_type="simple_line";
         params_model=("./","model1D",(-0.5*L,0.5*L),Δx);
         dimension="1D"
+    elseif type_potential=="adhoc"
+        dimension=params[1]
+        if dimension=="1D"
+            # params=(dimension,L,Δx,nev,sigma,adhoc_function_name,params_adhoc)
+            L,Δx,nev,sigma=params[2:5]
+            params_sturm_liouville=params[6:end]
+            grid_type="simple_line";
+            params_model=("./","model1D",(-0.5*L,0.5*L),Δx);
+        elseif dimension=="2D"
+            # params=(dimension,L,nx,ny,nev,sigma,adhoc_function_name,params_adhoc)
+            L,nx,ny,nev,sigma=params[2:6]
+            params_sturm_liouville=params[7:end]
+        end
     end
+
+    println("Building the grid model ...")
 
     model=make_model(grid_type,params_model);
     dimension=="1D" ? rm(params_model[1]*params_model[2]*".msh") : nothing
@@ -50,7 +67,13 @@ function default_solver_eigen_problem(type_potential::String,params::Tuple)
     Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
     reff = ReferenceFE(lagrangian,Float64,2);
     VSpace,USpace=fe_spaces(model,reff,grid_type;BC_type=BC_type,TypeData=ComplexF64,conf_type=:H1);
-    p,q,r = default_potential_sturm_liouville(type_potential,params_sturm_liouville);
+    if type_potential=="adhoc"
+        p,q,r = adhoc_potential_sturm_liouville(params_sturm_liouville);
+    else
+        p,q,r = default_potential_sturm_liouville(type_potential,params_sturm_liouville);
+    end
+
+    println("Solving eigen problem ...")
     ϵ,ϕ = eigen_values_and_eigen_vectors(p,q,r,dΩ,USpace,VSpace;params=(nev,10e-9,500,:none,sigma));
 
     @testset "Check normalization" begin

@@ -2,6 +2,7 @@ module FiniteWellPotential1D
 
 using Pkg
 Pkg.activate("../")
+Pkg.instantiate()
 
 using TimeIndependentSchrodingerEquation
 using Gridap,Test

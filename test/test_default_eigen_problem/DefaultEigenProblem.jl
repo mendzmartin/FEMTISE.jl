@@ -2,6 +2,7 @@ module DefaultEigenProblem
 
 using Pkg
 Pkg.activate("../")
+Pkg.instantiate()
 
 using TimeIndependentSchrodingerEquation
 using Gridap,Test

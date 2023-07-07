@@ -2,6 +2,7 @@ module QuantumHarmonicOscillator2D
 
 using Pkg
 Pkg.activate("../"); # activate specific environment from TimeIndependentSchrodingerEquation package
+Pkg.instantiate()
 
 using TimeIndependentSchrodingerEquation
 using Gridap,Test

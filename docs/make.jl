@@ -1,6 +1,25 @@
 using Pkg
 Pkg.activate("../")
 
-using Documenter
+push!(LOAD_PATH,"../src/")
+
 using TimeIndependentSchrodingerEquation
-makedocs(sitename="My Documentation")
+using Documenter
+
+makedocs(
+         sitename = "TimeIndependentSchrodingerEquation.jl",
+         modules  = [TimeIndependentSchrodingerEquation],
+         pages=[
+                "Home" => "index.md"
+               ])
+
+deploydocs(;
+    repo="github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl",
+)
+
+# using Pkg
+# Pkg.activate("../")
+
+# using Documenter
+# using TimeIndependentSchrodingerEquation
+# makedocs(sitename="My Documentation")

@@ -2,9 +2,9 @@
 
 | **Documentation** |
 |:------------ |
-| [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/stable) [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/dev) |
+| [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://mendzmartin.github.io/TimeIndependentSchrodingerEquation.jl/) [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://mendzmartin.github.io/TimeIndependentSchrodingerEquation.jl/) |
 |**Build Status** |
-| [![Build Status](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml?query=branch%3Amain) |
+| [![Build Status](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml?query=branch%3Amain) [![Codecov](https://app.codecov.io/gh/mendzmartin/TimeIndependentSchrodingerEquation.jl/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mendzmartin/TimeIndependentSchrodingerEquation.jl) |
 
 <!-- [![Codecov](https://codecov.io/gh/gridap/Gridap.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/gridap/Gridap.jl) -->
 

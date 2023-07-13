@@ -1,6 +1,12 @@
 # **TimeIndependentSchrodingerEquation**
 
-[![Build Status](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml?query=branch%3Amain)
+| **Documentation** |
+|:------------ |
+| [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/stable) [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/dev) |
+|**Build Status** |
+| [![Build Status](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml?query=branch%3Amain) |
+
+<!-- [![Codecov](https://codecov.io/gh/gridap/Gridap.jl/branch/master/graph/badge.svg)](https://codecov.io/gh/gridap/Gridap.jl) -->
 
 Julia package repository to resolve Time-Independent Schrödinger equation by (F)init (E)lement (M)ethod. This is an implementation of Gridap package for unidimensional and bidimensional grids.
 

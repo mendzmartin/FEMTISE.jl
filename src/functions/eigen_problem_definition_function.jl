@@ -77,6 +77,6 @@ function solve(prob::EigenProblem)
     ϵ,eigenvecs = eigs(prob.op.hamiltonian,prob.op.energy;
         nev=prob.nev,which=prob.which,explicittransform=prob.explicittransform,
         tol=prob.tol,maxiter=prob.maxiter,sigma=prob.sigma)
-    ϕ=[FEFunction(prob.trial, eigenvecs[:,m]) for m=1:prob.nev]
+    ϕ::Vector{CellField}=[FEFunction(prob.trial, eigenvecs[:,m]) for m=1:prob.nev]
     return ϵ,ϕ
 end

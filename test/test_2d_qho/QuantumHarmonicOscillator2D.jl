@@ -46,7 +46,7 @@ end
 
 @testset "Check normalization" begin
     for i in eachindex(ϕ)
-        @test norm_l2(ϕ[1],dΩ) ≈ 1.0
+        @test norm_l2(ϕ[i],dΩ) ≈ 1.0
     end
 end
 

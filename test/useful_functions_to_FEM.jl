@@ -37,17 +37,13 @@ end
 
 export eigenstates_normalization
 function eigenstates_normalization(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure)
-    nom_vector=zeros(Float64,length(ϕ));
-    Threads.@threads for i in eachindex(ϕ)
-        nom_vector[i]=norm_l2(ϕ[i],dΩ);
-    end
-    return nom_vector;
+    return [norm_l2(ϕ[i],dΩ) for i in eachindex(ϕ)]
 end
 
 export multifield_eigenstates_normalization
 function multifield_eigenstates_normalization(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure,TrialSpace::FESpace)
     nom_vector=zeros(Float64,length(ϕ));
-    Threads.@threads for i in eachindex(ϕ)
+    for i in eachindex(ϕ)
         ϕᵢ=interpolate_everywhere(ϕ[i],TrialSpace);
         ϕ¹ᵢ,ϕ²ᵢ=ϕᵢ;
         nom_vector[i]=norm_l2(ϕ¹ᵢ,dΩ)+norm_l2(ϕ²ᵢ,dΩ);

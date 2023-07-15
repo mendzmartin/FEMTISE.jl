@@ -58,9 +58,7 @@ function eigen_problem(weakformₖ::Function,weakformₘ::Function,test::FESpace
     F(v) = 0.0;
     opH = AffineFEOperator(weakformₖ, F, test, trial)
     opE = AffineFEOperator(weakformₘ, F, test, trial)
-    H = opH.op.matrix
-    E = opE.op.matrix
-    op = EigenOperator(H,E)
+    op = EigenOperator(opH.op.matrix,opE.op.matrix)
     return EigenProblem(trial,test,op,nev,which,explicittransform,tol,maxiter,sigma)
 end
 
@@ -76,14 +74,9 @@ Compute eigen problem by Arpack eigs function and return eigenvalues and eigenve
     `prob::EigenProblem`: problem deinition
 """
 function solve(prob::EigenProblem)
-    H = prob.op.hamiltonian
-    E = prob.op.energy
-    ϵ,eigenvecs = eigs( H,E;nev=prob.nev,which=prob.which,explicittransform=prob.explicittransform,
+    ϵ,eigenvecs = eigs(prob.op.hamiltonian,prob.op.energy;
+        nev=prob.nev,which=prob.which,explicittransform=prob.explicittransform,
         tol=prob.tol,maxiter=prob.maxiter,sigma=prob.sigma)
-    ϕ = Vector{CellField}(undef, prob.nev)
-    Threads.@threads for m=1:prob.nev
-        ϕₙ = FEFunction(prob.trial, eigenvecs[:,m])
-        ϕ[m] = ϕₙ
-    end
+    ϕ=[FEFunction(prob.trial, eigenvecs[:,m]) for m=1:prob.nev]
     return ϵ,ϕ
 end

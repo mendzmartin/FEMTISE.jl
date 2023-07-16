@@ -42,7 +42,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # COMPATHELPER_PRIV: ${{ secrets.DOCUMENTER_KEY }}
-          # COMPATHELPER_PRIV: ${{ secrets.COMPATHELPER_PRIV }}
+          COMPATHELPER_PRIV: ${{ secrets.COMPATHELPER_PRIV }}
 
 
 # name: CompatHelper

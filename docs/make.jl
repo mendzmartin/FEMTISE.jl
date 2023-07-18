@@ -23,5 +23,5 @@ makedocs(
     )
 
 deploydocs(;
-    repo="github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl",
+    repo="github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl.git",
     )

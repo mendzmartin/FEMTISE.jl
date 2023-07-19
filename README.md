@@ -1,10 +1,11 @@
 # **TimeIndependentSchrodingerEquation**
 
-| **Documentation** |
+| **GitHub Actions - Workflows** |
 |:------------ |
-| [![](https://img.shields.io/badge/docs-stable-blue.svg)](https://mendzmartin.github.io/TimeIndependentSchrodingerEquation.jl/) [![](https://img.shields.io/badge/docs-dev-blue.svg)](https://mendzmartin.github.io/TimeIndependentSchrodingerEquation.jl/) |
-|**Build Status** |
+| [![Documentation](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/documentation.yml/badge.svg)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/documentation.yml) |
 | [![Build Status](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CI.yml?query=branch%3Amain) |
+| [![CompatHelper](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CompatHelper.yml/badge.svg)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/CompatHelper.yml) |
+| [![TagBot](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/TagBot.yml/badge.svg)](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/actions/workflows/TagBot.yml) |
 
 <!-- [![Codecov](https://app.codecov.io/gh/mendzmartin/TimeIndependentSchrodingerEquation.jl/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mendzmartin/TimeIndependentSchrodingerEquation.jl) -->
 

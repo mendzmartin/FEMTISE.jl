@@ -1,7 +1,7 @@
-using Pkg
-Pkg.activate("../")
+# using Pkg
+# Pkg.activate("../")
 
-push!(LOAD_PATH,"../src/")
+# push!(LOAD_PATH,"../src/")
 
 # using TimeIndependentSchrodingerEquation
 # using Documenter

@@ -54,13 +54,44 @@ end
 ```
 Then we save de Julia code below name `MyModule.jl`. After that, we can run the code doing this
 ```bash
-julia MyModule.jl
+    @my_directory$: julia MyModule.jl
 ```
 Also, if we have activated multi-thread configuration we can use the next command to activate parallelism:
 ```bash
-julia -t 4 MyModule.jl
+    @my_directory$: julia -t 4 MyModule.jl
 ```
 where we have specified 4 threads as parallelization.
+
+## Run from Julia REPL
+We can also run the package directly from Julia REPL by opening the terminal `Ctrl+Alt+T` inside the package folder and typing the following commands inside the terminal:
+```bash
+    @prompt$: cd my_directory/TimeIndependentSchrodingerEquation.jl/
+    @TimeIndependentSchrodingerEquation.jl$: julia
+               _
+   _       _ _(_)_     |  Documentation: https://docs.julialang.org
+  (_)     | (_) (_)    |
+   _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.9.0 (2023-05-07)
+ _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org/ release
+|__/                   |
+```
+```julia
+    julia> using Pkg
+    julia> Pkg.activate("./")
+    julia> Pkg.instantiate()
+    julia> Pkg.add(path="~/my_directory/TimeIndependentSchrodingerEquation.jl")
+    julia> using TimeIndependentSchrodingerEquation
+```
+and then we can, for example, access Julia's help mode to ask for specific package functions such as the following:
+```julia
+    julia> Shift+?
+    help?> space_coord
+    search: space_coord
+
+    if dimension=="1D" ⇒ dom=(x₁,x₂); Δr=Δx; n=nx
+    if dimension=="2d" ⇒ dom=(x₁,x₂,y₁,y₂); Δr=(Δx,Δy); n=(nx,ny)
+```
 
 ## **Examples**
 See some use examples in [test folder](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/tree/main/test) where you can find some uses of `TimeIndependentSchrodingerEquation` package's functions.

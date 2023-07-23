@@ -18,5 +18,24 @@ jobs:
       - name: Run CompatHelper
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          COMPATHELPER_PRIV: ${{ secrets.COMPATHELPER_PRIV }}  # optional
+          # COMPATHELPER_PRIV: ${{ secrets.COMPATHELPER_PRIV }}  # optional
+          COMPATHELPER_PRIV: ${{ secrets.DOCUMENTER_KEY }}
         run: julia --project -e 'using CompatHelper; CompatHelper.main()'
+
+# name: CompatHelper
+
+# on:
+#   schedule:
+#     - cron: '00 00 * * *'
+
+# jobs:
+#   CompatHelper:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Pkg.add("CompatHelper")
+#         run: julia -e 'using Pkg; Pkg.add("CompatHelper")'
+#       - name: CompatHelper.main()
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           COMPATHELPER_PRIV: ${{ secrets.DOCUMENTER_KEY }}
+#         run: julia -e 'using CompatHelper; CompatHelper.main()'

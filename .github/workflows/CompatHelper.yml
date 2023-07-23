@@ -2,7 +2,7 @@ name: CompatHelper
 on:
   schedule:
     - cron: 0 0 * * *
-  # workflow_dispatch:
+  workflow_dispatch:
 jobs:
   CompatHelper:
     runs-on: ubuntu-latest
@@ -20,7 +20,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           # COMPATHELPER_PRIV: ${{ secrets.COMPATHELPER_PRIV }}  # optional
           COMPATHELPER_PRIV: ${{ secrets.DOCUMENTER_KEY }}
-        run: julia --project -e 'using CompatHelper; CompatHelper.main()'
+        run: julia --project -e 'using CompatHelper; CompatHelper.main(pull_request=false)'
 
 # name: CompatHelper
 

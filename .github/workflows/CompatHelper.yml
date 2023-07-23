@@ -1,3 +1,27 @@
+# name: CompatHelper
+# on:
+#   schedule:
+#     - cron: 0 0 * * *
+#   workflow_dispatch:
+# jobs:
+#   CompatHelper:
+#     runs-on: ubuntu-latest
+#     steps:
+#       - name: Set up Julia
+#         uses: julia-actions/setup-julia@latest
+#         with:
+#           version: '1.9'
+
+#       - name: Install CompatHelper.jl
+#         run: julia --project -e 'using Pkg; Pkg.add("CompatHelper")'
+
+#       - name: Run CompatHelper
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#           # COMPATHELPER_PRIV: ${{ secrets.COMPATHELPER_PRIV }}  # optional
+#           COMPATHELPER_PRIV: ${{ secrets.DOCUMENTER_KEY }}
+#         run: julia --project -e 'using CompatHelper; CompatHelper.main()'
+
 name: CompatHelper
 on:
   schedule:
@@ -15,27 +39,14 @@ jobs:
       - name: Install CompatHelper.jl
         run: julia --project -e 'using Pkg; Pkg.add("CompatHelper")'
 
-      - name: Run CompatHelper
+      - name: Run CompatHelper without pull request
+        if: github.event_name == 'schedule'  # Only run when triggered by schedule
+        run: julia --project -e 'using CompatHelper; CompatHelper.main()'
+
+      - name: Run CompatHelper with pull request
+        if: github.event_name == 'workflow_dispatch'  # Only run when manually triggered
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          # COMPATHELPER_PRIV: ${{ secrets.COMPATHELPER_PRIV }}  # optional
-          COMPATHELPER_PRIV: ${{ secrets.DOCUMENTER_KEY }}
-        run: julia --project -e 'using CompatHelper; CompatHelper.main(pull_request=false)'
-
-# name: CompatHelper
-
-# on:
-#   schedule:
-#     - cron: '00 00 * * *'
-
-# jobs:
-#   CompatHelper:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Pkg.add("CompatHelper")
-#         run: julia -e 'using Pkg; Pkg.add("CompatHelper")'
-#       - name: CompatHelper.main()
-#         env:
-#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-#           COMPATHELPER_PRIV: ${{ secrets.DOCUMENTER_KEY }}
-#         run: julia -e 'using CompatHelper; CompatHelper.main()'
+          COMPATHELPER_PRIV: ${{ secrets.COMPATHELPER_PRIV }}  # optional
+        run: julia --project -e 'using CompatHelper; CompatHelper.main()'
+        

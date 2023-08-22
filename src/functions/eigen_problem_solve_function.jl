@@ -18,7 +18,9 @@ Compute matrix eigen problem and return eigenvalues and eigenvectors
   - `sigma::Float64=1.0`: the level shift used in inverse iteration.
 ...
 """
-function eigen_values_and_eigen_vectors(p::Function,q::Function,r::Function,dΩ::Gridap.CellData.GenericMeasure,USpace::FESpace,VSpace::FESpace;params=(10::Integer,10e-9::Float64,100,:none,1.0::Float64))
+function eigen_values_and_eigen_vectors(p::Function,q::Function,r::Function,
+  dΩ::Gridap.CellData.GenericMeasure,USpace::FESpace,VSpace::FESpace;
+  params=(10::Integer,10e-9::Float64,100,:none,1.0::Float64))
     # Define bilinear forms
     a,b=bilineal_forms(p,q,r,dΩ)
     # solve eigenvalue problem

@@ -22,7 +22,7 @@ function space_coord(dom::Tuple,Δr,n;dimension::String="2D")
     return r,pts;
 end
 
-# Formas bilineales para problema de autovalores
+# Bilineals forms for eigenvalues 1D or 2D (equal masses)
 export bilineal_forms
 function bilineal_forms(p::Function,q::Function,r::Function,dΩ::Gridap.CellData.GenericMeasure)
     a(u,v) = ∫(p*(∇(v)⋅∇(u))+q*v*u)*dΩ

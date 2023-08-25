@@ -15,12 +15,12 @@ struct EigenProblem <: FEOperator
     trial::FESpace
     test::FESpace
     op::EigenOperator
-    nev::Int64
+    nev::Int
     which::Symbol #LM or SM
     explicittransform::Symbol #:shiftinvert
     tol::Float64
-    maxiter::Int64
-    sigma
+    maxiter::Int
+    sigma::Float64
 end
 
 """
@@ -34,7 +34,7 @@ Define eigen problem as an input to solve function where we compute eigen proble
     - `weakformₘ::Function`: forma bilineal lado derecho de la formulación débil
     - `test::FESpace`: espacio de prueba, puede ser MultiFieldFESpace
     - `trial::FESpace`: espacio de solución, puede ser MultiFieldFESpace
-    - `nev::Int64=10`: número de autovalores requeridos
+    - `nev::Int=10`: número de autovalores requeridos
     - `tol::Float64=10e-6`: relative tolerance for convergence of Ritz values
     - `maxiter::Integer=100`: maximum number of iterations
     - `explicittransform::Symbol=:none`: shift and invert should be explicitly invoked in julia code
@@ -51,8 +51,8 @@ Define eigen problem as an input to solve function where we compute eigen proble
     ...
 """
 function eigen_problem(weakformₖ::Function,weakformₘ::Function,test::FESpace,trial::FESpace;
-    nev::Int64=10,which::Symbol=:LM,explicittransform::Symbol=:none,tol::Float64=10^(-6),
-    maxiter::Int64=100,sigma=0.0)
+    nev::Int=10,which::Symbol=:LM,explicittransform::Symbol=:none,tol::Float64=10^(-6),
+    maxiter::Int=100,sigma=0.0)
     # source vector (always need to be zero for eigen problems)
     F(v) = 0.0;
     opH = AffineFEOperator(weakformₖ, F, test, trial)

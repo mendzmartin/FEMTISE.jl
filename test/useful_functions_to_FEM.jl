@@ -7,7 +7,7 @@ export orthogonality_check
 function orthogonality_check(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure)
     nev::Integer=length(ϕ);
     orthogonality_vector=zeros(Float64,round(Int,(nev^2-nev)/2));
-    index::Int64=1;
+    index::Int=1;
     for i in 2:nev
         for j in 1:(i-1)
             orthogonality_vector[index]=abs(sum(∫(ϕ[j]'*ϕ[i])*dΩ));
@@ -21,7 +21,7 @@ export multifield_orthogonality_check
 function multifield_orthogonality_check(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure,TrialSpace::FESpace)
     nev::Integer=length(ϕ);
     orthogonality_vector=zeros(Float64,round(Int,(nev^2-nev)/2));
-    index::Int64=1;
+    index::Int=1;
     for i in 2:nev
         ϕᵢ=interpolate_everywhere(ϕ[i],TrialSpace);
         ϕ¹ᵢ,ϕ²ᵢ=ϕᵢ;

@@ -155,11 +155,11 @@ end
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # function to ask about params of adhoc potential function
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-function ask_for_params(length_params::Int64)
+function ask_for_params(length_params::Int)
     params_vector=Any[]
     for i in 1:length_params
         print("Set parameter Nº $(i)\n")
-        print("Specify type of parameter Nº $(i): c (if ComplexF64), f (if Float64), i (if Int64) = ")
+        print("Specify type of parameter Nº $(i): c (if ComplexF64), f (if Float64), i (if Int) = ")
         type_λ_str=readline()
         print("Set parameter Nº $(i) λ = ")
         λ_str = readline()
@@ -168,7 +168,7 @@ function ask_for_params(length_params::Int64)
         elseif type_λ_str=="f"
             λ=parse(Float64,λ_str)
         elseif type_λ_str=="i"
-            λ=parse(Int64,λ_str)
+            λ=parse(Int,λ_str)
         end
         push!(params_vector,λ)
     end
@@ -215,7 +215,7 @@ function get_input(T::Type,BoolCondition::Function)
     return input
 end
 
-function num_ions_BoolCondition(num_ions::Int64;odd::Bool=true)
+function num_ions_BoolCondition(num_ions::Int;odd::Bool=true)
     odd ? bool_data=(mod(num_ions,2)==0) : bool_data=(mod(num_ions,2)==1)
     return bool_data
 end

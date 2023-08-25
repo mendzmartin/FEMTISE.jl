@@ -1,9 +1,3 @@
-#= 
-    Run command:
-        julia -t 4 DefaultEigenProblem.jl   (multi-threading)
-        julia DefaultEigenProblem.jl        (single-threading)
-=#
-
 function run_default_eigen_problem()
 
 println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
@@ -35,8 +29,8 @@ else
     L = get_input(Float64,default_value=30.0)
     print("Set domain type (for symetric domain {-L/2,L/2} set \"s\" and for non-symetric domain {0,L} set \"ns\": dom_type::String = ")
     dom_type = get_input(["s","ns"])
-    print("Number of eigenvalues: nev::Int64 = ")
-    nev = get_input(Int64;default_data=false)
+    print("Number of eigenvalues: nev::Int = ")
+    nev = get_input(Int;default_data=false)
 
     if type_potential in ["1","2","3"]
         dimension="1D"
@@ -53,7 +47,7 @@ else
             params_potential=(ω,x₁)
             write(io,"Quantum Harmonic Oscillator 1D\n")
             write(io,"Dimension of eigen value problem              dimension::String   = $(dimension)\n")
-            write(io,"Number of eigenvalues                         nev::Int64          = $(nev)\n")
+            write(io,"Number of eigenvalues                         nev::Int          = $(nev)\n")
             write(io,"Finite element domain length [au]             L::Float64          = $(L)\n")
             write(io,"Domain type                                   dom_type::String    = $(dom_type)\n")
             write(io,"Level shift used in inverse iteration [au]    sigma::Float64      = $(sigma)\n")
@@ -68,14 +62,14 @@ else
             t=get_input(Float64;default_data=false)
             print("Widths of potential wells [au]: b::Float64 = ")
             b=get_input(Float64;default_data=false)
-            print("Number of ions or potential wells: num_ions::Int64 = ")
-            num_ions=get_input(Int64,num_ions_BoolCondition)
+            print("Number of ions or potential wells: num_ions::Int = ")
+            num_ions=get_input(Int,num_ions_BoolCondition)
             print("Level shift used in inverse iteration [au] (default sigma=V₀ press Enter): sigma::Float64 = ")
             sigma=get_input(Float64;default_value=V₀)
             params_potential=(V₀,t,b,num_ions)
             write(io,"Finit Kronig-Penney 1D\n")
             write(io,"Dimension of eigen value problem              dimension::String   = $(dimension)\n")
-            write(io,"Number of eigenvalues                         nev::Int64          = $(nev)\n")
+            write(io,"Number of eigenvalues                         nev::Int          = $(nev)\n")
             write(io,"Finite element domain length [au]             L::Float64          = $(L)\n")
             write(io,"Domain type                                   dom_type::String    = $(dom_type)\n")
             write(io,"Level shift used in inverse iteration [au]    sigma::Float64      = $(sigma)\n")
@@ -83,7 +77,7 @@ else
             write(io,"Depths of potential wells [au]                V₀::Float64         = $(V₀)\n")
             write(io,"Distance between well centers [au]            t::Float64          = $(t)\n")
             write(io,"Widths of potential wells [au]                b::Float64          = $(b)\n")
-            write(io,"Number of ions or potential wells             num_ions::Int64     = $(num_ions)\n")
+            write(io,"Number of ions or potential wells             num_ions::Int     = $(num_ions)\n")
         elseif type_potential=="3"
             potential_function_name="finite_well_1d"
             print("Depth (with sign) of potential well [au]: V₀::Float64 = ")
@@ -95,7 +89,7 @@ else
             params_potential=(V₀,b)
             write(io,"Finit Well Potential 1D\n")
             write(io,"Dimension of eigen value problem              dimension::String   = $(dimension)\n")
-            write(io,"Number of eigenvalues                         nev::Int64          = $(nev)\n")
+            write(io,"Number of eigenvalues                         nev::Int          = $(nev)\n")
             write(io,"Finite element domain length [au]             L::Float64          = $(L)\n")
             write(io,"Domain type                                   dom_type::String    = $(dom_type)\n")
             write(io,"Level shift used in inverse iteration [au]    sigma::Float64      = $(sigma)\n")
@@ -107,10 +101,10 @@ else
     elseif type_potential=="4"
         potential_function_name="qho_2d"
         dimension="2D"
-        print("Number of finite element of x direction (default nx=100 press Enter): nx::Int64 = ")
-        nx=get_input(Int64;default_value=100)
-        print("Number of finite element of y direction (default ny=100 press Enter): ny::Int64 = ")
-        ny=get_input(Int64;default_value=100)
+        print("Number of finite element of x direction (default nx=100 press Enter): nx::Int = ")
+        nx=get_input(Int;default_value=100)
+        print("Number of finite element of y direction (default ny=100 press Enter): ny::Int = ")
+        ny=get_input(Int;default_value=100)
         print("Harmonic Oscillator frecuency [au]: ω::Float64 = ")
         ω = get_input(Float64;default_data=false)
         print("Harmonic Oscillator center of x direction [au]: x₁::Float64 = ")
@@ -124,12 +118,12 @@ else
         different_masses = tuple(false, nothing)
         write(io,"Quantum Harmonic Oscillator 2D\n")
         write(io,"Dimension of eigen value problem                  dimension::String   = $(dimension)\n")
-        write(io,"Number of eigenvalues                             nev::Int64          = $(nev)\n")
+        write(io,"Number of eigenvalues                             nev::Int          = $(nev)\n")
         write(io,"Finite element domain length [au]                 L::Float64          = $(L)\n")
         write(io,"Domain type                                       dom_type::String    = $(dom_type)\n")
         write(io,"Level shift used in inverse iteration [au]        sigma::Float64      = $(sigma)\n")
-        write(io,"Number of finite element of x direction           nx::Int64           = $(nx)\n")
-        write(io,"Number of finite element of y direction           ny::Int64           = $(ny)\n")
+        write(io,"Number of finite element of x direction           nx::Int           = $(nx)\n")
+        write(io,"Number of finite element of y direction           ny::Int           = $(ny)\n")
         write(io,"Harmonic Oscillator frecuency [au]                ω::Float64          = $(ω)\n")
         write(io,"Harmonic Oscillator center of x direction [au]    x₁::Float64         = $(x₁)\n")
         write(io,"Harmonic Oscillator center of y direction [au]    y₁::Float64         = $(y₁)\n")
@@ -140,10 +134,10 @@ else
             print("Finite element size [au] (default Δx=0.1 press Enter): Δx::Float64 = ")
             Δx=get_input(Float64;default_value=0.1)
         elseif dimension=="2D"
-            print("Number of finite element of x direction (default nx=100 press Enter): nx::Int64 = ")
-            nx=get_input(Int64;default_value=100)
-            print("Number of finite element of y direction (default ny=100 press Enter): ny::Int64 = ")
-            ny=get_input(Int64;default_value=100)
+            print("Number of finite element of x direction (default nx=100 press Enter): nx::Int = ")
+            nx=get_input(Int;default_value=100)
+            print("Number of finite element of y direction (default ny=100 press Enter): ny::Int = ")
+            ny=get_input(Int;default_value=100)
         end
         print("Level shift used in inverse iteration [au]: sigma::Float64 = ")
         sigma = get_input(Float64;default_data=false)
@@ -153,8 +147,8 @@ else
         include("./adhoc_potentials/"*adhoc_file_name*".jl")
         print("Set name of ad hoc potential function from $(adhoc_file_name).jl = ")
         potential_function_name = readline()
-        print("How many parameters does the ad hoc potential function have? length_params::Int64 = ")
-        length_params=get_input(Int64;default_data=false)
+        print("How many parameters does the ad hoc potential function have? length_params::Int = ")
+        length_params=get_input(Int;default_data=false)
         params_potential = ask_for_params(length_params)
         if dimension=="1D"
             params=Params1D(dimension,L,dom_type,Δx,nev,sigma,potential_function_name,params_potential)
@@ -174,15 +168,15 @@ else
         end
         write(io,"Ad hoc potential function called $(potential_function_name)\n")
         write(io,"Dimension of eigen value problem              dimension::String   = $(dimension)\n")
-        write(io,"Number of eigenvalues                         nev::Int64          = $(nev)\n")
+        write(io,"Number of eigenvalues                         nev::Int          = $(nev)\n")
         write(io,"Finite element domain length [au]             L::Float64          = $(L)\n")
         write(io,"Domain type                                   dom_type::String    = $(dom_type)\n")
         write(io,"Level shift used in inverse iteration [au]    sigma::Float64      = $(sigma)\n")
         if dimension=="1D"
             write(io,"Finite element size [au]                      Δx::Float64         = $(Δx)\n")
         elseif dimension=="2D"
-            write(io,"Number of finite element of x direction       nx::Int64           = $(nx)\n")
-            write(io,"Number of finite element of y direction       ny::Int64           = $(ny)\n")
+            write(io,"Number of finite element of x direction       nx::Int           = $(nx)\n")
+            write(io,"Number of finite element of y direction       ny::Int           = $(ny)\n")
         end
         write(io,"Ad hoc parameters are                         params::Tuple       = $(params_potential)\n")
         if dimension=="2D" && different_masses_str == "y"
@@ -195,7 +189,7 @@ end
 
 if (type_potential=="6" && id.analysis_param ≠ false)
     λvector=[id.analysis_param.λi+i*id.analysis_param.Δλ 
-        for i in 1:round(Int64,abs(id.analysis_param.λf-id.analysis_param.λi)/id.analysis_param.Δλ)]
+        for i in 1:round(Int,abs(id.analysis_param.λf-id.analysis_param.λi)/id.analysis_param.Δλ)]
     ϵ_matrix=Matrix{ComplexF64}(undef,id.params.nev,length(λvector))
     for i in eachindex(λvector)
         params_potential_array=Vector{Any}(undef, length(id.params.params_potential))

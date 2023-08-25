@@ -3,7 +3,7 @@ struct Params1D
     L::Float64
     dom_type::String
     Δx::Float64
-    nev::Int64
+    nev::Int
     sigma::Float64
     potential_function_name::String
     params_potential::Tuple
@@ -13,25 +13,25 @@ struct Params2D
     dimension::String
     L::Float64
     dom_type::String
-    nx::Int64
-    ny::Int64
-    nev::Int64
+    nx::Int
+    ny::Int
+    nev::Int
     sigma::Float64
     potential_function_name::String
     params_potential::Tuple
 end
 
-struct AnalysisParam
-    λindex::Int64
-    λi
-    λf
-    Δλ
+struct AnalysisParam{T}
+    λindex::Int
+    λi::T
+    λf::T
+    Δλ::T
 end
 
-struct InputData
+struct InputData{S,T,U}
     full_path_name::String
     adhoc_file_name::String
-    params
-    analysis_param
-    different_masses
+    params::S
+    analysis_param::T
+    different_masses::U
 end

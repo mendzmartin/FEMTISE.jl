@@ -10,7 +10,7 @@ end
 
 function exactly_eigenvalues_2dqho(num_eigval::Integer)
     ϵ_real_aux=Array{Float64}(undef, num_eigval^2)
-    index::Int64=1
+    index::Int=1
     for i in 1:num_eigval
         for j in 1:num_eigval
             ϵ_real_aux[index]=((i-1)+(j-1)+1)

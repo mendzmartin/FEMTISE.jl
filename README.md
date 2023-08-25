@@ -96,5 +96,12 @@ and then we can, for example, access Julia's help mode to ask for specific packa
 ## **Examples**
 See some use examples in [test folder](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/tree/main/test) where you can find some uses of `TimeIndependentSchrodingerEquation` package's functions.
 
+Here you can see some plots from Package's simulations eg.:
+
+### Unidimensional Symmetric Finit Kronig-Penney
+<img src="/images/kp1d_e10.png" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 250px; width:250px;"/>
+
+
+
 ## **Contact**
 Please, contact the project administrator [Méndez Martín](mailto:martinmendez@mi.unc.edu.ar) for any improve suggestion or questions about package use.

@@ -99,9 +99,17 @@ See some use examples in [test folder](https://github.com/mendzmartin/TimeIndepe
 Here you can see some plots from Package's simulations eg.:
 
 ### Unidimensional Symmetric Finit Kronig-Penney
-<img src="/images/kp1d_e10.png" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 250px; width:250px;"/>
+<img src="/images/kp1d_e3.png" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 500px; width:500px;"/>
+<img src="/images/kp1d_e10.png" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 500px; width:500px;"/>
 
+### Unidimensional Quantum Harmonic Oscillator
+<img src="/images/qho1d_e1toe3.png" alt="Unidimensional Quantum Harmonic Oscillator" style="height: 500px; width:500px;"/>
 
+### Bidimensional Isotropic Quantum Harmonic Oscillator
+<img src="/images/qho2d_e3.png" alt="Bidimensional Isotropic Quantum Harmonic Oscillator" style="height: 500px; width:500px;"/>
+
+### Unidimensional Morse Potential: Morse parameter vs Eigen energies
+<img src="/images/morse_study_params.png" alt="Unidimensional Morse Potential: Morse parameter vs Eigen energies" style="height: 500px; width:500px;"/>
 
 ## **Contact**
 Please, contact the project administrator [Méndez Martín](mailto:martinmendez@mi.unc.edu.ar) for any improve suggestion or questions about package use.

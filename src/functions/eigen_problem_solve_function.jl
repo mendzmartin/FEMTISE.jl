@@ -1,4 +1,3 @@
-export eigen_values_and_eigen_vectors
 """
     eigen_values_and_eigen_vectors(p,q,r,dΩ,USpace,VSpace; <keyword arguments>)
 
@@ -27,4 +26,15 @@ function eigen_values_and_eigen_vectors(p::Function,q::Function,r::Function,
     prob=eigen_problem(a,b,USpace,VSpace;nev=params[1],tol=params[2],maxiter=params[3],explicittransform=params[4],sigma=params[5]);
     ϵ,ϕ=solve(prob);
     return ϵ,ϕ;
+end
+
+function eigen_values_and_eigen_vectors(p₁::Function,p₂::Function,q::Function,r::Function,
+  dΩ::Gridap.CellData.GenericMeasure,USpace::FESpace,VSpace::FESpace;
+  params=(10::Integer,10e-9::Float64,100,:none,1.0::Float64))
+  # Define bilinear forms
+  a,b=bilineal_forms(p₁,p₂,q,r,dΩ)
+  # solve eigenvalue problem
+  prob=eigen_problem(a,b,USpace,VSpace;nev=params[1],tol=params[2],maxiter=params[3],explicittransform=params[4],sigma=params[5]);
+  ϵ,ϕ=solve(prob);
+  return ϵ,ϕ;
 end

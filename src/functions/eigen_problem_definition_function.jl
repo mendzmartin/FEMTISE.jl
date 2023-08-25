@@ -23,7 +23,6 @@ struct EigenProblem <: FEOperator
     sigma
 end
 
-export eigen_problem
 """
     eigen_problem(weakformₖ,weakformₘ,test,trial;; <keyword arguments>)
 
@@ -62,7 +61,6 @@ function eigen_problem(weakformₖ::Function,weakformₘ::Function,test::FESpace
     return EigenProblem(trial,test,op,nev,which,explicittransform,tol,maxiter,sigma)
 end
 
-export solve
 """
     solve(prob)
 

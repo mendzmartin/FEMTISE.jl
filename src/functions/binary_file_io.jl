@@ -13,7 +13,9 @@ Write binary file from array data
 ...
 """
 function write_bin(x::Array{T,1},fileName::String;existing_file::Bool=false)::Int64 where T
-    existing_file ? rm(fileName): nothing
+    if existing_file
+        rm(fileName)
+    end
     # Open the file
     io=open(fileName,"w")
     # Cast this number to make sure we know its type
@@ -48,7 +50,9 @@ Write binary file from matrix data
 ...
 """
 function write_bin(x::Matrix{T},fileName::String;existing_file::Bool=false)::Int64 where T
-    existing_file ? rm(fileName): nothing
+    if existing_file
+        rm(fileName)
+    end
     # Open the file
     io=open(fileName,"w")
     # Cast this number to make sure we know its type

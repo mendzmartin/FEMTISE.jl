@@ -1,3 +1,8 @@
+"""
+    run_default_eigen_problem()
+
+Function to simulate eigen problems from default potential or custom potential
+"""
 function run_default_eigen_problem()
 
 println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")

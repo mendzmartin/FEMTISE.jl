@@ -32,11 +32,6 @@ function heaviside(x)
     return 0.5*(sign(x)+1)==true
  end
 
-"""
-    sym_rect_pot_barr(x,b,V₀)
-
-    to compute symetrical rectangular potential barrer
-"""
 function sym_rect_pot_barr(x,b::Real,V₀::Real)
    return V₀*(heaviside(x+0.5*b)-heaviside(x-0.5*b))
 end
@@ -76,11 +71,13 @@ function kronig_penney_1d(x,params::Tuple)
     return kronig_penney_center(x[1],b,V₀) .+ kronig_penney_left(x[1],convert(Int,(num_ions-1)/2),a,b,V₀) .+ kronig_penney_right(x[1],convert(Int,(num_ions-1)/2),a,b,V₀)
 end
 
+# unidimensional quantum harmonic osillator
 function qho_1d(x,params::Tuple)
     ω,x₁=params
     return 0.5*(ω*ω)*((x[1]-x₁)*(x[1]-x₁))
 end
 
+# bidimensional isotropic quantum harmonic osillator
 function qho_2d(x,params::Tuple)
     ω,x₁,y₁=params
     return 0.5*(ω*ω)*((x[1]-x₁)*(x[1]-x₁)+(x[2]-y₁)*(x[2]-y₁))
@@ -89,6 +86,16 @@ end
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # function to resolve eigenproblem
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+"""
+    default_solver_eigen_problem(params)
+
+Function to resolve unidimensonal eigen problem
+
+...
+# Arguments
+- `params::Params1D`: parameters of 1D potential
+...
+"""
 function default_solver_eigen_problem(params::Params1D)
     grid_type="simple_line";
     if params.dom_type=="s"
@@ -106,7 +113,6 @@ function default_solver_eigen_problem(params::Params1D)
     # Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
     dΩ=measures(model,3,FullDirichlet_tags)[2]
     reff = ReferenceFE(lagrangian,Float64,2);
-    # VSpace,USpace=fe_spaces(model,reff,grid_type;BC_type="FullDirichlet",TypeData=ComplexF64,conf_type=:H1);
     VSpace,USpace=fe_spaces(model,reff;BC_data=(FullDirichlet_values,FullDirichlet_tags),BC_type="Dirichlet")
     params_sturm_liouville=(params.potential_function_name,params.params_potential)
     p,q,r = sturm_liouville_formulation(params_sturm_liouville)
@@ -117,6 +123,17 @@ function default_solver_eigen_problem(params::Params1D)
     return tuple(ϵ,ϕ);
 end
 
+"""
+    default_solver_eigen_problem(params)
+
+Function to resolve bidimensonal eigen problem over cartesian grid
+
+...
+# Arguments
+- `params::Params2D`: parameters fo 2D potential
+- `different_masses::Tuple`: keyword to specify if we want to simulate two particles with diferent masses
+...
+"""
 function default_solver_eigen_problem(params::Params2D,different_masses::Tuple)
     if params.dom_type=="s"
         dom=(-0.5*params.L,0.5*params.L,-0.5*params.L,0.5*params.L)
@@ -134,7 +151,6 @@ function default_solver_eigen_problem(params::Params2D,different_masses::Tuple)
     # Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
     dΩ=measures(model,3,FullDirichlet_tags)[2]
     reff = ReferenceFE(lagrangian,Float64,2);
-    # VSpace,USpace=fe_spaces(model,reff,grid_type;BC_type="FullDirichlet",TypeData=ComplexF64,conf_type=:H1);
     VSpace,USpace=fe_spaces(model,reff;BC_data=(FullDirichlet_values,FullDirichlet_tags),BC_type="Dirichlet")
     params_sturm_liouville=(params.potential_function_name,params.params_potential)
     p,q,r = sturm_liouville_formulation(params_sturm_liouville,different_masses)

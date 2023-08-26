@@ -1,5 +1,4 @@
 # Reference: https://gist.github.com/dataPulverizer/3dc0af456a427aeb704a437e31299242
-# run command = julia binary_file_io.jl
 """
     write_bin(x,fileName;<keyword arguments>)
 

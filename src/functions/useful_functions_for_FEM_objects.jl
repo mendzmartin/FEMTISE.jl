@@ -1,3 +1,14 @@
+"""
+    norm_l2(𝜳,dΩ)
+
+Compute de L2 norm for specific FE wave function
+
+...
+# Arguments
+- `𝜳::CellField`: specific FE wave function
+- `dΩ::Gridap.CellData.GenericMeasure`: integration domain
+...
+"""
 function norm_l2(𝜳::CellField,dΩ::Gridap.CellData.GenericMeasure)
     return sqrt(real(sum(∫(𝜳'*𝜳)*dΩ)));
 end
@@ -15,6 +26,7 @@ function orthogonality_check(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericM
     return orthogonality_vector;
 end
 
+# multifield option
 function orthogonality_check(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure,TrialSpace::FESpace)
     nev::Integer=length(ϕ);
     orthogonality_vector=zeros(Float64,round(Int,(nev^2-nev)/2));
@@ -40,6 +52,7 @@ function eigenstates_normalization(ϕ::Vector{CellField},dΩ::Gridap.CellData.Ge
     return nom_vector;
 end
 
+# multifield option
 function eigenstates_normalization(ϕ::Vector{CellField},dΩ::Gridap.CellData.GenericMeasure,
     TrialSpace::FESpace)
     nom_vector=zeros(Float64,length(ϕ));

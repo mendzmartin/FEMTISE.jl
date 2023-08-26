@@ -1,3 +1,15 @@
+"""
+    input_data(data_file_name)
+
+Definition of input data form input.dat file using specific type structures.
+
+...
+# Arguments
+- `data_file_name::String`: name of input data file
+...
+"""
+function input_data(data_file_name::String)
+
 #=
     `full_path_name::String`:           Full path name where you want to write problem results
     `L::Float64`:                       Finite element domain length [au]
@@ -15,7 +27,6 @@
         `ny::Int`:                    Number of finite element of y direction
 =#
 
-function input_data(data_file_name::String)
     attributes = readdlm("$(data_file_name).dat",String);
     init_row::Int = 1; # without count white spaces
     init_column::Int = 3;

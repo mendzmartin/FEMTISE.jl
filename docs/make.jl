@@ -6,7 +6,7 @@ makedocs(
     modules  = [TimeIndependentSchrodingerEquation],
     pages = [
         "Home" => "index.md",
-        "Guide Information"=>"guide_information",
+        "Guide Information"=>"guide_information.md",
         "Function Information" => "function_information.md",
         "Simulation Example" => "simulation_example.md",
         "Contact Information" => "contact_information.md"

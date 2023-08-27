@@ -1,22 +1,14 @@
-# using Pkg
-# Pkg.activate("../")
-
-# push!(LOAD_PATH,"../src/")
-
 using Documenter
 using TimeIndependentSchrodingerEquation
-
-# makedocs(
-#          sitename = "TimeIndependentSchrodingerEquation.jl",
-#          modules  = [TimeIndependentSchrodingerEquation],
-#          pages=[
-#                 "Home" => "index.md"
-#                ])
 
 makedocs(
     sitename = "TimeIndependentSchrodingerEquation.jl",
     modules  = [TimeIndependentSchrodingerEquation],
-    pages = ["Home" => "index.md"],
+    pages = ["Home" => "index.md",
+            "Guide Information"=>"guide_information",
+            "Function Information" => "function_information.md"
+            "Simulation Examples" => "simulation_example.md"
+            "Contact Information" => "contact_information.md"],
     format = Documenter.HTML(;
     prettyurls = get(ENV, "CI", "false") == "true",
     assets = String[],),
@@ -25,19 +17,3 @@ makedocs(
 deploydocs(;
     repo="github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl.git",
     )
-
-# using Documenter
-# using TimeIndependentSchrodingerEquation
-
-# makedocs(
-#     sitename = "TimeIndependentSchrodingerEquation",
-#     format = Documenter.HTML(),
-#     modules = [TimeIndependentSchrodingerEquation]
-# )
-
-# # Documenter can also automatically deploy documentation to gh-pages.
-# # See "Hosting Documentation" and deploydocs() in the Documenter manual
-# # for more information.
-# deploydocs(
-#     repo = "github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl.git"
-# )

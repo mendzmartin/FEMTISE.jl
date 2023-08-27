@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Simulation Example · TimeIndependentSchrodingerEquation.jl</title><script data-outdated-warner src="../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL=".."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../assets/documenter.js"></script><script src="../siteinfo.js"></script><script src="../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../">TimeIndependentSchrodingerEquation.jl</a></span></div><form class="docs-search" action="../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../">Home</a></li><li><a class="tocitem" href="../guide_information/">Guide Information</a></li><li><a class="tocitem" href="../function_information/">Function Information</a></li><li class="is-active"><a class="tocitem" href>Simulation Example</a><ul class="internal"><li><a class="tocitem" href="#Coling-TimeIndependentSchrodingerEquation-package-repository"><span>Coling TimeIndependentSchrodingerEquation package repository</span></a></li><li><a class="tocitem" href="#Simulate-predefined-potential"><span>Simulate predefined potential</span></a></li><li><a class="tocitem" href="#Simulate-custom-potential"><span>Simulate custom potential</span></a></li></ul></li><li><a class="tocitem" href="../contact_information/">Contact Information</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li class="is-active"><a href>Simulation Example</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Simulation Example</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/blob/main/docs/src/simulation_example.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="How-to-run-default-eigen-problems-defined-inside-TimeIndependentSchrodingerEquation-Package"><a class="docs-heading-anchor" href="#How-to-run-default-eigen-problems-defined-inside-TimeIndependentSchrodingerEquation-Package">How to run default eigen problems defined inside TimeIndependentSchrodingerEquation Package</a><a id="How-to-run-default-eigen-problems-defined-inside-TimeIndependentSchrodingerEquation-Package-1"></a><a class="docs-heading-anchor-permalink" href="#How-to-run-default-eigen-problems-defined-inside-TimeIndependentSchrodingerEquation-Package" title="Permalink"></a></h1><h2 id="Coling-TimeIndependentSchrodingerEquation-package-repository"><a class="docs-heading-anchor" href="#Coling-TimeIndependentSchrodingerEquation-package-repository">Coling TimeIndependentSchrodingerEquation package repository</a><a id="Coling-TimeIndependentSchrodingerEquation-package-repository-1"></a><a class="docs-heading-anchor-permalink" href="#Coling-TimeIndependentSchrodingerEquation-package-repository" title="Permalink"></a></h2><p>First of all you need to clone package from GitHub repository as follow</p><pre><code class="language-bash hljs">    @prompt$: cd ~/my_directory/
+    @my_directory$: git clone https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl.git</code></pre><p>This will download a folder called <code>TimeIndependentSchrodingerEquation.jl</code>, it is important to keep the <code>.jl</code> extension in the repository name. And, in case we have already cloned the repository, we must update it by running <code>git pull</code>.</p><h2 id="Simulate-predefined-potential"><a class="docs-heading-anchor" href="#Simulate-predefined-potential">Simulate predefined potential</a><a id="Simulate-predefined-potential-1"></a><a class="docs-heading-anchor-permalink" href="#Simulate-predefined-potential" title="Permalink"></a></h2><p>Create a folder where you want to save simuation data, from Bash terminal write</p><pre><code class="language-bash hljs">    @prompt$: mkdir ~/my_folder
+    @prompt$: cd ~/my_folder
+    @my_folder$: julia
+               _
+   _       _ _(_)_     |  Documentation: https://docs.julialang.org
+  (_)     | (_) (_)    |
+   _ _   _| |_  __ _   |  Type &quot;?&quot; for help, &quot;]?&quot; for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.9.0 (2023-05-07)
+ _/ |\__&#39;_|_|_|\__&#39;_|  |  Official https://julialang.org/ release
+|__/                   |</code></pre><pre><code class="language-julia hljs">    julia&gt; Ctrl+]
+    (@v1.9) pkg&gt;
+    (@v1.9) pkg&gt; activate .
+    (@v1.9) pkg&gt; dev ~/my_directory/TimeIndependentSchrodingerEquation.jl
+    (@v1.9) pkg&gt; add Revise
+    julia&gt; exit()</code></pre><p>Then, open a Julia file <code>@my_folder$: vi my_script.jl</code> and write the following comands:</p><pre><code class="language-julia hljs">    begin
+        using Pkg
+        Pkg.activate(&quot;./&quot;)
+        Pkg.instantiate()
+        
+        using Revise
+        using TimeIndependentSchrodingerEquation;
+        
+        run_default_eigen_problem() 
+    end</code></pre><p>After save the changes you can run the script and see de following</p><pre><code class="language-bash hljs">    @my_folder$: julia my_script.jl
+  Activating project at `~/test_default_eigen_problem_from_input`
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The types of default potential can be:
+   - Unidimensional Quantum Harmonic Oscillator            --&gt; set (1)
+   - Unidimensional Symmetric Finit Kronig-Penney          --&gt; set (2)
+   - Unidimensional Finit Well Potential                   --&gt; set (3)
+   - Bidimensional Isotropic Quantum Harmonic Oscillator   --&gt; set (4)
+   - Ad hoc potential                                      --&gt; set (5)
+   - Ad hoc potential from input file                      --&gt; set (6)
+Please, set some number to specify the type potential:</code></pre><p>Then you can specify the set number to run a specific potential. Be carefull when you set the numbers 5 or 6 because you need to do a little more steps before to run over this simulations (see the next).</p><h2 id="Simulate-custom-potential"><a class="docs-heading-anchor" href="#Simulate-custom-potential">Simulate custom potential</a><a id="Simulate-custom-potential-1"></a><a class="docs-heading-anchor-permalink" href="#Simulate-custom-potential" title="Permalink"></a></h2><h3 id="Definitons-of-specific-potentials"><a class="docs-heading-anchor" href="#Definitons-of-specific-potentials">Definitons of specific potentials</a><a id="Definitons-of-specific-potentials-1"></a><a class="docs-heading-anchor-permalink" href="#Definitons-of-specific-potentials" title="Permalink"></a></h3><p>First you need to create a folder called <code>adhoc_potential</code> like this</p><pre><code class="language-bash hljs">    @my_folder$: mkdir ./adhoc_potential
+    @my_folder$: cd ./adhoc_potential</code></pre><p>Inside <code>adhoc_potentials/</code> folder we need to create a Julia file with name <code>my_julia_file.jl</code> where we can find custom potential functions in specific format.</p><p>Inside our <code>my_julia_file.jl</code> folder the format to write custom potential function need to be like follows:</p><p><strong>Unidimensional potential</strong></p><pre><code class="nohighlight hljs">    export my_potential_1d
+    function my_potential_1d(x,params::Tuple)
+        λ₁,λ₂,λ₃...=params
+        return f(x[1],λ₁,λ₂,λ₃...)
+    end</code></pre><p>Here params is a Tuple with potential parameters (can be Integers, Floats, Complex, etc) and <code>f(x[1],λ₁,λ₂,λ₃...)</code> is an expresion(function) of <code>x[1]</code> (unidmensional DOF) and <code>λᵢ</code>&#39;s (parameters).</p><p><strong>Bidimensional potential</strong></p><pre><code class="nohighlight hljs">    export my_potential_2d
+    function my_potential_2d(x,params::Tuple)
+        λ₁,λ₂,λ₃...=params
+        return f(x[1],x[2],λ₁,λ₂,λ₃...)
+    end</code></pre><p>Here params is a Tuple with potential parameters (can be Integers, Floats, Complex, etc) and <code>f(x[1],x[2],λ₁,λ₂,λ₃...)</code> is an expresion(function) of <code>x[1]</code> (unidmensional DOF), <code>x[2]</code> (unidmensional DOF) and <code>λᵢ</code>&#39;s (parameters).</p><h3 id="Building-input-data-for-custom-potential-simulations"><a class="docs-heading-anchor" href="#Building-input-data-for-custom-potential-simulations">Building input data for custom potential simulations</a><a id="Building-input-data-for-custom-potential-simulations-1"></a><a class="docs-heading-anchor-permalink" href="#Building-input-data-for-custom-potential-simulations" title="Permalink"></a></h3><p>In some specific folder we need to create a data folder <code>@my_folder$: vi my_input.dat</code> with custom potential input information behing the following format (the data next to equal sign is only for example information)</p><pre><code class="language-dat hljs">full_path_name              = ./qho2D_different_masses/results/qho2D_different_masses
+L                           = 30.0
+dom_type                    = s
+nev                         = 3
+dimension                   = 2D
+sigma                       = 0.0
+adhoc_file_name             = mendez_adhoc_potentials
+potential_function_name     = qho2D_different_masses
+params_potential_types      = f f f f
+params_potential            = 1.0 10.0 0.0 -1.0
+analysis_param              = false
+Δx                          = 
+nx                          = 100
+ny                          = 100
+different_masses            = 10.0
+
+# #################################################################################################
+    full_path_name::String:           Full path name where you want to write problem results
+    L::Real:                          Finite element domain length [au]
+    dom_type::String                  Domain type (symetric (s) or non-symetric (ns) domain)
+    nev::Integer:                     Number of eigenvalues
+    dimension::String:                Dimension of eigen value problem
+    sigma::Real:                      Level shift used in inverse iteration [au]
+    adhoc_file_name::String:          Julia file name with ad hoc potential
+    potential_function_name::String:  Name of ad hoc potential function
+    params_potential:                 Parameters of ad hoc potential function
+    params_potential_types:           Paremters type -&gt; f (Float), i (Integer), c (Complex)
+    analysis_param
+        only if want to sweap a parameter from params_potential
+            analysis_param = λindex::Integer λi λf Δλ
+        else
+            analysis_param = false::Boolean
+    only if dimension == 1D
+        Δx::Real:                     Finite element size [au]
+    only if dimension == 2D
+        nx::Integer:                  Number of finite element of x direction
+        ny::Integer:                  Number of finite element of y direction
+    different_masses
+        only if want to simulate 2D eigenproblem and two particles with different masses
+            different_masses = mass2::Real
+        only if want to simulate 2D eigenproblem or two particles with equal masses
+            different_masses = false::Boolean
+# #################################################################################################
+
+# #################################################################################################
+    WARNIG! Beware of whitespace between data values and do not use spaces in variables named
+    full_path_name, adhoc_file_name and potential_function_name.
+# #################################################################################################</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../function_information/">« Function Information</a><a class="docs-footer-nextpage" href="../contact_information/">Contact Information »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Sunday 27 August 2023 00:56">Sunday 27 August 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

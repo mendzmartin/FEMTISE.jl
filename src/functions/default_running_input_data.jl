@@ -1,19 +1,18 @@
 """
     input_data(data_file_name)
 
-Definition of input data form input.dat file using specific type structures.
+# Aim
+- Definition of input data form input.dat file using specific type structures.
 
-...
 # Arguments
 - `data_file_name::String`: name of input data file
-...
 """
 function input_data(data_file_name::String)
 
 #=
     `full_path_name::String`:           Full path name where you want to write problem results
     `L::Float64`:                       Finite element domain length [au]
-    ´dom_type::String´                  Domain type (symetric or non-symetric domain)
+    `dom_type::String`                  Domain type (symetric or non-symetric domain)
     `nev::Int`:                       Number of eigenvalues
     `dimension::String`:                Dimension of eigen value problem
     `sigma::Float64`:                   Level shift used in inverse iteration [au]

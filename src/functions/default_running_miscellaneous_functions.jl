@@ -89,12 +89,11 @@ end
 """
     default_solver_eigen_problem(params)
 
-Function to resolve unidimensonal eigen problem
+# Aim
+- Function to resolve unidimensonal eigen problem
 
-...
 # Arguments
 - `params::Params1D`: parameters of 1D potential
-...
 """
 function default_solver_eigen_problem(params::Params1D)
     grid_type="simple_line";
@@ -126,13 +125,12 @@ end
 """
     default_solver_eigen_problem(params)
 
-Function to resolve bidimensonal eigen problem over cartesian grid
+# Aim
+- Function to resolve bidimensonal eigen problem over cartesian grid
 
-...
 # Arguments
 - `params::Params2D`: parameters fo 2D potential
 - `different_masses::Tuple`: keyword to specify if we want to simulate two particles with diferent masses
-...
 """
 function default_solver_eigen_problem(params::Params2D,different_masses::Tuple)
     if params.dom_type=="s"

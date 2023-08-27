@@ -1,13 +1,13 @@
 """
     measures(model,degree,tags_boundary)
     
+# Aim
 The triangulation and integration aproximated Lebesgue measures
-...
+
 # Arguments
-    - `model`: FE grid model.
-    - `degree::Integer`: degree of quadrature rule to use in the cells of triangulation.
-    - `tags_boundary`: tags of boundary conditions.
-...
+- `model`: FE grid model.
+- `degree::Integer`: degree of quadrature rule to use in the cells of triangulation.
+- `tags_boundary`: tags of boundary conditions.
 """
 function measures(model,degree::Integer,tags_boundary)
     Ω=Triangulation(model); dΩ=Measure(Ω,degree);
@@ -18,15 +18,15 @@ end
 """
     space_coord(dom,Δr,n;<keyword arguments>)
 
-Returns coordinate vector (r) and discrete points (pts) for 1D or 2D spaces.
-    if dimension=="1D" ⇒ dom=(x₁,x₂); Δr=Δx; n=nx
-    if dimension=="2d" ⇒ dom=(x₁,x₂,y₁,y₂); Δr=(Δx,Δy); n=(nx,ny)
-...
+# Aim
+- Returns coordinate vector (r) and discrete points (pts) for 1D or 2D spaces.
+  - if dimension=="1D" ⇒ dom=(x₁,x₂); Δr=Δx; n=nx
+  - if dimension=="2d" ⇒ dom=(x₁,x₂,y₁,y₂); Δr=(Δx,Δy); n=(nx,ny)
+
 # Arguments
-    - `dom::Tuple`: FE cartesian domain.
-    - `Δr`:: discretization of FE space.
-    - `n`:: number of FE in each direction.
-...
+- `dom::Tuple`: FE cartesian domain.
+- `Δr`:: discretization of FE space.
+- `n`:: number of FE in each direction.
 """
 function space_coord(dom::Tuple,Δr,n;dimension::String="2D")
     if (dimension=="1D")
@@ -42,14 +42,14 @@ end
 """
     bilineal_forms(p,q,r,dΩ)
     
-Returns bilineals forms (a(u,v) and b(u,v)) for eigenvalues 1D or 2D (equal masses)
-...
+# Aim
+- Returns bilineals forms (a(u,v) and b(u,v)) for eigenvalues 1D or 2D (equal masses)
+
 # Arguments
-    - `p::Function`: kinetic energy function from Sturm Liouville_Formulation.
-    - `q::Function`: potential energy function from Sturm Liouville_Formulation.
-    - `r::Function`: weight or density function from Sturm Liouville_Formulation.
-    - `dΩ::Gridap.CellData.GenericMeasure`: differential FE domain
-...
+- `p::Function`: kinetic energy function from Sturm Liouville_Formulation.
+- `q::Function`: potential energy function from Sturm Liouville_Formulation.
+- `r::Function`: weight or density function from Sturm Liouville_Formulation.
+- `dΩ::Gridap.CellData.GenericMeasure`: differential FE domain
 """
 function bilineal_forms(p::Function,q::Function,r::Function,dΩ::Gridap.CellData.GenericMeasure)
     a(u,v) = ∫(p*(∇(v)⋅∇(u))+q*v*u)*dΩ
@@ -68,14 +68,13 @@ end
 """
     fe_spaces(model,reff,grid_type; <keyword arguments>)
 
-Create finite element (FE) spaces (Trial and Test spaces).
+# Aim
+- Create finite element (FE) spaces (Trial and Test spaces).
 
-...
 # Arguments
 - `BC_type::String="FullDirichlet"`: the type of boundary condition.
 - `TypeData::Type=ComplexF64`: the type of data to define FE spaces.
 - `conf_type::Symbol=:H1`: the regularity of the interpolation at the boundaries of cells in the mesh. (e.g.:L2,:H1,:C0,:Hgrad,)
-...
 """
 function fe_spaces(model,reff::Tuple,grid_type::String;
     BC_type::String="FullDirichlet",TypeData::Type=ComplexF64,conf_type::Symbol=:H1)

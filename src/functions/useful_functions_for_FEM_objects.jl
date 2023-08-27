@@ -1,13 +1,12 @@
 """
     norm_l2(𝜳,dΩ)
 
-Compute de L2 norm for specific FE wave function
+# Aim
+- Compute de L2 norm for specific FE wave function
 
-...
 # Arguments
 - `𝜳::CellField`: specific FE wave function
 - `dΩ::Gridap.CellData.GenericMeasure`: integration domain
-...
 """
 function norm_l2(𝜳::CellField,dΩ::Gridap.CellData.GenericMeasure)
     return sqrt(real(sum(∫(𝜳'*𝜳)*dΩ)));

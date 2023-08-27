@@ -2,14 +2,13 @@
 """
     write_bin(x,fileName;<keyword arguments>)
 
-Write binary file from array data
+# Aim
+- Write binary file from array data
 
-...
 # Arguments
 - `x::Array{T,1}`: array/vector data
 - `fileName::String`: name of file data
 - `existing_file::Bool=false`: optional boolean keyword to delete or not delete existing data
-...
 """
 function write_bin(x::Array{T,1},fileName::String;existing_file::Bool=false)::Int where T
     if existing_file
@@ -39,14 +38,13 @@ end
 """
     write_bin(x,fileName;<keyword arguments>)
 
-Write binary file from matrix data
+# Aim
+- Write binary file from matrix data
 
-...
 # Arguments
 - `x::Matrix{T}`: matrix data
 - `fileName::String`: name of file data
 - `existing_file::Bool=false`: optional boolean keyword to delete or not delete existing data
-...
 """
 function write_bin(x::Matrix{T},fileName::String;existing_file::Bool=false)::Int where T
     if existing_file
@@ -76,16 +74,15 @@ end
 """
     read_bin(io,::Type{T},n,matrix_data,c_dim)
 
-Speeds up the read binary file
+# Aim
+- Speeds up the read binary file
 
-...
 # Arguments
 - `io::IO`: in/output variable
 - `::Type{T}`: data type
 - `n::Int`: total number of elements in array/matrix data
 - `matrix_data::Bool`: boolean keyword to specify matrix or array data
 - `c_dim::Int`: column number of matrix data
-...
 """
 function read_bin(io::IO,::Type{T},n::Int,matrix_data::Bool,c_dim::Int) where T
     (matrix_data==true) ? (x=Array{T,2}(undef,n,c_dim)) : (x=Array{T,1}(undef, n))
@@ -99,14 +96,13 @@ end
 """
     read_bin(fileName;<keyword arguments>)
 
-Read binary file
+# Aim
+- Read binary file
 
-...
 # Arguments
 - `fileName::String`: name of file data
 - `matrix_data::Bool`: optional boolean keyword to specify matrix or array data
 - `c_dim::Int`: optional column number of matrix data
-...
 """
 function read_bin(fileName::String;matrix_data=false,c_dim::Int=1)
     # Open the file

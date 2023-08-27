@@ -1,21 +1,20 @@
 """
     eigen_values_and_eigen_vectors(p,q,r,dΩ,USpace,VSpace; <keyword arguments>)
 
-Compute matrix eigen problem and return eigenvalues and eigenvectors
+# Aim
+- Compute matrix eigen problem and return eigenvalues and eigenvectors
 
-...
 # Arguments
-- `p,q,r`::Function: functions from Sturm Liouville formulation
-- `dΩ::Gridap.CellData.GenericMeasure : measure of FE grid
-- `USpace`::FESpace: trial FE Space
-- `VSpace`::FESpace: test FE Space
-- `params::Tuple=(nev,tol,maxiter,explicittransform,sigma): params to Arpack eigs function.
+- `p,q,r::Function`: functions from Sturm Liouville formulation
+- `dΩ::Gridap.CellData.GenericMeasure`: measure of FE grid
+- `USpace::FESpace`: trial FE Space
+- `VSpace::FESpace`: test FE Space
+- `params::Tuple=(nev,tol,maxiter,explicittransform,sigma)`: params to Arpack eigs function.
   - `nev::Integer=10`: quantity of eigendata to calculate
   - `tol::Float64=10e-9`: relative tolerance for convergence of Ritz values
   - `maxiter::Integer=100`: maximum number of iterations
   - `explicittransform::Symbol=:none`: shift and invert should be explicitly invoked in julia code
   - `sigma::Float64=1.0`: the level shift used in inverse iteration.
-...
 """
 function eigen_values_and_eigen_vectors(p::Function,q::Function,r::Function,
   dΩ::Gridap.CellData.GenericMeasure,USpace::FESpace,VSpace::FESpace;

@@ -10,7 +10,32 @@ First we need to clone package from GitHub repository as follow
 This will download a folder called `TimeIndependentSchrodingerEquation.jl`, it is important to keep the `.jl` extension in the repository name. And, in case we have already cloned the repository, we must update it by running `git pull`.
 
 ### **2. Build Julia code to use `TimeIndependentSchrodingerEquation` package**
-Build Julia code with structure:
+
+```bash
+    @prompt$: mkdir ~/my_folder
+    @prompt$: cd ~/my_folder
+    @my_folder$: julia
+               _
+   _       _ _(_)_     |  Documentation: https://docs.julialang.org
+  (_)     | (_) (_)    |
+   _ _   _| |_  __ _   |  Type "?" for help, "]?" for Pkg help.
+  | | | | | | |/ _` |  |
+  | | |_| | | | (_| |  |  Version 1.9.0 (2023-05-07)
+ _/ |\__'_|_|_|\__'_|  |  Official https://julialang.org/ release
+|__/                   |
+```
+
+```julia
+    julia> Ctrl+]
+    (@v1.9) pkg>
+    (@v1.9) pkg> activate .
+    (@my_folder) pkg> instantiate()
+    (@my_folder) pkg> dev ~/my_directory/TimeIndependentSchrodingerEquation.jl
+    (@my_folder) pkg> add Revise
+    julia> exit()
+```
+then build Julia code with following structure:
+
 ```julia
 module MyModule
 
@@ -18,8 +43,8 @@ using Pkg
 Pkg.activate("./")
 Pkg.instantiate()
 
-Pkg.add(path="~/my_directory/TimeIndependentSchrodingerEquation.jl")
 using TimeIndependentSchrodingerEquation
+using Revise
 
 #=
 ... ...
@@ -55,11 +80,14 @@ We can also run the package directly from Julia REPL by opening the terminal `Ct
 |__/                   |
 ```
 ```julia
-    julia> using Pkg
-    julia> Pkg.activate("./")
-    julia> Pkg.instantiate()
-    julia> Pkg.add(path="~/my_directory/TimeIndependentSchrodingerEquation.jl")
+    julia> Ctrl+]
+    (@v1.9) pkg>
+    (@v1.9) pkg> activate .
+    (@my_folder) pkg> instantiate()
+    (@my_folder) pkg> dev ~/my_directory/TimeIndependentSchrodingerEquation.jl
+    (@my_folder) pkg> add Revise
     julia> using TimeIndependentSchrodingerEquation
+    julia> using Revise
 ```
 and then we can, for example, access Julia's help mode to ask for specific package functions such as the following:
 ```julia

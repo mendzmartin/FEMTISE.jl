@@ -12,8 +12,8 @@ include("functions/eigen_problem_definition_function.jl")
 include("functions/eigen_problem_solve_function.jl")
 
 include("functions/default_running_structures.jl")
-include("functions/default_running_miscellaneous_functions.jl")
 include("functions/default_running_input_data.jl")
+include("functions/default_running_miscellaneous_functions.jl")
 include("functions/default_eigen_problem.jl")
 
 include("functions/useful_functions_for_FEM_objects.jl")
@@ -28,9 +28,9 @@ export default_solver_eigen_problem,ask_for_params,
 export eigen_problem,solve
 
 # export Params1D,Params2D,AnalysisParam,InputData
-export eigen_values_and_eigen_vectors
 export input_data
-export run_default_eigen_problem
+export eigen_values_and_eigen_vectors
+export run_default_eigen_problem,set_include,set_type_potential
 
 export norm_l2,orthogonality_check,eigenstates_normalization
 export write_bin,read_bin

@@ -44,7 +44,7 @@ Then, open a Julia file `@my_folder$: vi my_script.jl` and write the following c
         using Revise
         using TimeIndependentSchrodingerEquation;
         
-        run_default_eigen_problem() 
+        run_default_eigen_problem(set_type_potential())
     end
 ```
 After save the changes you can run the script and see de following

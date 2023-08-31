@@ -24,7 +24,8 @@ export make_boundary_conditions
 export measures,space_coord,bilineal_forms,fe_spaces
 
 export default_solver_eigen_problem,ask_for_params,
-        get_input,num_ions_BoolCondition,rm_existing_file
+        get_input,num_ions_BoolCondition,rm_existing_file,
+        create_and_remove_model,solver_eigen_problem_with_analysis_param
 export eigen_problem,solve
 
 # export Params1D,Params2D,AnalysisParam,InputData

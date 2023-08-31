@@ -179,6 +179,9 @@ function run_default_eigen_problem(simulation_data::Tuple)
         λvector=[id.analysis_param.λi+i*id.analysis_param.Δλ 
             for i in 1:round(Int,abs(id.analysis_param.λf-id.analysis_param.λi)/id.analysis_param.Δλ)]
         ϵ_matrix=Matrix{ComplexF64}(undef,id.params.nev,length(λvector))
+
+        model=create_and_remove_model(id.params)
+
         for i in eachindex(λvector)
             params_potential_array=Vector{Any}(undef, length(id.params.params_potential))
             for j in eachindex(id.params.params_potential)
@@ -196,7 +199,8 @@ function run_default_eigen_problem(simulation_data::Tuple)
 
                     println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
                     println("... Running for λ$(i) of $(length(λvector)) λ's...")
-                    ϵ,ϕ = default_solver_eigen_problem(paramsλ)
+                    # ϵ,ϕ = default_solver_eigen_problem(paramsλ)
+                    ϵ,ϕ = solver_eigen_problem_with_analysis_param(paramsλ,model)
             elseif id.params.dimension=="2D"
                 paramsλ=Params2D(id.params.dimension,id.params.L,id.params.dom_type,
                     id.params.nx,id.params.ny,id.params.nev,id.params.sigma,
@@ -204,9 +208,9 @@ function run_default_eigen_problem(simulation_data::Tuple)
 
                     println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
                     println("... Running for λ$(i) of $(length(λvector)) λ's...")
-                    ϵ,ϕ = default_solver_eigen_problem(paramsλ,id.different_masses)
+                    # ϵ,ϕ = default_solver_eigen_problem(paramsλ,id.different_masses)
+                    ϵ,ϕ = solver_eigen_problem_with_analysis_param(paramsλ,id.different_masses,model)
             end
-
             ϵ_matrix[:,i] = ϵ[:]
         end
 

@@ -166,6 +166,79 @@ function default_solver_eigen_problem(params::Params2D,different_masses::Tuple)
     return tuple(ϵ,ϕ);
 end
 
+function create_and_remove_model(params::Params1D)
+    grid_type="simple_line";
+    if params.dom_type=="s"
+        dom=(-0.5*params.L,0.5*params.L)
+    elseif params.dom_type=="ns"
+        dom=(0.0,params.L)
+    end
+    params_model=("./","model1D",dom,params.Δx);  
+
+    println("Building the grid model ...")
+
+    model=make_model(grid_type,params_model);
+    rm(params_model[1]*params_model[2]*".msh")
+
+    return model
+end
+
+function create_and_remove_model(params::Params2D)
+    if params.dom_type=="s"
+        dom=(-0.5*params.L,0.5*params.L,-0.5*params.L,0.5*params.L)
+    elseif params.dom_type=="ns"
+        dom=(0.0,params.L,0.0,params.L)
+    end
+    nxy=(params.nx,params.ny);  # define number of FE to use in each coordinate
+    params_model=(dom,nxy);     # organize data in a tuple
+    grid_type="Cartesian2D";    # define type of FE grid
+
+    println("Building the grid model ...")
+
+    model=make_model(grid_type,params_model);
+
+    return model
+end
+
+function solver_eigen_problem_with_analysis_param(params::Params1D,model::Gridap.Geometry.UnstructuredDiscreteModel)
+    grid_type="simple_line";
+    FullDirichlet_values,FullDirichlet_tags=make_boundary_conditions(grid_type,"FullDirichlet",ComplexF64);
+    # Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
+    dΩ=measures(model,3,FullDirichlet_tags)[2]
+    reff = ReferenceFE(lagrangian,Float64,2);
+    VSpace,USpace=fe_spaces(model,reff;BC_data=(FullDirichlet_values,FullDirichlet_tags),BC_type="Dirichlet")
+    params_sturm_liouville=(params.potential_function_name,params.params_potential)
+    p,q,r = sturm_liouville_formulation(params_sturm_liouville)
+
+    println("Solving eigen problem ...")
+    ϵ,ϕ = eigen_values_and_eigen_vectors(p,q,r,dΩ,USpace,VSpace;params=(params.nev,10e-9,500,:none,params.sigma));
+    
+    return tuple(ϵ,ϕ);
+end
+
+function solver_eigen_problem_with_analysis_param(params::Params2D,different_masses::Tuple,model::CartesianDiscreteModel)
+    grid_type="Cartesian2D";
+    FullDirichlet_values,FullDirichlet_tags=make_boundary_conditions(grid_type,"FullDirichlet",ComplexF64);
+    # Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
+    dΩ=measures(model,3,FullDirichlet_tags)[2]
+    reff = ReferenceFE(lagrangian,Float64,2);
+    VSpace,USpace=fe_spaces(model,reff;BC_data=(FullDirichlet_values,FullDirichlet_tags),BC_type="Dirichlet")
+    params_sturm_liouville=(params.potential_function_name,params.params_potential)
+    p,q,r = sturm_liouville_formulation(params_sturm_liouville,different_masses)
+
+    println("Solving eigen problem ...")
+
+    if different_masses[1]
+        ϵ,ϕ = eigen_values_and_eigen_vectors(p[1],p[2],q,r,dΩ,USpace,VSpace;
+            params=(params.nev,10e-9,500,:none,params.sigma));
+    else
+        ϵ,ϕ = eigen_values_and_eigen_vectors(p[1],q,r,dΩ,USpace,VSpace;
+            params=(params.nev,10e-9,500,:none,params.sigma));
+    end
+
+    return tuple(ϵ,ϕ);
+end
+
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # function to ask about params of adhoc potential function
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++

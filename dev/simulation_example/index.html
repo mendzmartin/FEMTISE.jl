@@ -90,4 +90,26 @@ different_masses            = 10.0
 # #################################################################################################
     WARNIG! Beware of whitespace between data values and do not use spaces in variables named
     full_path_name, adhoc_file_name and potential_function_name.
-# #################################################################################################</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../function_information/">« Function Information</a><a class="docs-footer-nextpage" href="../contact_information/">Contact Information »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Thursday 31 August 2023 12:04">Thursday 31 August 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+# #################################################################################################</code></pre><p>Then you can run the script and set options <code>5</code> or <code>6</code> like this:</p><pre><code class="language-bash hljs">    @my_folder$: julia my_script.jl
+  Activating project at `~/test_default_eigen_problem_from_input`
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The types of default potential can be:
+   - Unidimensional Quantum Harmonic Oscillator            --&gt; set (1)
+   - Unidimensional Symmetric Finit Kronig-Penney          --&gt; set (2)
+   - Unidimensional Finit Well Potential                   --&gt; set (3)
+   - Bidimensional Isotropic Quantum Harmonic Oscillator   --&gt; set (4)
+   - Ad hoc potential                                      --&gt; set (5)
+   - Ad hoc potential from input file                      --&gt; set (6)
+Please, set some number to specify the type potential: 6
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Set full path name (e.g: &quot;./my_directory/my_input_data&quot;) where the data is specified and press Enter =</code></pre><p>Where we were specified the full path name of our input data (only for option <code>6</code>). Also, we can specify this full path name inside Julia script like following:</p><p>First open script file <code>@my_folder$: vi my_script.jl</code> and write the following comands:</p><pre><code class="language-julia hljs">    begin
+        using Pkg
+        Pkg.activate(&quot;./&quot;)
+        Pkg.instantiate()
+        
+        using Revise
+        using TimeIndependentSchrodingerEquation;
+        
+        path_input_data = &quot;./my_input&quot;
+        run_default_eigen_problem(set_type_potential(path_input_data))
+    end</code></pre><p>Then you can run the script <code>@my_folder$: julia my_script.jl</code> and wait for simulation results.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../function_information/">« Function Information</a><a class="docs-footer-nextpage" href="../contact_information/">Contact Information »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Thursday 31 August 2023 19:56">Thursday 31 August 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

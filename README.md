@@ -124,17 +124,18 @@ and then we can, for example, access Julia's help mode to ask for specific packa
 ## **Examples**
 See some use examples in [test folder](https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl/tree/main/test) where you can find some uses of `TimeIndependentSchrodingerEquation` package's functions.
 
-Here you can see some plots from Package's simulations eg.:
+Here you can see some plots from Package's simulations eg.:              
 
-| **Unidimensional Symmetric Finit Kronig-Penney** |  |
+
+|    **Unidimensional Symmetric Finit Kronig-Penney**    |                                                   |
 | ------------- |:-------------:|
 | <img src="/images/kp1d_e3.png" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 300px; width:300px;"/> | <img src="/images/kp1d_e10.png" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 300px; width:300px;"/> |
 
-| **Unidimensional Quantum Harmonic Oscillator** | **Bidimensional Isotropic Quantum Harmonic Oscillator** |
+|    **Unidimensional Quantum Harmonic Oscillator**      |    **Bidimensional Isotropic**                         <br />        **Quantum Harmonic Oscillator**                 |
 | ------------- |:-------------:|
 | <img src="/images/qho1d_e1toe3.png" alt="Unidimensional Quantum Harmonic Oscillator" style="height: 300px; width:300px;"/> | <img src="/images/qho2d_e3.png" alt="Bidimensional Isotropic Quantum Harmonic Oscillator" style="height: 300px; width:300px;"/> |
 
-| **Unidimensional Morse Potential: <br /> Morse parameter vs Eigen energies** | **Unidimensional Finit Well Potential: <br /> Depth potential vs Eigen energies** |
+|    **Unidimensional Morse Potential:**                 <br />        **Morse parameter vs Eigen energies**           |    **Unidimensional Finit Well Potential:**            <br />    **Depth potential vs Eigen energies**               |
 | ------------- |:-------------:|
 | <img src="/images/morse_study_params.png" alt="Unidimensional Morse Potential: Morse parameter vs Eigen energies" style="height: 300px; width:300px;"/> | <img src="/images/fwp1d_study_params.png" alt="Unidimensional Morse Potential: Morse parameter vs Eigen energies" style="height: 300px; width:300px;"/> |
 

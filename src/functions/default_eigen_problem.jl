@@ -383,3 +383,9 @@ function set_type_potential()
     type_potential == "6" ? id=set_include() : id=nothing
     return tuple(type_potential,id)
 end
+
+function set_type_potential(full_path_input_data_name::String)
+    id=input_data(full_path_input_data_name)
+    include("./adhoc_potentials/"*(id.adhoc_file_name)*".jl")
+    return tuple("6",id)
+end

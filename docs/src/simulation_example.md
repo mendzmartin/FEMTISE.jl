@@ -154,3 +154,37 @@ different_masses            = 10.0
     full_path_name, adhoc_file_name and potential_function_name.
 # #################################################################################################
 ```
+
+Then you can run the script and set options `5` or `6` like this:
+```bash
+    @my_folder$: julia my_script.jl
+  Activating project at `~/test_default_eigen_problem_from_input`
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The types of default potential can be:
+   - Unidimensional Quantum Harmonic Oscillator            --> set (1)
+   - Unidimensional Symmetric Finit Kronig-Penney          --> set (2)
+   - Unidimensional Finit Well Potential                   --> set (3)
+   - Bidimensional Isotropic Quantum Harmonic Oscillator   --> set (4)
+   - Ad hoc potential                                      --> set (5)
+   - Ad hoc potential from input file                      --> set (6)
+Please, set some number to specify the type potential: 6
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Set full path name (e.g: "./my_directory/my_input_data") where the data is specified and press Enter =
+```
+Where we were specified the full path name of our input data (only for option `6`). Also, we can specify this full path name inside Julia script like following:
+
+First open script file `@my_folder$: vi my_script.jl` and write the following comands:
+```julia
+    begin
+        using Pkg
+        Pkg.activate("./")
+        Pkg.instantiate()
+        
+        using Revise
+        using TimeIndependentSchrodingerEquation;
+        
+        path_input_data = "./my_input"
+        run_default_eigen_problem(set_type_potential(path_input_data))
+    end
+```
+Then you can run the script `@my_folder$: julia my_script.jl` and wait for simulation results.

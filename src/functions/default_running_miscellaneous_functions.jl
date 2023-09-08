@@ -132,7 +132,8 @@ end
 - `params::Params2D`: parameters fo 2D potential
 - `different_masses::Tuple`: keyword to specify if we want to simulate two particles with diferent masses
 """
-function default_solver_eigen_problem(params::Params2D,different_masses::Tuple)
+function default_solver_eigen_problem(params::Params2D,different_masses::Tuple; switch_reduced_density::Bool=false)
+
     if params.dom_type=="s"
         dom=(-0.5*params.Lx,0.5*params.Lx,-0.5*params.Ly,0.5*params.Ly)
     elseif params.dom_type=="ns"
@@ -163,7 +164,12 @@ function default_solver_eigen_problem(params::Params2D,different_masses::Tuple)
             params=(params.nev,10e-9,500,:none,params.sigma));
     end
 
-    return tuple(ϵ,ϕ);
+    if switch_reduced_density
+        result = tuple(ϵ,ϕ,model)
+    else
+        result = tuple(ϵ,ϕ)
+    end
+    return result;
 end
 
 function create_and_remove_model(params::Params1D)
@@ -309,124 +315,4 @@ end
 
 function rm_existing_file(full_path_file::String)
     isfile(full_path_file) ? rm(full_path_file) : nothing
-end
-
-
-# function interpolation(x,component::Int,f_vector::Vector{Float64},r_vector::Vector{Float64},type_interpolation::Function)
-#     f=type_interpolation(f_vector,r_vector)
-#     return f(x[component])
-# end
-
-# function reduced_density(params::Params2D,ϕ_matrix::Matrix{ComplexF64},r_matrix::Matrix{Float64})
-#     grid_type="simple_line";
-#     if params.dom_type=="s"
-#         dom_DOF1=(-0.5*params.Lx,0.5*params.Lx)
-#         dom_DOF2=(-0.5*params.Ly,0.5*params.Ly)
-#     elseif params.dom_type=="ns"
-#         dom_DOF1=(0.0,params.Lx)
-#         dom_DOF2=(0.0,params.Ly)
-#     end
-#     params_model_DOF1=("./","model1D_DOF1",dom_DOF1,params.Lx/params.nx);
-#     params_model_DOF2=("./","model1D_DOF2",dom_DOF2,params.Ly/params.ny);
-
-#     println("Building the grid model ...")
-
-#     model_DOF1=make_model(grid_type,params_model_DOF1);
-#     model_DOF2=make_model(grid_type,params_model_DOF2);
-#     rm(params_model_DOF1[1]*params_model_DOF1[2]*".msh")
-#     rm(params_model_DOF2[1]*params_model_DOF2[2]*".msh")
-
-#     FullDirichlet_values,FullDirichlet_tags=make_boundary_conditions(grid_type,"FullDirichlet",ComplexF64);
-#     reff = ReferenceFE(lagrangian,Float64,2);
-
-#     VSpace_DOF1,USpace_DOF1=fe_spaces(model_DOF1,reff;BC_data=(FullDirichlet_values,FullDirichlet_tags),BC_type="Dirichlet")
-#     VSpace_DOF2,USpace_DOF2=fe_spaces(model_DOF2,reff;BC_data=(FullDirichlet_values,FullDirichlet_tags),BC_type="Dirichlet")
-
-#     Ω_DOF1,dΩ_DOF1,Γ_DOF1,dΓ_DOF1=measures(model_DOF1,3,FullDirichlet_tags);
-#     Ω_DOF2,dΩ_DOF2,Γ_DOF2,dΓ_DOF2=measures(model_DOF2,3,FullDirichlet_tags);
-
-
-#     rho_matrix::Matrix{Float64}(undef,(size(ϕ_matrix::Matrix{ComplexF64}))[1],(size(ϕ_matrix::Matrix{ComplexF64}))[2]);
-
-#     for i in eachindex(ϕ_matrix[1,:])
-#         rho_matrix[:,i] = real.(conj.(ϕ_matrix[:,i]).*(ϕ_matrix[:,i]))
-#     end
-
-#     rho_matrix_DOF1=similar(rho_matrix)
-#     rho_matrix_DOF2=similar(rho_matrix)
-
-#     for i in eachindex(ϕ_matrix[1,:])
-#         Gridap_interpolation_DOF1=CellField(x->InterpolationFunction(x,1,rho_matrix[:,i],r_matrix[1]),Ω_DOF1);
-#         Gridap_interpolation_DOF2=CellField(x->InterpolationFunction(x,1,rho_matrix[:,i],r_matrix[2]),Ω_DOF2);
-
-#         rho_matrix_DOF1[i]=-sum(integrate(Gridap_interpolation,dΩ))
-
-
-#         rho_matrix_DOF1[:,i] = sum(integrate(fx_InterpolationGridap,dΩ))
-#     end
-
-#     fx_InterpolationGridap=CellField(x->InterpolationFunction(x,1,fx_vector,x_vector),Ω);
-
-# end
-
-function reduced_density(params::Params2D,ϕ,r)
-    grid_type="Cartesian2D";
-    model=create_and_remove_model(params)
-    FullDirichlet_values,FullDirichlet_tags=make_boundary_conditions(grid_type,"FullDirichlet",ComplexF64);
-    Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
-    reff = ReferenceFE(lagrangian,Float64,2);
-    VSpace,USpace=fe_spaces(model,reff;BC_data=(FullDirichlet_values,FullDirichlet_tags),BC_type="Dirichlet")
-
-    reduced_rho_DOF1 = Matrix{Float64}(undef, length(r[1]), length(ϕ))
-    reduced_rho_DOF2 = Matrix{Float64}(undef, length(r[2]), length(ϕ))
-
-
-    length(r[1]) < length(r[2]) ? nmin=length(r[1]) : nmin=length(r[2])
-    length(r[1]) == length(r[2]) ? nmin=length(r[1]) : nothing
-
-    Threads.@threads for i in 1:nmin
-        Threads.@threads for j in eachindex(ϕ)
-            ϕij_DOF1=Interpolable(CellField(x->ϕ[j](Point(r[1][i],x[2])),Ω))
-            ϕ_DOF1=interpolate_everywhere(ϕij_DOF1,USpace)
-            reduced_rho_DOF1[i,j]=sum(integrate(real(conj(ϕ_DOF1)*(ϕ_DOF1)),dΩ))
-
-            ϕij_DOF2=Interpolable(CellField(x->ϕ[j](Point(x[1],r[2][i])),Ω))
-            ϕ_DOF2=interpolate_everywhere(ϕij_DOF2,USpace)
-            reduced_rho_DOF2[i,j]=sum(integrate(real(conj(ϕ_DOF2)*(ϕ_DOF2)),dΩ))
-        end
-    end
-
-    if (length(r[1]) < length(r[2]))
-        Threads.@threads for i in nmin:length(r[2])
-            Threads.@threads for j in eachindex(ϕ)
-                ϕij_DOF2=Interpolable(CellField(x->ϕ[j](Point(x[1],r[2][i])),Ω))
-                ϕ_DOF2=interpolate_everywhere(ϕij_DOF2,USpace)
-                reduced_rho_DOF2[i,j]=sum(integrate(real(conj(ϕ_DOF2)*(ϕ_DOF2)),dΩ))
-            end
-        end
-    elseif (length(r[1]) > length(r[2]))
-        Threads.@threads for i in nmin:length(r[1])
-            Threads.@threads for j in eachindex(ϕ)
-                ϕij_DOF1=Interpolable(CellField(x->ϕ[j](Point(r[1][i],x[2])),Ω))
-                ϕ_DOF1=interpolate_everywhere(ϕij_DOF1,USpace)
-                reduced_rho_DOF1[i,j]=sum(integrate(real(conj(ϕ_DOF1)*(ϕ_DOF1)),dΩ))
-            end
-        end
-    end
-
-    # for j in eachindex(ϕ)
-    #     for i in eachindex(reduced_rho_DOF1)
-    #         ϕij_DOF1=Interpolable(CellField(x->ϕ[j](Point(r[1][i],x[2])),Ω))
-    #         ϕ_DOF1=interpolate_everywhere(ϕij_DOF1,USpace)
-    #         reduced_rho_DOF1[i,j]=sum(integrate(real(conj(ϕ_DOF1)*(ϕ_DOF1)),dΩ))
-    #     end
-
-    #     for i in eachindex(ϕ_DOF2)
-    #         ϕij_DOF2=Interpolable(CellField(x->ϕ[j](Point(x[1],r[2][i])),Ω))
-    #         ϕ_DOF2=interpolate_everywhere(ϕij_DOF2,USpace)
-    #         reduced_rho_DOF2[i,j]=sum(integrate(real(conj(ϕ_DOF2)*(ϕ_DOF2)),dΩ))
-    #     end
-    # end
-
-    return reduced_rho_DOF1,reduced_rho_DOF2
 end

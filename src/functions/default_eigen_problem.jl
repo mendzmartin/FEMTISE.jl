@@ -251,20 +251,28 @@ function run_default_eigen_problem(simulation_data::Tuple)
 
         println("Saved data.")
     elseif (type_potential=="6" && id.analysis_param == false)
+        # switch_reduced_density=true
+
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         println("... Running ...")
 
         if id.params.dimension == "1D"
             ϵ,ϕ = default_solver_eigen_problem(id.params)
         elseif id.params.dimension == "2D"
-            ϵ,ϕ = default_solver_eigen_problem(id.params,id.different_masses)
+            if switch_reduced_density
+                ϵ,ϕ,model = default_solver_eigen_problem(id.params,id.different_masses;switch_reduced_density=switch_reduced_density)
+            else
+                ϵ,ϕ = default_solver_eigen_problem(id.params,id.different_masses)
+            end
         end
 
         eigen_vectors_output = id.full_path_name*"_eigen_vectors.bin"
         eigen_values_output = id.full_path_name*"_eigen_values.bin"
         coordinates_output = id.full_path_name*"_coordinates.bin"
-        reduced_density_DOF1_output = id.full_path_name*"_reduced_density_DOF1.bin"
-        reduced_density_DOF2_output = id.full_path_name*"_reduced_density_DOF2.bin"
+        if switch_reduced_density
+            reduced_density_DOF1_output = id.full_path_name*"_reduced_density_DOF1.bin"
+            reduced_density_DOF2_output = id.full_path_name*"_reduced_density_DOF2.bin"
+        end
 
         if id.params.dimension == "1D"
             if id.params.dom_type=="s"
@@ -284,7 +292,10 @@ function run_default_eigen_problem(simulation_data::Tuple)
             ϕ_matrix=Matrix{ComplexF64}(undef,length(r[1])*length(r[2]),length(ϵ))
         end
 
-        rho_DOF1_matrix,rho_DOF2_matrix = reduced_density(id.params,ϕ,r)
+        if switch_reduced_density
+            # rho_DOF1_matrix,rho_DOF2_matrix = reduced_density(id.params,ϕ,r,model)
+            rho_DOF1_matrix,rho_DOF2_matrix = reduced_density(ϕ,r,model)
+        end
 
         ϵ_vector=Vector{ComplexF64}(undef,length(ϵ))
 
@@ -300,16 +311,20 @@ function run_default_eigen_problem(simulation_data::Tuple)
         rm_existing_file(eigen_vectors_output)
         rm_existing_file(eigen_values_output)
         rm_existing_file(coordinates_output)
-        rm_existing_file(reduced_density_DOF1_output)
-        rm_existing_file(reduced_density_DOF2_output)
+        if switch_reduced_density
+            rm_existing_file(reduced_density_DOF1_output)
+            rm_existing_file(reduced_density_DOF2_output)
+        end
 
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         println("Saving data ...")
 
         write_bin(ϕ_matrix,eigen_vectors_output);
         write_bin(ϵ_vector,eigen_values_output);
-        write_bin(rho_DOF1_matrix,reduced_density_DOF1_output);
-        write_bin(rho_DOF2_matrix,reduced_density_DOF2_output);
+        if switch_reduced_density
+            write_bin(rho_DOF1_matrix,reduced_density_DOF1_output);
+            write_bin(rho_DOF2_matrix,reduced_density_DOF2_output);
+        end
 
         if id.params.dimension == "1D"
             write_bin(x,coordinates_output)

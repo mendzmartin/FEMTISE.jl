@@ -30,7 +30,6 @@ function input_data(data_file_name::String)
     init_row::Int = 1; # without count white spaces
     init_column::Int = 3;
     full_path_name::String          = "$(attributes[init_row,init_column])"
-    L::Float64                      = parse(Float64,attributes[init_row+1,init_column])
     dom_type::String                = "$(attributes[init_row+2,init_column])"
     nev::Int                      = parse(Float64,attributes[init_row+3,init_column])
     dimension::String               = "$(attributes[init_row+4,init_column])"
@@ -47,15 +46,18 @@ function input_data(data_file_name::String)
     end
     
     if dimension == "1D"
+        L::Float64 = parse(Float64,attributes[init_row+1,init_column])
         Δx = parse(Float64,attributes[init_row+11,init_column])
         params = Params1D("1D",L,dom_type,Δx,nev,sigma,potential_function_name,params_potential)
         different_masses = false
     elseif dimension == "2D"
+        Lx::Float64 = parse(Float64,attributes[init_row+1,init_column+1])
+        Ly::Float64 = parse(Float64,attributes[init_row+1,init_column+2])
         nx = parse(Int,attributes[init_row+12,init_column])
         ny = parse(Int,attributes[init_row+13,init_column])
-        params = Params2D("2D",L,dom_type,nx,ny,nev,sigma,potential_function_name,params_potential)
+        params = Params2D("2D",Lx,Ly,dom_type,nx,ny,nev,sigma,potential_function_name,params_potential)
         if "$(attributes[init_row+14,init_column])" == "false"
-            different_masses = false
+            different_masses = (false,nothing)
         else
             different_masses = tuple(true,parse(Float64,attributes[init_row+14,init_column]))
         end

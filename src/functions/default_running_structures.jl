@@ -11,7 +11,8 @@ end
 
 struct Params2D
     dimension::String
-    L::Float64
+    Lx::Float64
+    Ly::Float64
     dom_type::String
     nx::Int
     ny::Int

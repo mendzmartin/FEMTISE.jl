@@ -13,14 +13,14 @@ function run_default_eigen_problem(simulation_data::Tuple)
         io=open(full_path_name*"_eigen_problem_attributes.dat","w")
 
         println("Mandatory input data")
-        print("Finite element domain length [au] (default L=30.0 press Enter): L::Float64 = ")
-        L = get_input(Float64,default_value=30.0)
-        print("Set domain type (for symetric domain {-L/2,L/2} set \"s\" and for non-symetric domain {0,L} set \"ns\": dom_type::String = ")
-        dom_type = get_input(["s","ns"])
         print("Number of eigenvalues: nev::Int = ")
         nev = get_input(Int;default_data=false)
 
         if type_potential in ["1","2","3"]
+            print("Finite element domain length [au] (default L=30.0 press Enter): L::Float64 = ")
+            L = get_input(Float64,default_value=30.0)
+            print("Set domain type (for symetric domain {-L/2,L/2} set \"s\" and for non-symetric domain {0,L} set \"ns\": dom_type::String = ")
+            dom_type = get_input(["s","ns"])
             dimension="1D"
             print("Finite element size [au] (default Δx=0.1 press Enter): Δx::Float64 = ")
             Δx = get_input(Float64;default_value=0.1)
@@ -87,6 +87,12 @@ function run_default_eigen_problem(simulation_data::Tuple)
             end
             params=Params1D(dimension,L,dom_type,Δx,nev,sigma,potential_function_name,params_potential)
         elseif type_potential=="4"
+            print("Finite element domain length of DOF1 [au] (default L=30.0 press Enter): Lx::Float64 = ")
+            Lx = get_input(Float64,default_value=30.0)
+            print("Finite element domain length of DOF2 [au] (default L=30.0 press Enter): Ly::Float64 = ")
+            Ly = get_input(Float64,default_value=30.0)
+            print("Set domain type (for symetric domain {-L/2,L/2} set \"s\" and for non-symetric domain {0,L} set \"ns\": dom_type::String = ")
+            dom_type = get_input(["s","ns"])
             potential_function_name="qho_2d"
             dimension="2D"
             print("Number of finite element of x direction (default nx=100 press Enter): nx::Int = ")
@@ -102,26 +108,36 @@ function run_default_eigen_problem(simulation_data::Tuple)
             print("Level shift used in inverse iteration [au] (default sigma=0.0 press Enter): sigma::Float64 = ")
             sigma=get_input(Float64;default_value=0.0)
             params_potential=(ω,x₁,y₁)
-            params=Params2D(dimension,L,dom_type,nx,ny,nev,sigma,potential_function_name,params_potential)
+            params=Params2D(dimension,Lx,Ly,dom_type,nx,ny,nev,sigma,potential_function_name,params_potential)
             different_masses = tuple(false, nothing)
             write(io,"Quantum Harmonic Oscillator 2D\n")
-            write(io,"Dimension of eigen value problem                  dimension::String   = $(dimension)\n")
-            write(io,"Number of eigenvalues                             nev::Int          = $(nev)\n")
-            write(io,"Finite element domain length [au]                 L::Float64          = $(L)\n")
-            write(io,"Domain type                                       dom_type::String    = $(dom_type)\n")
-            write(io,"Level shift used in inverse iteration [au]        sigma::Float64      = $(sigma)\n")
-            write(io,"Number of finite element of x direction           nx::Int           = $(nx)\n")
-            write(io,"Number of finite element of y direction           ny::Int           = $(ny)\n")
-            write(io,"Harmonic Oscillator frecuency [au]                ω::Float64          = $(ω)\n")
-            write(io,"Harmonic Oscillator center of x direction [au]    x₁::Float64         = $(x₁)\n")
-            write(io,"Harmonic Oscillator center of y direction [au]    y₁::Float64         = $(y₁)\n")
+            write(io,"Dimension of eigen value problem                  dimension::String       = $(dimension)\n")
+            write(io,"Number of eigenvalues                             nev::Int                = $(nev)\n")
+            write(io,"Finite element domain lengths [au]                Lx::Float64 Ly::Float64 = $(Lx) $(Ly)\n")
+            write(io,"Domain type                                       dom_type::String        = $(dom_type)\n")
+            write(io,"Level shift used in inverse iteration [au]        sigma::Float64          = $(sigma)\n")
+            write(io,"Number of finite element of x direction           nx::Int                 = $(nx)\n")
+            write(io,"Number of finite element of y direction           ny::Int                 = $(ny)\n")
+            write(io,"Harmonic Oscillator frecuency [au]                ω::Float64              = $(ω)\n")
+            write(io,"Harmonic Oscillator center of x direction [au]    x₁::Float64             = $(x₁)\n")
+            write(io,"Harmonic Oscillator center of y direction [au]    y₁::Float64             = $(y₁)\n")
         elseif type_potential=="5"
             print("Set dimension of eigen value problem (1D or 2D): dimension::String = ")
             dimension = get_input(["1D","2D"])
             if dimension=="1D"
+                print("Finite element domain length [au] (default L=30.0 press Enter): L::Float64 = ")
+                L = get_input(Float64,default_value=30.0)
+                print("Set domain type (for symetric domain {-L/2,L/2} set \"s\" and for non-symetric domain {0,L} set \"ns\": dom_type::String = ")
+                dom_type = get_input(["s","ns"])
                 print("Finite element size [au] (default Δx=0.1 press Enter): Δx::Float64 = ")
                 Δx=get_input(Float64;default_value=0.1)
             elseif dimension=="2D"
+                print("Finite element domain length of DOF1 [au] (default L=30.0 press Enter): Lx::Float64 = ")
+                Lx = get_input(Float64,default_value=30.0)
+                print("Finite element domain length of DOF2 [au] (default L=30.0 press Enter): Ly::Float64 = ")
+                Ly = get_input(Float64,default_value=30.0)
+                print("Set domain type (for symetric domain {-L/2,L/2} set \"s\" and for non-symetric domain {0,L} set \"ns\": dom_type::String = ")
+                dom_type = get_input(["s","ns"])
                 print("Number of finite element of x direction (default nx=100 press Enter): nx::Int = ")
                 nx=get_input(Int;default_value=100)
                 print("Number of finite element of y direction (default ny=100 press Enter): ny::Int = ")
@@ -141,7 +157,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
             if dimension=="1D"
                 params=Params1D(dimension,L,dom_type,Δx,nev,sigma,potential_function_name,params_potential)
             elseif dimension=="2D"
-                params=Params2D(dimension,L,dom_type,nx,ny,nev,sigma,potential_function_name,params_potential)
+                params=Params2D(dimension,Lx,Ly,dom_type,nx,ny,nev,sigma,potential_function_name,params_potential)
             end
             if dimension=="2D"
                 print("Do you want to simulate a 2D problem with different masses? (YES (set \"y\") or NO (set \"n\")) different_masses::String = ")
@@ -155,23 +171,28 @@ function run_default_eigen_problem(simulation_data::Tuple)
                 end
             end
             write(io,"Ad hoc potential function called $(potential_function_name)\n")
-            write(io,"Dimension of eigen value problem              dimension::String   = $(dimension)\n")
-            write(io,"Number of eigenvalues                         nev::Int          = $(nev)\n")
-            write(io,"Finite element domain length [au]             L::Float64          = $(L)\n")
-            write(io,"Domain type                                   dom_type::String    = $(dom_type)\n")
-            write(io,"Level shift used in inverse iteration [au]    sigma::Float64      = $(sigma)\n")
+            write(io,"Finite element domain lengths [au]                Lx::Float64 Ly::Float64 = $(Lx) $(Ly)\n")
+            write(io,"Dimension of eigen value problem                  dimension::String       = $(dimension)\n")
+            write(io,"Number of eigenvalues                             nev::Int                = $(nev)\n")
             if dimension=="1D"
-                write(io,"Finite element size [au]                      Δx::Float64         = $(Δx)\n")
+                write(io,"Finite element domain length [au]                 L::Float64              = $(L)\n")
             elseif dimension=="2D"
-                write(io,"Number of finite element of x direction       nx::Int           = $(nx)\n")
-                write(io,"Number of finite element of y direction       ny::Int           = $(ny)\n")
+                write(io,"Finite element domain lengths [au]                Lx::Float64 Ly::Float64 = $(Lx) $(Ly)\n")
             end
-            write(io,"Ad hoc parameters are                         params::Tuple       = $(params_potential)\n")
+            write(io,"Domain type                                       dom_type::String        = $(dom_type)\n")
+            write(io,"Level shift used in inverse iteration [au]        sigma::Float64          = $(sigma)\n")
+            if dimension=="1D"
+                write(io,"Finite element size [au]                          Δx::Float64             = $(Δx)\n")
+            elseif dimension=="2D"
+                write(io,"Number of finite element of x direction           nx::Int                 = $(nx)\n")
+                write(io,"Number of finite element of y direction           ny::Int                 = $(ny)\n")
+            end
+            write(io,"Ad hoc parameters are                             params::Tuple           = $(params_potential)\n")
             if dimension=="2D" && different_masses_str == "y"
-                write(io,"Mass of the second particle [au]              m₂::Float64         = $(m₂)\n")
+                write(io,"Mass of the second particle [au]                  m₂::Float64             = $(m₂)\n")
             end
         end
-        write(io,"\nNumber of threads                                               = $(Threads.nthreads())\n")
+        write(io,"\nNumber of threads                                                           = $(Threads.nthreads())\n")
         close(io)
     end
 
@@ -202,7 +223,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
                     # ϵ,ϕ = default_solver_eigen_problem(paramsλ)
                     ϵ,ϕ = solver_eigen_problem_with_analysis_param(paramsλ,model)
             elseif id.params.dimension=="2D"
-                paramsλ=Params2D(id.params.dimension,id.params.L,id.params.dom_type,
+                paramsλ=Params2D(id.params.dimension,id.params.Lx,id.params.Ly,id.params.dom_type,
                     id.params.nx,id.params.ny,id.params.nev,id.params.sigma,
                     id.params.potential_function_name,params_potential)
 
@@ -242,6 +263,8 @@ function run_default_eigen_problem(simulation_data::Tuple)
         eigen_vectors_output = id.full_path_name*"_eigen_vectors.bin"
         eigen_values_output = id.full_path_name*"_eigen_values.bin"
         coordinates_output = id.full_path_name*"_coordinates.bin"
+        reduced_density_DOF1_output = id.full_path_name*"_reduced_density_DOF1.bin"
+        reduced_density_DOF2_output = id.full_path_name*"_reduced_density_DOF2.bin"
 
         if id.params.dimension == "1D"
             if id.params.dom_type=="s"
@@ -253,13 +276,15 @@ function run_default_eigen_problem(simulation_data::Tuple)
             ϕ_matrix=Matrix{ComplexF64}(undef,length(x),length(ϵ))
         elseif id.params.dimension == "2D"
             if id.params.dom_type=="s"
-                dom=(-0.5*id.params.L,0.5*id.params.L,-0.5*id.params.L,0.5*id.params.L)
+                dom=(-0.5*id.params.Lx,0.5*id.params.Lx,-0.5*id.params.Ly,0.5*id.params.Ly)
             elseif params.dom_type=="ns"
-                dom=(0.0,id.params.L,0.0,id.params.L)
+                dom=(0.0,id.params.Lx,0.0,id.params.Ly)
             end
-            r,pts=space_coord(dom,(id.params.L/id.params.nx,id.params.L/id.params.ny),(id.params.nx,id.params.ny))
+            r,pts=space_coord(dom,(id.params.Lx/id.params.nx,id.params.Ly/id.params.ny),(id.params.nx,id.params.ny))
             ϕ_matrix=Matrix{ComplexF64}(undef,length(r[1])*length(r[2]),length(ϵ))
         end
+
+        rho_DOF1_matrix,rho_DOF2_matrix = reduced_density(id.params,ϕ,r)
 
         ϵ_vector=Vector{ComplexF64}(undef,length(ϵ))
 
@@ -275,12 +300,16 @@ function run_default_eigen_problem(simulation_data::Tuple)
         rm_existing_file(eigen_vectors_output)
         rm_existing_file(eigen_values_output)
         rm_existing_file(coordinates_output)
+        rm_existing_file(reduced_density_DOF1_output)
+        rm_existing_file(reduced_density_DOF2_output)
 
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         println("Saving data ...")
 
         write_bin(ϕ_matrix,eigen_vectors_output);
         write_bin(ϵ_vector,eigen_values_output);
+        write_bin(rho_DOF1_matrix,reduced_density_DOF1_output);
+        write_bin(rho_DOF2_matrix,reduced_density_DOF2_output);
 
         if id.params.dimension == "1D"
             write_bin(x,coordinates_output)
@@ -316,11 +345,11 @@ function run_default_eigen_problem(simulation_data::Tuple)
             ϕ_matrix=Matrix{ComplexF64}(undef,length(x),length(ϵ))
         elseif params.dimension == "2D"
             if params.dom_type=="s"
-                dom=(-0.5*params.L,0.5*params.L,-0.5*params.L,0.5*params.L)
+                dom=(-0.5*params.Lx,0.5*params.Lx,-0.5*params.Ly,0.5*params.Ly)
             elseif params.dom_type=="ns"
-                dom=(0.0,params.L,0.0,params.L)
+                dom=(0.0,params.Lx,0.0,params.Lx)
             end
-            r,pts=space_coord(dom,(params.L/params.nx,params.L/params.ny),(params.nx,params.ny))
+            r,pts=space_coord(dom,(params.Lx/params.nx,params.Ly/params.ny),(params.nx,params.ny))
             ϕ_matrix=Matrix{ComplexF64}(undef,length(r[1])*length(r[2]),length(ϵ))
         end
 

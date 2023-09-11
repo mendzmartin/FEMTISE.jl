@@ -30,40 +30,49 @@ function input_data(data_file_name::String)
     init_row::Int = 1; # without count white spaces
     init_column::Int = 3;
     full_path_name::String          = "$(attributes[init_row,init_column])"
-    dom_type::String                = "$(attributes[init_row+2,init_column])"
-    nev::Int                      = parse(Float64,attributes[init_row+3,init_column])
-    dimension::String               = "$(attributes[init_row+4,init_column])"
-    sigma::Float64                  = parse(Float64,attributes[init_row+5,init_column])
-    adhoc_file_name::String         = "$(attributes[init_row+6,init_column])"
-    potential_function_name::String = "$(attributes[init_row+7,init_column])"
+    dom_type::String                = "$(attributes[init_row+1,init_column])"
+    nev::Int                      = parse(Float64,attributes[init_row+2,init_column])
+    dimension::String               = "$(attributes[init_row+3,init_column])"
+    sigma::Float64                  = parse(Float64,attributes[init_row+4,init_column])
+    adhoc_file_name::String         = "$(attributes[init_row+5,init_column])"
+    potential_function_name::String = "$(attributes[init_row+6,init_column])"
 
-    params_potential = create_tuple(attributes[init_row+8,init_column:end],attributes[init_row+9,init_column:end])
+    params_potential = create_tuple(attributes[init_row+7,init_column:end],attributes[init_row+8,init_column:end])
 
-    if "$(attributes[init_row+10,init_column])" == "false"
+    if "$(attributes[init_row+9,init_column])" == "false"
         analysis_param = false
     else
-        analysis_param = create_tuple(attributes[init_row+10,init_column:end],params_potential)
+        analysis_param = create_tuple(attributes[init_row+9,init_column:end],params_potential)
     end
     
     if dimension == "1D"
-        L::Float64 = parse(Float64,attributes[init_row+1,init_column])
-        Δx = parse(Float64,attributes[init_row+11,init_column])
+        init_row = 12
+        L::Float64 = parse(Float64,attributes[init_row,init_column])
+        Δx = parse(Float64,attributes[init_row+1,init_column])
+
         params = Params1D("1D",L,dom_type,Δx,nev,sigma,potential_function_name,params_potential)
-        different_masses = false
+        data = InputData1D(full_path_name,adhoc_file_name,params,analysis_param)
     elseif dimension == "2D"
-        Lx::Float64 = parse(Float64,attributes[init_row+1,init_column+1])
-        Ly::Float64 = parse(Float64,attributes[init_row+1,init_column+2])
-        nx = parse(Int,attributes[init_row+12,init_column])
-        ny = parse(Int,attributes[init_row+13,init_column])
+        init_row = 15
+        Lx::Float64 = parse(Float64,attributes[init_row,init_column])
+        Ly::Float64 = parse(Float64,attributes[init_row+1,init_column])
+        nx = parse(Int,attributes[init_row+2,init_column])
+        ny = parse(Int,attributes[init_row+3,init_column])
         params = Params2D("2D",Lx,Ly,dom_type,nx,ny,nev,sigma,potential_function_name,params_potential)
-        if "$(attributes[init_row+14,init_column])" == "false"
+        if "$(attributes[init_row+4,init_column])" == "false"
             different_masses = (false,nothing)
         else
-            different_masses = tuple(true,parse(Float64,attributes[init_row+14,init_column]))
+            different_masses = tuple(true,parse(Float64,attributes[init_row+4,init_column]))
         end
+        if "$(attributes[init_row+5,init_column])" == "false"
+            reduced_density = false
+        else
+            reduced_density = true
+        end
+        data = InputData2D(full_path_name,adhoc_file_name,params,analysis_param,different_masses,reduced_density)
     end
 
-    return InputData(full_path_name,adhoc_file_name,params,analysis_param,different_masses)
+    return data
 end
 
 function create_tuple(params_potential_type_array::Vector{String},params_potential_array::Vector{String})

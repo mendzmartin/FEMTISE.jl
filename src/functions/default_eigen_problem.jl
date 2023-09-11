@@ -110,6 +110,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
             params_potential=(ω,x₁,y₁)
             params=Params2D(dimension,Lx,Ly,dom_type,nx,ny,nev,sigma,potential_function_name,params_potential)
             different_masses = tuple(false, nothing)
+            switch_reduced_density = false
             write(io,"Quantum Harmonic Oscillator 2D\n")
             write(io,"Dimension of eigen value problem                  dimension::String       = $(dimension)\n")
             write(io,"Number of eigenvalues                             nev::Int                = $(nev)\n")
@@ -169,6 +170,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
                 elseif different_masses_str == "n"
                     different_masses = tuple(false,nothing)
                 end
+                switch_reduced_density = false
             end
             write(io,"Ad hoc potential function called $(potential_function_name)\n")
             write(io,"Finite element domain lengths [au]                Lx::Float64 Ly::Float64 = $(Lx) $(Ly)\n")
@@ -251,7 +253,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
 
         println("Saved data.")
     elseif (type_potential=="6" && id.analysis_param == false)
-        # switch_reduced_density=true
+        switch_reduced_density=id.reduced_density
 
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         println("... Running ...")
@@ -293,7 +295,6 @@ function run_default_eigen_problem(simulation_data::Tuple)
         end
 
         if switch_reduced_density
-            # rho_DOF1_matrix,rho_DOF2_matrix = reduced_density(id.params,ϕ,r,model)
             rho_DOF1_matrix,rho_DOF2_matrix = reduced_density(ϕ,r,model)
         end
 

@@ -25,7 +25,7 @@ include("functions/default_eigen_problem.jl")
 
 include("functions/binary_file_io.jl")
 
-export Params1D,Params2D,AnalysisParam,InputData # Type's structures
+export Params1D,Params2D,AnalysisParam,InputData,InputData1D,InputData2D # Type's structures
 
 export make_model
 export make_boundary_conditions

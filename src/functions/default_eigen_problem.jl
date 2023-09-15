@@ -253,7 +253,9 @@ function run_default_eigen_problem(simulation_data::Tuple)
 
         println("Saved data.")
     elseif (type_potential=="6" && id.analysis_param == false)
-        switch_reduced_density=id.reduced_density
+        if id.params.dimension == "2D"
+            switch_reduced_density=id.reduced_density
+        end
 
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         println("... Running ...")
@@ -271,7 +273,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
         eigen_vectors_output = id.full_path_name*"_eigen_vectors.bin"
         eigen_values_output = id.full_path_name*"_eigen_values.bin"
         coordinates_output = id.full_path_name*"_coordinates.bin"
-        if switch_reduced_density
+        if switch_reduced_density && id.params.dimension == "2D"
             reduced_density_DOF1_output = id.full_path_name*"_reduced_density_DOF1.bin"
             reduced_density_DOF2_output = id.full_path_name*"_reduced_density_DOF2.bin"
         end
@@ -294,7 +296,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
             ϕ_matrix=Matrix{ComplexF64}(undef,length(r[1])*length(r[2]),length(ϵ))
         end
 
-        if switch_reduced_density
+        if switch_reduced_density && id.params.dimension == "2D"
             rho_DOF1_matrix,rho_DOF2_matrix = reduced_density(ϕ,r,model)
         end
 
@@ -312,7 +314,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
         rm_existing_file(eigen_vectors_output)
         rm_existing_file(eigen_values_output)
         rm_existing_file(coordinates_output)
-        if switch_reduced_density
+        if switch_reduced_density && id.params.dimension == "2D"
             rm_existing_file(reduced_density_DOF1_output)
             rm_existing_file(reduced_density_DOF2_output)
         end
@@ -322,7 +324,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
 
         write_bin(ϕ_matrix,eigen_vectors_output);
         write_bin(ϵ_vector,eigen_values_output);
-        if switch_reduced_density
+        if switch_reduced_density && id.params.dimension == "2D"
             write_bin(rho_DOF1_matrix,reduced_density_DOF1_output);
             write_bin(rho_DOF2_matrix,reduced_density_DOF2_output);
         end

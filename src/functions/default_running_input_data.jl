@@ -31,7 +31,7 @@ function input_data(data_file_name::String)
     init_column::Int = 3;
     full_path_name::String          = "$(attributes[init_row,init_column])"
     dom_type::String                = "$(attributes[init_row+1,init_column])"
-    nev::Int                      = parse(Float64,attributes[init_row+2,init_column])
+    nev::Int                      = parse(Int,attributes[init_row+2,init_column])
     dimension::String               = "$(attributes[init_row+3,init_column])"
     sigma::Float64                  = parse(Float64,attributes[init_row+4,init_column])
     adhoc_file_name::String         = "$(attributes[init_row+5,init_column])"

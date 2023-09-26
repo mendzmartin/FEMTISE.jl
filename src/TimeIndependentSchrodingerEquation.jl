@@ -7,6 +7,7 @@ using Gridap.CellData;  # para construir condición inicial interpolando una fun
 # using Gridap.FESpaces;  # para crear matrices afines a partir de formas bilineales
 # using Gridap.Algebra;   # para utilizar operaciones algebraicas con Gridap
 # using DataInterpolations;   # interpolation function package (https://github.com/PumasAI/DataInterpolations.jl)
+using JLD2
 
 include("functions/default_running_structures.jl")
 

@@ -42,7 +42,8 @@ export default_solver_eigen_problem,ask_for_params,
         get_input,num_ions_BoolCondition,rm_existing_file,
         create_and_remove_model,solver_eigen_problem_with_analysis_param
 export input_data
-export run_default_eigen_problem,set_include,set_type_potential
+export run_default_eigen_problem,run_default_eigen_problem_jld2,
+        set_include,set_type_potential
 
 export write_bin,read_bin
 

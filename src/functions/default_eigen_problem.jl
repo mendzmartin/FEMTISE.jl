@@ -262,6 +262,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
 
         if id.params.dimension == "1D"
             ϵ,ϕ = default_solver_eigen_problem(id.params)
+            switch_reduced_density=false
         elseif id.params.dimension == "2D"
             if switch_reduced_density
                 ϵ,ϕ,model = default_solver_eigen_problem(id.params,id.different_masses;switch_reduced_density=switch_reduced_density)

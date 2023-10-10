@@ -43,54 +43,66 @@ Please, set some number to specify the type potential:</code></pre><p>Then you c
     function my_potential_2d(x,params::Tuple)
         λ₁,λ₂,λ₃...=params
         return f(x[1],x[2],λ₁,λ₂,λ₃...)
-    end</code></pre><p>Here params is a Tuple with potential parameters (can be Integers, Floats, Complex, etc) and <code>f(x[1],x[2],λ₁,λ₂,λ₃...)</code> is an expresion(function) of <code>x[1]</code> (unidmensional DOF), <code>x[2]</code> (unidmensional DOF) and <code>λᵢ</code>&#39;s (parameters).</p><h3 id="Building-input-data-for-custom-potential-simulations"><a class="docs-heading-anchor" href="#Building-input-data-for-custom-potential-simulations">Building input data for custom potential simulations</a><a id="Building-input-data-for-custom-potential-simulations-1"></a><a class="docs-heading-anchor-permalink" href="#Building-input-data-for-custom-potential-simulations" title="Permalink"></a></h3><p>In some specific folder we need to create a data folder <code>@my_folder$: vi my_input.dat</code> with custom potential input information behing the following format (the data next to equal sign is only for example information)</p><pre><code class="language-dat hljs">full_path_name              = ./qho2D_different_masses/results/qho2D_different_masses
-L                           = 30.0
+    end</code></pre><p>Here params is a Tuple with potential parameters (can be Integers, Floats, Complex, etc) and <code>f(x[1],x[2],λ₁,λ₂,λ₃...)</code> is an expresion(function) of <code>x[1]</code> (unidmensional DOF), <code>x[2]</code> (unidmensional DOF) and <code>λᵢ</code>&#39;s (parameters).</p><h3 id="Building-input-data-for-custom-potential-simulations"><a class="docs-heading-anchor" href="#Building-input-data-for-custom-potential-simulations">Building input data for custom potential simulations</a><a id="Building-input-data-for-custom-potential-simulations-1"></a><a class="docs-heading-anchor-permalink" href="#Building-input-data-for-custom-potential-simulations" title="Permalink"></a></h3><p>In some specific folder we need to create a data folder <code>@my_folder$: vi my_input.dat</code> with custom potential input information behing the following format (the data next to equal sign is only for example information)</p><pre><code class="language-dat hljs">full_path_name              = ../my_folder_name/my_file_name
 dom_type                    = s
-nev                         = 3
-dimension                   = 2D
+nev                         = 10
+dimension                   = 1D
 sigma                       = 0.0
-adhoc_file_name             = mendez_adhoc_potentials
-potential_function_name     = qho2D_different_masses
-params_potential_types      = f f f f
-params_potential            = 1.0 10.0 0.0 -1.0
-analysis_param              = false
-Δx                          = 
-nx                          = 100
-ny                          = 100
-different_masses            = 10.0
+adhoc_file_name             = my_adhoc_potentials
+potential_function_name     = my_potential
+params_potential_types      = f f f
+params_potential            = 1.0 0.1 10.0
+analysis_param              = 2 0.0 0.1 0.01
+## ONLY FOR 1D EIGENPROBLEMS
+L                           = 100.0
+Δx                          = 0.1
+## ONLY FOR 2D EIGENPROBLEMS
+Lx                          = 
+Ly                          = 
+nx                          = 
+ny                          = 
+different_masses            = 
+reduced_density             = 
+
 
 # #################################################################################################
     full_path_name::String:           Full path name where you want to write problem results
-    L::Real:                          Finite element domain length [au]
     dom_type::String                  Domain type (symetric (s) or non-symetric (ns) domain)
     nev::Integer:                     Number of eigenvalues
     dimension::String:                Dimension of eigen value problem
     sigma::Real:                      Level shift used in inverse iteration [au]
     adhoc_file_name::String:          Julia file name with ad hoc potential
     potential_function_name::String:  Name of ad hoc potential function
-    params_potential:                 Parameters of ad hoc potential function
     params_potential_types:           Paremters type -&gt; f (Float), i (Integer), c (Complex)
+    params_potential:                 Parameters of ad hoc potential function
     analysis_param
         only if want to sweap a parameter from params_potential
             analysis_param = λindex::Integer λi λf Δλ
         else
-            analysis_param = false::Boolean
+            analysis_param = false
     only if dimension == 1D
+        L::Real:                      Finite element domain length [au]
         Δx::Real:                     Finite element size [au]
     only if dimension == 2D
+        Lx::Real:                     Finite element domain length of x direction [au]
+        Ly::Real:                     Finite element domain length of y direction [au]
         nx::Integer:                  Number of finite element of x direction
         ny::Integer:                  Number of finite element of y direction
-    different_masses
-        only if want to simulate 2D eigenproblem and two particles with different masses
-            different_masses = mass2::Real
-        only if want to simulate 2D eigenproblem or two particles with equal masses
-            different_masses = false::Boolean
+        different_masses
+            only if want to simulate 2 particles with different masses
+                different_masses::Real = DOF2mass
+            else
+                different_masses::Bool = false
+        reduced_density
+            if want to compute reduced densities
+                reduced_density::Bool = true
+            else
+                reduced_density::Bool = false
 # #################################################################################################
 
 # #################################################################################################
     WARNIG! Beware of whitespace between data values and do not use spaces in variables named
-    full_path_name, adhoc_file_name and potential_function_name.
-# #################################################################################################</code></pre><p>Then you can run the script and set options <code>5</code> or <code>6</code> like this:</p><pre><code class="language-bash hljs">    @my_folder$: julia my_script.jl
+    full_path_name, adhoc_file_name and potential_function_name.</code></pre><p>Then you can run the script and set options <code>5</code> or <code>6</code> like this:</p><pre><code class="language-bash hljs">    @my_folder$: julia my_script.jl
   Activating project at `~/test_default_eigen_problem_from_input`
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 The types of default potential can be:
@@ -112,4 +124,4 @@ Set full path name (e.g: &quot;./my_directory/my_input_data&quot;) where the dat
         
         path_input_data = &quot;./my_input&quot;
         run_default_eigen_problem(set_type_potential(path_input_data))
-    end</code></pre><p>Then you can run the script <code>@my_folder$: julia my_script.jl</code> and wait for simulation results.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../function_information/">« Function Information</a><a class="docs-footer-nextpage" href="../contact_information/">Contact Information »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Thursday 28 September 2023 17:36">Thursday 28 September 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    end</code></pre><p>Then you can run the script <code>@my_folder$: julia my_script.jl</code> and wait for simulation results.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../function_information/">« Function Information</a><a class="docs-footer-nextpage" href="../contact_information/">Contact Information »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Tuesday 10 October 2023 12:54">Tuesday 10 October 2023</span>. Using Julia version 1.9.3.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

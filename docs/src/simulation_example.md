@@ -105,54 +105,66 @@ Here params is a Tuple with potential parameters (can be Integers, Floats, Compl
 In some specific folder we need to create a data folder `@my_folder$: vi my_input.dat` with custom potential input information behing the following format (the data next to equal sign is only for example information)
 
 ```dat
-full_path_name              = ./qho2D_different_masses/results/qho2D_different_masses
-L                           = 30.0
+full_path_name              = ../my_folder_name/my_file_name
 dom_type                    = s
-nev                         = 3
-dimension                   = 2D
+nev                         = 10
+dimension                   = 1D
 sigma                       = 0.0
-adhoc_file_name             = mendez_adhoc_potentials
-potential_function_name     = qho2D_different_masses
-params_potential_types      = f f f f
-params_potential            = 1.0 10.0 0.0 -1.0
-analysis_param              = false
-Δx                          = 
-nx                          = 100
-ny                          = 100
-different_masses            = 10.0
+adhoc_file_name             = my_adhoc_potentials
+potential_function_name     = my_potential
+params_potential_types      = f f f
+params_potential            = 1.0 0.1 10.0
+analysis_param              = 2 0.0 0.1 0.01
+## ONLY FOR 1D EIGENPROBLEMS
+L                           = 100.0
+Δx                          = 0.1
+## ONLY FOR 2D EIGENPROBLEMS
+Lx                          = 
+Ly                          = 
+nx                          = 
+ny                          = 
+different_masses            = 
+reduced_density             = 
+
 
 # #################################################################################################
     full_path_name::String:           Full path name where you want to write problem results
-    L::Real:                          Finite element domain length [au]
     dom_type::String                  Domain type (symetric (s) or non-symetric (ns) domain)
     nev::Integer:                     Number of eigenvalues
     dimension::String:                Dimension of eigen value problem
     sigma::Real:                      Level shift used in inverse iteration [au]
     adhoc_file_name::String:          Julia file name with ad hoc potential
     potential_function_name::String:  Name of ad hoc potential function
-    params_potential:                 Parameters of ad hoc potential function
     params_potential_types:           Paremters type -> f (Float), i (Integer), c (Complex)
+    params_potential:                 Parameters of ad hoc potential function
     analysis_param
         only if want to sweap a parameter from params_potential
             analysis_param = λindex::Integer λi λf Δλ
         else
-            analysis_param = false::Boolean
+            analysis_param = false
     only if dimension == 1D
+        L::Real:                      Finite element domain length [au]
         Δx::Real:                     Finite element size [au]
     only if dimension == 2D
+        Lx::Real:                     Finite element domain length of x direction [au]
+        Ly::Real:                     Finite element domain length of y direction [au]
         nx::Integer:                  Number of finite element of x direction
         ny::Integer:                  Number of finite element of y direction
-    different_masses
-        only if want to simulate 2D eigenproblem and two particles with different masses
-            different_masses = mass2::Real
-        only if want to simulate 2D eigenproblem or two particles with equal masses
-            different_masses = false::Boolean
+        different_masses
+            only if want to simulate 2 particles with different masses
+                different_masses::Real = DOF2mass
+            else
+                different_masses::Bool = false
+        reduced_density
+            if want to compute reduced densities
+                reduced_density::Bool = true
+            else
+                reduced_density::Bool = false
 # #################################################################################################
 
 # #################################################################################################
     WARNIG! Beware of whitespace between data values and do not use spaces in variables named
     full_path_name, adhoc_file_name and potential_function_name.
-# #################################################################################################
 ```
 
 Then you can run the script and set options `5` or `6` like this:

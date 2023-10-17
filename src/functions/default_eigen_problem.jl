@@ -574,7 +574,7 @@ function run_default_eigen_problem_jld2(simulation_data::Tuple)
                 elseif different_masses_str == "n"
                     different_masses = tuple(false,nothing)
                 end
-                switch_reduced_density = false
+                switch_reduced_density=false
             end
             write(io,"Ad hoc potential function called $(potential_function_name)\n")
             write(io,"Finite element domain lengths [au]                Lx::Float64 Ly::Float64 = $(Lx) $(Ly)\n")
@@ -641,19 +641,16 @@ function run_default_eigen_problem_jld2(simulation_data::Tuple)
             ϵ_matrix[:,i] = ϵ[:]
         end
 
-        eigen_values_output = id.full_path_name*"_eigen_values.bin"
-        param_values_output = id.full_path_name*"_param_values.bin"
+        eigen_outputs = id.full_path_name*"_eigen_data.jld2"
 
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         println("Moving result data to trash if data exists ...")
-        rm_existing_file(eigen_values_output)
-        rm_existing_file(param_values_output)
+        rm_existing_file(eigen_outputs)
 
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        println("Saving data ...")
+        println("Saving JLD2 data ...")
 
-        write_bin(ϵ_matrix,eigen_values_output);
-        write_bin(λvector,param_values_output)
+        jldsave(eigen_outputs;ϵ_matrix=ϵ_matrix,λvector=λvector)
 
         println("Saved data.")
     elseif (type_potential=="6" && id.analysis_param == false)
@@ -719,9 +716,7 @@ function run_default_eigen_problem_jld2(simulation_data::Tuple)
             ϵ,ϕ = default_solver_eigen_problem(params)
         end
 
-        eigen_vectors_output = full_path_name*"_eigen_vectors.bin"
-        eigen_values_output = full_path_name*"_eigen_values.bin"
-        coordinates_output = full_path_name*"_coordinates.bin"
+        eigen_outputs = full_path_name*"_eigen_data.jld2"
 
         if params.dimension == "1D"
             if params.dom_type=="s"
@@ -729,8 +724,7 @@ function run_default_eigen_problem_jld2(simulation_data::Tuple)
             elseif params.dom_type=="ns"
                 dom=(0.0,params.L)
             end
-            x,pts=space_coord(dom,params.Δx,round(Int,abs(params.L/params.Δx));dimension="1D")
-            ϕ_matrix=Matrix{ComplexF64}(undef,length(x),length(ϵ))
+            r,pts=space_coord(dom,params.Δx,round(Int,abs(params.L/params.Δx));dimension="1D")
         elseif params.dimension == "2D"
             if params.dom_type=="s"
                 dom=(-0.5*params.Lx,0.5*params.Lx,-0.5*params.Ly,0.5*params.Ly)
@@ -738,41 +732,19 @@ function run_default_eigen_problem_jld2(simulation_data::Tuple)
                 dom=(0.0,params.Lx,0.0,params.Lx)
             end
             r,pts=space_coord(dom,(params.Lx/params.nx,params.Ly/params.ny),(params.nx,params.ny))
-            ϕ_matrix=Matrix{ComplexF64}(undef,length(r[1])*length(r[2]),length(ϵ))
-        end
-
-        ϵ_vector=Vector{ComplexF64}(undef,length(ϵ))
-
-        println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        println("Transforming data from FE object to complex value...")
-        Threads.@threads for i in eachindex(ϵ)
-            ϕ_matrix[:,i] = ϕ[i].(pts)
-            ϵ_vector[i] = ϵ[i]
         end
 
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         println("Moving result data to trash if data exists ...")
-        rm_existing_file(eigen_vectors_output)
-        rm_existing_file(eigen_values_output)
-        rm_existing_file(coordinates_output)
+        rm_existing_file(eigen_outputs)
 
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-        println("Saving data ...")
+        println("Saving JLD2 data ...")
 
-        write_bin(ϕ_matrix,eigen_vectors_output);
-        write_bin(ϵ_vector,eigen_values_output);
-
-        if dimension == "1D"
-            write_bin(x,coordinates_output)
-        elseif dimension == "2D"
-            r_matrix=Matrix{Float64}(undef,max(length(r[1]),length(r[2])),2)
-            for i in [1,2]
-                r_matrix[1:length(r[i]),i] = r[i]
-            end
-            write_bin(r_matrix,coordinates_output)
-        end
+        jldsave(eigen_outputs;ϵ=ϵ,ϕ=ϕ,r=r,pts=pts)
 
         println("Saved data.")
+
     end
 
 end

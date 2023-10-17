@@ -95,7 +95,7 @@ end
 # Arguments
 - `params::Params1D`: parameters of 1D potential
 """
-function default_solver_eigen_problem(params::Params1D)
+function default_solver_eigen_problem(params::Params1D;export_data::Bool=false)
     grid_type="simple_line";
     if params.dom_type=="s"
         dom=(-0.5*params.L,0.5*params.L)
@@ -109,8 +109,7 @@ function default_solver_eigen_problem(params::Params1D)
     model=make_model(grid_type,params_model);
     rm(params_model[1]*params_model[2]*".msh")
     FullDirichlet_values,FullDirichlet_tags=make_boundary_conditions(grid_type,"FullDirichlet",ComplexF64);
-    # Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
-    dΩ=measures(model,3,FullDirichlet_tags)[2]
+    Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
     reff = ReferenceFE(lagrangian,Float64,2);
     VSpace,USpace=fe_spaces(model,reff;BC_data=(FullDirichlet_values,FullDirichlet_tags),BC_type="Dirichlet")
     params_sturm_liouville=(params.potential_function_name,params.params_potential)
@@ -119,7 +118,9 @@ function default_solver_eigen_problem(params::Params1D)
     println("Solving eigen problem ...")
     ϵ,ϕ = eigen_values_and_eigen_vectors(p,q,r,dΩ,USpace,VSpace;params=(params.nev,10e-9,500,:none,params.sigma));
     
-    return tuple(ϵ,ϕ);
+    export_data ? (result = tuple((ϵ,ϕ),(Ω,dΩ,Γ,dΓ),(USpace,VSpace),model)) : (result = tuple(ϵ,ϕ))
+
+    return result;
 end
 
 """
@@ -132,7 +133,7 @@ end
 - `params::Params2D`: parameters fo 2D potential
 - `different_masses::Tuple`: keyword to specify if we want to simulate two particles with diferent masses
 """
-function default_solver_eigen_problem(params::Params2D,different_masses::Tuple; switch_reduced_density::Bool=false)
+function default_solver_eigen_problem(params::Params2D,different_masses::Tuple; switch_reduced_density::Bool=false, export_data::Bool=false)
 
     if params.dom_type=="s"
         dom=(-0.5*params.Lx,0.5*params.Lx,-0.5*params.Ly,0.5*params.Ly)
@@ -147,8 +148,7 @@ function default_solver_eigen_problem(params::Params2D,different_masses::Tuple; 
 
     model=make_model(grid_type,params_model);
     FullDirichlet_values,FullDirichlet_tags=make_boundary_conditions(grid_type,"FullDirichlet",ComplexF64);
-    # Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
-    dΩ=measures(model,3,FullDirichlet_tags)[2]
+    Ω,dΩ,Γ,dΓ=measures(model,3,FullDirichlet_tags);
     reff = ReferenceFE(lagrangian,Float64,2);
     VSpace,USpace=fe_spaces(model,reff;BC_data=(FullDirichlet_values,FullDirichlet_tags),BC_type="Dirichlet")
     params_sturm_liouville=(params.potential_function_name,params.params_potential)
@@ -167,7 +167,7 @@ function default_solver_eigen_problem(params::Params2D,different_masses::Tuple; 
     if switch_reduced_density
         result = tuple(ϵ,ϕ,model)
     else
-        result = tuple(ϵ,ϕ)
+        export_data ? (result = tuple((ϵ,ϕ),(Ω,dΩ,Γ,dΓ),(USpace,VSpace),model)) : (result = tuple(ϵ,ϕ))
     end
     return result;
 end

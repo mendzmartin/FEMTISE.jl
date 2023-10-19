@@ -31,7 +31,7 @@ function input_data(data_file_name::String)
     init_column::Int = 3;
     full_path_name::String          = "$(attributes[init_row,init_column])"
     dom_type::String                = "$(attributes[init_row+1,init_column])"
-    nev::Int                      = parse(Int,attributes[init_row+2,init_column])
+    nev::Int                        = parse(Int,attributes[init_row+2,init_column])
     dimension::String               = "$(attributes[init_row+3,init_column])"
     sigma::Float64                  = parse(Float64,attributes[init_row+4,init_column])
     adhoc_file_name::String         = "$(attributes[init_row+5,init_column])"
@@ -44,16 +44,19 @@ function input_data(data_file_name::String)
     else
         analysis_param = create_tuple(attributes[init_row+9,init_column:end],params_potential)
     end
-    
+
+    output_format_type::Tuple{String,String} = ("$(attributes[init_row+10,init_column])","$(attributes[init_row+10,init_column+1])")
+    check_output_format_type(output_format_type,analysis_param)
+
     if dimension == "1D"
-        init_row = 12
+        init_row = 13
         L::Float64 = parse(Float64,attributes[init_row,init_column])
         Δx = parse(Float64,attributes[init_row+1,init_column])
 
         params = Params1D("1D",L,dom_type,Δx,nev,sigma,potential_function_name,params_potential)
-        data = InputData1D(full_path_name,adhoc_file_name,params,analysis_param)
+        data = InputData1D(full_path_name,adhoc_file_name,params,analysis_param,output_format_type)
     elseif dimension == "2D"
-        init_row = 15
+        init_row = 16
         Lx::Float64 = parse(Float64,attributes[init_row,init_column])
         Ly::Float64 = parse(Float64,attributes[init_row+1,init_column])
         nx = parse(Int,attributes[init_row+2,init_column])
@@ -69,13 +72,44 @@ function input_data(data_file_name::String)
         else
             reduced_density = true
         end
-        data = InputData2D(full_path_name,adhoc_file_name,params,analysis_param,different_masses,reduced_density)
+        data = InputData2D(full_path_name,adhoc_file_name,params,analysis_param,different_masses,reduced_density,output_format_type)
+    else
+        println("ERROR FROM INPUT DATA.")
+        println("Please check dimension setting. This parameter must be \"1D\" or \"2D\".")
+        exit(0)
     end
 
     return data
 end
 
+function check_output_format_type(output_format_type::Tuple{String,String},analysis_param)
+    if analysis_param == false && output_format_type in [("bin","eigen"),("jld2","eigen"),("jld2","all")]
+        check = true
+    elseif analysis_param ≠ false && output_format_type in [("bin","eigen"),("jld2","eigen")]
+        check = true
+    else
+        check = false
+    end
+
+    if check == false
+        println("ERROR FROM INPUT DATA.")
+        println("Please check output_format_type setting.")
+        exit(0)
+    end
+
+    return check
+end
+
+
 function create_tuple(params_potential_type_array::Vector{String},params_potential_array::Vector{String})
+
+    if params_quantity(params_potential_type_array) ≠ params_quantity(params_potential_array)
+        println("ERROR FROM INPUT DATA.")
+        println("Please check params_potential_types and params_potential_types settings.")
+        println("Both need to be consistent and have same argument quantity.")
+        exit(0)
+    end
+
     params_potential_vec = Vector{Any}(undef,params_quantity(params_potential_type_array))
     for i in eachindex(params_potential_vec)
         params_potential_vec[i] = parse(define_type(params_potential_type_array[i]),params_potential_array[i])

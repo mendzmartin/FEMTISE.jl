@@ -37,18 +37,20 @@ struct InputData{S,T,U}
     different_masses::U
 end
 
-struct InputData1D{S,T}
+struct InputData1D{R,S,T}
     full_path_name::String
     adhoc_file_name::String
     params::S
     analysis_param::T
+    output_format_type::R
 end
 
-struct InputData2D{S,T,U}
+struct InputData2D{R,S,T,U}
     full_path_name::String
     adhoc_file_name::String
     params::S
     analysis_param::T
     different_masses::U
     reduced_density::Bool
+    output_format_type::R
 end

@@ -77,7 +77,7 @@ end
 function run_default_eigen_problem(simulation_data::Tuple)
     type_potential,id=simulation_data
     println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    if type_potential ≠ "6"
+    if type_potential ≠ "5"
         print("Set full path name (e.g: \"./my_directory/my_name\") where you want to write problem results and press Enter = ")
         full_path_name = readline()
         io=open(full_path_name*"_eigen_problem_attributes.dat","w")
@@ -194,84 +194,12 @@ function run_default_eigen_problem(simulation_data::Tuple)
             write(io,"Harmonic Oscillator frecuency [au]                ω::Float64              = $(ω)\n")
             write(io,"Harmonic Oscillator center of x direction [au]    x₁::Float64             = $(x₁)\n")
             write(io,"Harmonic Oscillator center of y direction [au]    y₁::Float64             = $(y₁)\n")
-        elseif type_potential=="5"
-            print("Set dimension of eigen value problem (1D or 2D): dimension::String = ")
-            dimension = get_input(["1D","2D"])
-            if dimension=="1D"
-                print("Finite element domain length [au] (default L=30.0 press Enter): L::Float64 = ")
-                L = get_input(Float64,default_value=30.0)
-                print("Set domain type (for symetric domain {-L/2,L/2} set \"s\" and for non-symetric domain {0,L} set \"ns\": dom_type::String = ")
-                dom_type = get_input(["s","ns"])
-                print("Finite element size [au] (default Δx=0.1 press Enter): Δx::Float64 = ")
-                Δx=get_input(Float64;default_value=0.1)
-            elseif dimension=="2D"
-                print("Finite element domain length of DOF1 [au] (default L=30.0 press Enter): Lx::Float64 = ")
-                Lx = get_input(Float64,default_value=30.0)
-                print("Finite element domain length of DOF2 [au] (default L=30.0 press Enter): Ly::Float64 = ")
-                Ly = get_input(Float64,default_value=30.0)
-                print("Set domain type (for symetric domain {-L/2,L/2} set \"s\" and for non-symetric domain {0,L} set \"ns\": dom_type::String = ")
-                dom_type = get_input(["s","ns"])
-                print("Number of finite element of x direction (default nx=100 press Enter): nx::Int = ")
-                nx=get_input(Int;default_value=100)
-                print("Number of finite element of y direction (default ny=100 press Enter): ny::Int = ")
-                ny=get_input(Int;default_value=100)
-            end
-            print("Level shift used in inverse iteration [au]: sigma::Float64 = ")
-            sigma = get_input(Float64;default_data=false)
-            println("You need to create a Julia file inside \"./adhoc_potentials/\" folder.")
-            print("Set julia file name with ad hoc potential = ")
-            adhoc_file_name = readline()
-            include("./adhoc_potentials/"*adhoc_file_name*".jl")
-            print("Set name of ad hoc potential function from $(adhoc_file_name).jl = ")
-            potential_function_name = readline()
-            print("How many parameters does the ad hoc potential function have? length_params::Int = ")
-            length_params=get_input(Int;default_data=false)
-            params_potential = ask_for_params(length_params)
-            if dimension=="1D"
-                params=Params1D(dimension,L,dom_type,Δx,nev,sigma,potential_function_name,params_potential)
-            elseif dimension=="2D"
-                params=Params2D(dimension,Lx,Ly,dom_type,nx,ny,nev,sigma,potential_function_name,params_potential)
-            end
-            if dimension=="2D"
-                print("Do you want to simulate a 2D problem with different masses? (YES (set \"y\") or NO (set \"n\")) different_masses::String = ")
-                different_masses_str = get_input(["y","n"])
-                if different_masses_str == "y"
-                    print("Set the mass of the second particle [au]: m₂::Float64 = ")
-                    m₂=get_input(Float64;default_value=false)
-                    different_masses = tuple(true,m₂)
-                elseif different_masses_str == "n"
-                    different_masses = tuple(false,nothing)
-                end
-                switch_reduced_density = false
-            end
-            output_format_type = ("bin","eigen")
-            write(io,"Ad hoc potential function called $(potential_function_name)\n")
-            write(io,"Finite element domain lengths [au]                Lx::Float64 Ly::Float64 = $(Lx) $(Ly)\n")
-            write(io,"Dimension of eigen value problem                  dimension::String       = $(dimension)\n")
-            write(io,"Number of eigenvalues                             nev::Int                = $(nev)\n")
-            if dimension=="1D"
-                write(io,"Finite element domain length [au]                 L::Float64              = $(L)\n")
-            elseif dimension=="2D"
-                write(io,"Finite element domain lengths [au]                Lx::Float64 Ly::Float64 = $(Lx) $(Ly)\n")
-            end
-            write(io,"Domain type                                       dom_type::String        = $(dom_type)\n")
-            write(io,"Level shift used in inverse iteration [au]        sigma::Float64          = $(sigma)\n")
-            if dimension=="1D"
-                write(io,"Finite element size [au]                          Δx::Float64             = $(Δx)\n")
-            elseif dimension=="2D"
-                write(io,"Number of finite element of x direction           nx::Int                 = $(nx)\n")
-                write(io,"Number of finite element of y direction           ny::Int                 = $(ny)\n")
-            end
-            write(io,"Ad hoc parameters are                             params::Tuple           = $(params_potential)\n")
-            if dimension=="2D" && different_masses_str == "y"
-                write(io,"Mass of the second particle [au]                  m₂::Float64             = $(m₂)\n")
-            end
         end
         write(io,"\nNumber of threads                                                           = $(Threads.nthreads())\n")
         close(io)
     end
 
-    if (type_potential=="6" && id.analysis_param ≠ false)
+    if (type_potential=="5" && id.analysis_param ≠ false)
         λvector=[id.analysis_param.λi+i*id.analysis_param.Δλ 
             for i in 1:round(Int,abs(id.analysis_param.λf-id.analysis_param.λi)/id.analysis_param.Δλ)]
         ϵ_matrix=Matrix{ComplexF64}(undef,id.params.nev,length(λvector))
@@ -323,7 +251,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
             remove_and_write_data(output)
 
         end
-    elseif (type_potential=="6" && id.analysis_param == false)
+    elseif (type_potential=="5" && id.analysis_param == false)
         if id.params.dimension == "2D"
             switch_reduced_density=id.reduced_density
         end
@@ -446,7 +374,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
     
             end
         end
-    elseif type_potential in ["1","2","3","4","5"]
+    elseif type_potential in ["1","2","3","4"]
         println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
         println("... Running ...")
         if params.dimension == "2D"
@@ -529,16 +457,15 @@ function set_type_potential()
     println("   - Unidimensional Symmetric Finit Kronig-Penney          --> set (2)")
     println("   - Unidimensional Finit Well Potential                   --> set (3)")
     println("   - Bidimensional Isotropic Quantum Harmonic Oscillator   --> set (4)")
-    println("   - Ad hoc potential                                      --> set (5)")
-    println("   - Ad hoc potential from input file                      --> set (6)")
+    println("   - Ad hoc potential from input file                      --> set (5)")
     print("Please, set some number to specify the type potential: ")
     type_potential = readline()
-    type_potential == "6" ? id=set_include() : id=nothing
+    type_potential == "5" ? id=set_include() : id=nothing
     return tuple(type_potential,id)
 end
 
 function set_type_potential(full_path_input_data_name::String)
     id=input_data(full_path_input_data_name)
     include("./adhoc_potentials/"*(id.adhoc_file_name)*".jl")
-    return tuple("6",id)
+    return tuple("5",id)
 end

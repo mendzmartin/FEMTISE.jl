@@ -181,12 +181,9 @@ function create_and_remove_model(params::Params1D)
         dom=(0.0,params.L)
     end
     params_model=("./","model1D",dom,params.Δx);  
-
     println("Building the grid model ...")
-
     model=make_model(grid_type,params_model);
     rm(params_model[1]*params_model[2]*".msh")
-
     return model
 end
 

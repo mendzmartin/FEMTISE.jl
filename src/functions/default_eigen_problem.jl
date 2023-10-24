@@ -21,16 +21,16 @@ function remove_and_write_data(output::OutputData)
                 rhoDOF1=output.data[5],rhoDOF2=output.data[6])
         elseif output.output_format_type == ("jld2","all")
             jldsave(output.file_name;ϵ=output.data[1],ϕ=output.data[2],r=output.data[3],pts=output.data[4],
-                Ω=output.data[5],dΩ=output.data[6],Γ=output.data[7],dΓ=output.data[8],TestFESpace=output.data[9],
-                TrialFESpace=output.data[10],model=output.data[11],rhoDOF1=output.data[12],rhoDOF2=output.data[13])
+                Ω=output.data[5],dΩ=output.data[6],Γ=output.data[7],dΓ=output.data[8],UTrialFESpace=output.data[9],
+                VTestFESpace=output.data[10],model=output.data[11],rhoDOF1=output.data[12],rhoDOF2=output.data[13])
         end
     elseif output.data_type == "jld2_default"
         if output.output_format_type == ("jld2","eigen")
             jldsave(output.file_name;ϵ=output.data[1],ϕ=output.data[2],r=output.data[3],pts=output.data[4])
         elseif output.output_format_type == ("jld2","all")
             jldsave(output.file_name;ϵ=output.data[1],ϕ=output.data[2],r=output.data[3],pts=output.data[4],
-                Ω=output.data[5],dΩ=output.data[6],Γ=output.data[7],dΓ=output.data[8],TestFESpace=output.data[9],
-                TrialFESpace=output.data[10],model=output.data[11])
+                Ω=output.data[5],dΩ=output.data[6],Γ=output.data[7],dΓ=output.data[8],UTrialFESpace=output.data[9],
+                VTestFESpace=output.data[10],model=output.data[11])
         end
     end
     println("Saved data.")
@@ -249,7 +249,6 @@ function run_default_eigen_problem(simulation_data::Tuple)
             output_file_name = id.full_path_name*"_eigen_data.jld2"
             output=OutputData("jld2_analysis_param",id.output_format_type,output_file_name,(ϵ_matrix,λvector))
             remove_and_write_data(output)
-
         end
     elseif (type_potential=="5" && id.analysis_param == false)
         if id.params.dimension == "2D"
@@ -352,12 +351,10 @@ function run_default_eigen_problem(simulation_data::Tuple)
                 output=OutputData("jld2_reduced_density",id.output_format_type,output_file_name,
                     (ϵ,ϕ,r,pts,rho_DOF1_matrix,rho_DOF2_matrix))
                 remove_and_write_data(output)
-    
             else
                 output_file_name = id.full_path_name*"_eigen_data.jld2"
                 output=OutputData("jld2_default",id.output_format_type,output_file_name,(ϵ,ϕ,r,pts))
                 remove_and_write_data(output)
-    
             end
         elseif (id.output_format_type)==("jld2","all")
             if switch_reduced_density && id.params.dimension == "2D"
@@ -371,7 +368,6 @@ function run_default_eigen_problem(simulation_data::Tuple)
                 output=OutputData("jld2_default",id.output_format_type,output_file_name,
                     (ϵ,ϕ,r,pts,Ω,dΩ,Γ,dΓ,USpace,VSpace,model))
                 remove_and_write_data(output)
-    
             end
         end
     elseif type_potential in ["1","2","3","4"]

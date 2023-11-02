@@ -21,16 +21,14 @@ function remove_and_write_data(output::OutputData)
                 rhoDOF1=output.data[5],rhoDOF2=output.data[6])
         elseif output.output_format_type == ("jld2","all")
             jldsave(output.file_name;ϵ=output.data[1],ϕ=output.data[2],r=output.data[3],pts=output.data[4],
-                Ω=output.data[5],dΩ=output.data[6],Γ=output.data[7],dΓ=output.data[8],UTrialFESpace=output.data[9],
-                VTestFESpace=output.data[10],model=output.data[11],rhoDOF1=output.data[12],rhoDOF2=output.data[13])
+                model=output.data[5],rhoDOF1=output.data[6],rhoDOF2=output.data[7])
         end
     elseif output.data_type == "jld2_default"
         if output.output_format_type == ("jld2","eigen")
             jldsave(output.file_name;ϵ=output.data[1],ϕ=output.data[2],r=output.data[3],pts=output.data[4])
         elseif output.output_format_type == ("jld2","all")
             jldsave(output.file_name;ϵ=output.data[1],ϕ=output.data[2],r=output.data[3],pts=output.data[4],
-                Ω=output.data[5],dΩ=output.data[6],Γ=output.data[7],dΓ=output.data[8],UTrialFESpace=output.data[9],
-                VTestFESpace=output.data[10],model=output.data[11])
+                model=output.data[5])
         end
     end
     println("Saved data.")
@@ -282,11 +280,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
         end
 
         if (id.output_format_type)==("jld2","all")
-            eigen_results = dispatch_solver(id.params.dimension,"full_export",parameters)
-            ϵ,ϕ = eigen_results[1]
-            Ω,dΩ,Γ,dΓ = eigen_results[2]
-            USpace,VSpace = eigen_results[3]
-            model = eigen_results[4]
+            ϵ,ϕ,model = dispatch_solver(id.params.dimension,"full_export",parameters)
         else
             if switch_reduced_density
                 ϵ,ϕ,model = dispatch_solver(id.params.dimension,"reduced_density",parameters)
@@ -360,13 +354,11 @@ function run_default_eigen_problem(simulation_data::Tuple)
             if switch_reduced_density && id.params.dimension == "2D"
                 output_file_name = id.full_path_name*"_eigen_data.jld2"
                 output=OutputData("jld2_reduced_density",id.output_format_type,output_file_name,
-                    (ϵ,ϕ,r,pts,Ω,dΩ,Γ,dΓ,USpace,VSpace,model,rho_DOF1_matrix,rho_DOF2_matrix))
+                    (ϵ,ϕ,r,pts,model,rho_DOF1_matrix,rho_DOF2_matrix))
                 remove_and_write_data(output)
-    
             else
                 output_file_name = id.full_path_name*"_eigen_data.jld2"
-                output=OutputData("jld2_default",id.output_format_type,output_file_name,
-                    (ϵ,ϕ,r,pts,Ω,dΩ,Γ,dΓ,USpace,VSpace,model))
+                output=OutputData("jld2_default",id.output_format_type,output_file_name,(ϵ,ϕ,r,pts,model))
                 remove_and_write_data(output)
             end
         end
@@ -430,8 +422,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
             remove_and_write_data(output)
         elseif (output_format_type)==("jld2","all")
             output_file_name = full_path_name*"_eigen_data.jld2"
-            output=OutputData("jld2_default",output_format_type,output_file_name,
-                (ϵ,ϕ,r,pts,Ω,dΩ,Γ,dΓ,USpace,VSpace,model))
+            output=OutputData("jld2_default",output_format_type,output_file_name,(ϵ,ϕ,r,pts,model))
             remove_and_write_data(output)
         end
     end
@@ -442,7 +433,7 @@ function set_include()
     print("Set full path name (e.g: \"./my_directory/my_input_data\") where the data is specified and press Enter = ")
     full_path_input_data_name = readline()
     id=input_data(full_path_input_data_name)
-    include("./adhoc_potentials/"*(id.adhoc_file_name)*".jl")
+    include((id.adhoc_file_name)*".jl")
     return id
 end
 
@@ -462,6 +453,6 @@ end
 
 function set_type_potential(full_path_input_data_name::String)
     id=input_data(full_path_input_data_name)
-    include("./adhoc_potentials/"*(id.adhoc_file_name)*".jl")
+    include((id.adhoc_file_name)*".jl")
     return tuple("5",id)
 end

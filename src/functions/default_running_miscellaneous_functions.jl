@@ -118,7 +118,7 @@ function default_solver_eigen_problem(params::Params1D;export_all_data::Bool=fal
     println("Solving eigen problem ...")
     ϵ,ϕ = eigen_values_and_eigen_vectors(p,q,r,dΩ,USpace,VSpace;params=(params.nev,10e-9,500,:none,params.sigma));
     
-    export_all_data ? (result = tuple((ϵ,ϕ),(Ω,dΩ,Γ,dΓ),(USpace,VSpace),model)) : (result = tuple(ϵ,ϕ))
+    export_all_data ? (result = tuple(ϵ,ϕ,model)) : (result = tuple(ϵ,ϕ))
 
     return result;
 end
@@ -164,11 +164,7 @@ function default_solver_eigen_problem(params::Params2D,different_masses::Tuple; 
             params=(params.nev,10e-9,500,:none,params.sigma));
     end
 
-    if export_all_data
-        result = tuple((ϵ,ϕ),(Ω,dΩ,Γ,dΓ),(USpace,VSpace),model)
-    else
-        switch_reduced_density ? (result = tuple(ϵ,ϕ,model)) : (result = tuple(ϵ,ϕ))
-    end
+    (switch_reduced_density || export_all_data) ? (result = tuple(ϵ,ϕ,model)) : (result = tuple(ϵ,ϕ))
 
     return result;
 end

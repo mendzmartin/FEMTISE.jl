@@ -211,7 +211,7 @@ function solver_eigen_problem_with_analysis_param(params::Params1D,model::Gridap
     p,q,r = sturm_liouville_formulation(params_sturm_liouville)
 
     println("Solving eigen problem ...")
-    ϵ,ϕ = eigen_values_and_eigen_vectors(p,q,r,dΩ,USpace,VSpace;params=(params.nev,10e-9,500,:none,params.sigma));
+    ϵ,ϕ = eigen_values_and_eigen_vectors(p,q,r,dΩ,USpace,VSpace;params=(params.nev,10e-9,1500,:none,params.sigma));
     
     return tuple(ϵ,ϕ);
 end

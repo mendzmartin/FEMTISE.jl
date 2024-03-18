@@ -1,40 +1,31 @@
 ---
-title: 'Gala: A Python package for galactic dynamics'
+title: 'TimeIndependentSchrodingerEquation: Julia package to resolve Time-Independent Schrödinger equation by (F)init (E)lement (M)ethod. This is an implementation of Gridap package for unidimensional and bidimensional grids.'
 tags:
-  - Python
-  - astronomy
-  - dynamics
-  - galactic dynamics
-  - milky way
+  - Julia
+  - Physics
+  - Time-Independent Schrödinger equation
+  - Quantum mechanics
+  - Finit Element Method
 authors:
-  - name: Adrian M. Price-Whelan
+  - name: Méndez, Martín
     orcid: 0000-0000-0000-0000
     equal-contrib: true
-    affiliation: "1, 2" # (Multiple affiliations must be quoted)
-  - name: Author Without ORCID
+    affiliation: "1, 2"
+  - name: Pont, Federico M.
     equal-contrib: true # (This is how you can denote equal contributions between multiple authors)
-    affiliation: 2
-  - name: Author with no affiliation
-    corresponding: true # (This is how to denote the corresponding author)
-    affiliation: 3
-  - given-names: Ludwig
-    dropping-particle: van
-    surname: Beethoven
-    affiliation: 3
+    affiliation: "1, 2"
 affiliations:
- - name: Lyman Spitzer, Jr. Fellow, Princeton University, USA
+ - name: [Faculty of Mathematics, Astronomy, Physics and Computation (FaMAF)](https://www.famaf.unc.edu.ar/)
    index: 1
- - name: Institution Name, Country
+ - name: Insituto de Física Enrique Gaviola (IFEG-CONICET).
    index: 2
- - name: Independent Researcher, Country
-   index: 3
-date: 13 August 2017
+date: 18 March 2024
 bibliography: paper.bib
 
 # Optional fields if submitting to a AAS journal too, see this blog post:
 # https://blog.joss.theoj.org/2018/12/a-new-collaboration-with-aas-publishing
 aas-doi: 10.3847/xxxxx <- update this with the DOI from AAS once you know it.
-aas-journal: Astrophysical Journal <- The name of the AAS journal.
+aas-journal: Physics Journal <- The name of the AAS journal.
 ---
 
 # Summary
@@ -71,22 +62,26 @@ design, and support for Astropy functionality in `Gala` will enable exciting
 scientific explorations of forthcoming data releases from the *Gaia* mission
 [@gaia] by students and experts alike.
 
-# Mathematics
+# Mathematics: Formulación débil y problema de autovalores (método de Galerkin)
 
-Single dollars ($) are required for inline mathematics e.g. $f(x) = e^{\pi/x}$
+Partiendo de la ecuación de Schrödinger independiente del tiempo tendremos $\hat{H}\ket{\psi } =\epsilon \ket{\psi }$ en representación coordenada podremos escribir esta ecuación en su formulación de Sturm-Liouville como sigue,
 
-Double dollars make self-standing equations:
+$$
+\underbrace{\hat{H}\ket{\psi } =\epsilon \ket{\psi }}_{\mathrm{TISE}} \Rightarrow \overbrace{-\nabla \cdotp ( p\nabla \psi ) +q\psi =\lambda r\psi ;}^{\mathrm{Sturm-Liouville}} \ \mathrm{if} \ \hat{H} =-\frac{i\hbar }{2m}\vec{\nabla } +V( r) \Rightarrow \begin{cases}
+p( x) =\frac{\hbar ^{2}}{2m_{e}}(  >0)\\
+q( x) =V( r)\\
+r( x) =1(  >0)
+\end{cases}
+$$
 
-$$\Theta(x) = \left\{\begin{array}{l}
-0\textrm{ if } x < 0\cr
-1\textrm{ else}
-\end{array}\right.$$
+Para una formulación variacional primero aproximamos la función de onda $\psi \in \mathcal{H}$ por una función $u\in U_{\mathrm{trial}}$ (donde $\mathcal{H}$ es un espacio de Hilbert, en principio, de dimensión infinita y donde $U_{\mathrm{trial}}$ es un espacio que aproxima a $\mathcal{H}$ de dimensión finita) y multiplicamos la PDE por una función de prueba $v\in V_{\mathrm{space}}\left( C^{1}\right)$ (notemos que no se requiere que $v$ satisfaga alguna condición de contorno), e integramos sobre $\Omega$ usando la formula de Green que nos dice
 
-You can also use plain \LaTeX for equations
-\begin{equation}\label{eq:fourier}
-\hat f(\omega) = \int_{-\infty}^{\infty} f(x) e^{i\omega x} dx
-\end{equation}
-and refer to \autoref{eq:fourier} from text.
+$$
+\overbrace{\int _{\Omega }( \partial _{j} h) gdx=-\int _{\Omega } h( \partial _{j} g) dx+\int _{\partial \Omega =\Gamma } hgn_{j} ds}^{\mathrm{Green\ theorem}}
+$$
+
+donde $n_{j} =\vec{n} \cdotp e_{j}$ es la coordenada $j$-ésima de $\vec{n}$ en la base canónica de $\mathbb{R}^{d}$. Entonces,
+
 
 # Citations
 

@@ -4,7 +4,7 @@ using Pkg
 Pkg.activate("../"); # activate specific environment from TimeIndependentSchrodingerEquation package
 Pkg.instantiate()
 
-using TimeIndependentSchrodingerEquation
+using FEMTISE
 using Gridap,Test
 
 # include auxiliary codes

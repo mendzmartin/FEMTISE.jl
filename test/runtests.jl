@@ -2,7 +2,7 @@ using Pkg
 Pkg.activate("../")
 Pkg.instantiate()
 
-using TimeIndependentSchrodingerEquation
+using FEMTISE
 using Test
 
 @testset "Test eigenvalue problem for Quantum Harmonic Oscillator 2D" begin

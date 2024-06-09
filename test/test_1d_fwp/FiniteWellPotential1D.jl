@@ -4,7 +4,7 @@ using Pkg
 Pkg.activate("../")
 Pkg.instantiate()
 
-using TimeIndependentSchrodingerEquation
+using FEMTISE
 using Gridap,Test
 
 include("../useful_functions_to_FEM.jl")

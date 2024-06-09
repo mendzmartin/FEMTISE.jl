@@ -1,9 +1,9 @@
 using Documenter
-using TimeIndependentSchrodingerEquation
+using FEMTISE
 
 makedocs(
-    sitename = "TimeIndependentSchrodingerEquation.jl",
-    modules  = [TimeIndependentSchrodingerEquation],
+    sitename = "FEMTISE.jl",
+    modules  = [FEMTISE],
     pages = [
         "Home" => "index.md",
         "Guide Information"=>"guide_information.md",
@@ -17,5 +17,5 @@ makedocs(
     )
 
 deploydocs(;
-    repo="github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl.git",
+    repo="github.com/mendzmartin/FEMTISE.jl.git",
     )

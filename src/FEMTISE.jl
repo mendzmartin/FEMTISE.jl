@@ -1,4 +1,4 @@
-module TimeIndependentSchrodingerEquation
+module FEMTISE
 
 using Gridap,GridapGmsh,Gmsh,FileIO
 using LinearAlgebra,SparseArrays,Arpack

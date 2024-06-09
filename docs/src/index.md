@@ -1,4 +1,4 @@
-# TimeIndependentSchrodingerEquation.jl
+# FEMTISE.jl
 
 *A documentation generator for Julia.*
 

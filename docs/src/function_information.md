@@ -1,6 +1,6 @@
-## Documentation of the TimeIndependentSchrodingerEquation module.
+## Documentation of the FEMTISE module.
 
 ```@autodocs
-Modules = [TimeIndependentSchrodingerEquation]
+Modules = [FEMTISE]
 Order   = [:function, :type]
 ```

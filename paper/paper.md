@@ -1,5 +1,5 @@
 ---
-title: 'TimeIndependentSchrodingerEquation: Julia package to resolve Time-Independent Schrödinger equation by (F)init (E)lement (M)ethod. This is an implementation of Gridap package for unidimensional and bidimensional grids.'
+title: 'FEMTISE: Julia package to resolve Time-Independent Schrödinger equation by (F)init (E)lement (M)ethod. This is an implementation of Gridap package for unidimensional and bidimensional grids.'
 tags:
   - Julia
   - Physics

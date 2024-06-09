@@ -1,15 +1,15 @@
-## **How we can use `TimeIndependentSchrodingerEquation` package ?**
-### **1. Clone `TimeIndependentSchrodingerEquation` package**
+## **How we can use `FEMTISE` package ?**
+### **1. Clone `FEMTISE` package**
 
 First we need to clone package from GitHub repository as follow
 ```bash
     @prompt$: cd ~/my_directory/
-    @my_directory$: git clone https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl.git
+    @my_directory$: git clone https://github.com/mendzmartin/FEMTISE.jl.git
 ```
 
-This will download a folder called `TimeIndependentSchrodingerEquation.jl`, it is important to keep the `.jl` extension in the repository name. And, in case we have already cloned the repository, we must update it by running `git pull`.
+This will download a folder called `FEMTISE.jl`, it is important to keep the `.jl` extension in the repository name. And, in case we have already cloned the repository, we must update it by running `git pull`.
 
-### **2. Build Julia code to use `TimeIndependentSchrodingerEquation` package**
+### **2. Build Julia code to use `FEMTISE` package**
 
 ```bash
     @prompt$: mkdir ~/my_folder
@@ -30,7 +30,7 @@ This will download a folder called `TimeIndependentSchrodingerEquation.jl`, it i
     (@v1.9) pkg>
     (@v1.9) pkg> activate .
     (@my_folder) pkg> instantiate()
-    (@my_folder) pkg> dev ~/my_directory/TimeIndependentSchrodingerEquation.jl
+    (@my_folder) pkg> dev ~/my_directory/FEMTISE.jl
     (@my_folder) pkg> add Revise
     julia> exit()
 ```
@@ -43,13 +43,13 @@ using Pkg
 Pkg.activate("./")
 Pkg.instantiate()
 
-using TimeIndependentSchrodingerEquation
+using FEMTISE
 using Revise
 
 #=
 ... ...
     code block where we use function
-    from TimeIndependentSchrodingerEquation package
+    from FEMTISE package
 ... ....
 =#
 
@@ -68,8 +68,8 @@ where we have specified 4 threads as parallelization.
 ## Run from Julia REPL
 We can also run the package directly from Julia REPL by opening the terminal `Ctrl+Alt+T` inside the package folder and typing the following commands inside the terminal:
 ```bash
-    @prompt$: cd my_directory/TimeIndependentSchrodingerEquation.jl/
-    @TimeIndependentSchrodingerEquation.jl$: julia
+    @prompt$: cd my_directory/FEMTISE.jl/
+    @FEMTISE.jl$: julia
                _
    _       _ _(_)_     |  Documentation: https://docs.julialang.org
   (_)     | (_) (_)    |
@@ -84,9 +84,9 @@ We can also run the package directly from Julia REPL by opening the terminal `Ct
     (@v1.9) pkg>
     (@v1.9) pkg> activate .
     (@my_folder) pkg> instantiate()
-    (@my_folder) pkg> dev ~/my_directory/TimeIndependentSchrodingerEquation.jl
+    (@my_folder) pkg> dev ~/my_directory/FEMTISE.jl
     (@my_folder) pkg> add Revise
-    julia> using TimeIndependentSchrodingerEquation
+    julia> using FEMTISE
     julia> using Revise
 ```
 and then we can, for example, access Julia's help mode to ask for specific package functions such as the following:

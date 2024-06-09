@@ -1,13 +1,13 @@
-# How to run default eigen problems defined inside TimeIndependentSchrodingerEquation Package
+# How to run default eigen problems defined inside FEMTISE Package
 
-## Coling TimeIndependentSchrodingerEquation package repository
+## Coling FEMTISE package repository
 First of all you need to clone package from GitHub repository as follow
 ```bash
     @prompt$: cd ~/my_directory/
-    @my_directory$: git clone https://github.com/mendzmartin/TimeIndependentSchrodingerEquation.jl.git
+    @my_directory$: git clone https://github.com/mendzmartin/FEMTISE.jl.git
 ```
 
-This will download a folder called `TimeIndependentSchrodingerEquation.jl`, it is important to keep the `.jl` extension in the repository name. And, in case we have already cloned the repository, we must update it by running `git pull`.
+This will download a folder called `FEMTISE.jl`, it is important to keep the `.jl` extension in the repository name. And, in case we have already cloned the repository, we must update it by running `git pull`.
 
 ## Simulate predefined potential
 Create a folder where you want to save simuation data, from Bash terminal write
@@ -29,7 +29,7 @@ Create a folder where you want to save simuation data, from Bash terminal write
     julia> Ctrl+]
     (@v1.9) pkg>
     (@v1.9) pkg> activate .
-    (@v1.9) pkg> dev ~/my_directory/TimeIndependentSchrodingerEquation.jl
+    (@v1.9) pkg> dev ~/my_directory/FEMTISE.jl
     (@v1.9) pkg> add Revise
     julia> exit()
 ```
@@ -42,7 +42,7 @@ Then, open a Julia file `@my_folder$: vi my_script.jl` and write the following c
         Pkg.instantiate()
         
         using Revise
-        using TimeIndependentSchrodingerEquation;
+        using FEMTISE;
         
         run_default_eigen_problem(set_type_potential())
     end
@@ -193,7 +193,7 @@ First open script file `@my_folder$: vi my_script.jl` and write the following co
         Pkg.instantiate()
         
         using Revise
-        using TimeIndependentSchrodingerEquation;
+        using FEMTISE;
         
         path_input_data = "./my_input"
         run_default_eigen_problem(set_type_potential(path_input_data))

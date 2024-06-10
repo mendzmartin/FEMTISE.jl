@@ -1,11 +1,11 @@
 # **FEMTISE.jl**
 
 <picture>
-<source srcset="/images/logo_FEMTISE.svg" alt="FEMTISE.jl Logo" width="125" height="125" align="right">
+<img alt="FEMTISE logo" src="/images/logo_FEMTISE.svg" width="125" height="125" align="right">
 </picture>
 
 | **GitHub Actions - Workflows** |
-|:------------:|
+| ------------ |
 | [![Documentation](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/documentation.yml/badge.svg)](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/documentation.yml) |
 | [![Build Status](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/CI.yml?query=branch%3Amain) |
 | [![CompatHelper](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/CompatHelper.yml/badge.svg)](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/CompatHelper.yml) |

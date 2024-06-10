@@ -1,6 +1,6 @@
 # **FEMTISE.jl**
 
-<img src="/images/logo_FEMTISE.pdf" alt="FEMTISE.jl Logo" style="height: 125px; width:125px;"/>
+<img src="/images/logo_FEMTISE.svg" alt="FEMTISE.jl Logo" style="height: 125px; width:125px;"/>
 
 | **GitHub Actions - Workflows** |
 |:------------ |

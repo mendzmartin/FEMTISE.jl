@@ -1,12 +1,11 @@
-# **FEMTISE.jl**
+# **FEMTISE.jl** <img src="/images/logo_FEMTISE.svg" alt="FEMTISE.jl Logo" style="height: 125px; width:125px;"/>
 
-|| **GitHub Actions - Workflows** |
+| **GitHub Actions - Workflows** |
 |:------------ |
 | [![Documentation](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/documentation.yml/badge.svg)](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/documentation.yml) |
 | [![Build Status](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/CI.yml/badge.svg?branch=main)](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/CI.yml?query=branch%3Amain) |
 | [![CompatHelper](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/CompatHelper.yml/badge.svg)](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/CompatHelper.yml) |
-| [![TagBot](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/TagBot.yml/badge.svg)](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/TagBot.yml) || <img src="/images/logo_FEMTISE.svg" alt="FEMTISE.jl Logo" style="height: 125px; width:125px;"/> |
-
+| [![TagBot](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/TagBot.yml/badge.svg)](https://github.com/mendzmartin/FEMTISE.jl/actions/workflows/TagBot.yml) |
 
 <!-- [![Codecov](https://app.codecov.io/gh/mendzmartin/FEMTISE.jl/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mendzmartin/FEMTISE.jl) -->
 

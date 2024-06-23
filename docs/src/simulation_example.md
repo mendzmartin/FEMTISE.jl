@@ -1,6 +1,6 @@
 # How to run default eigen problems defined inside FEMTISE Package
 
-## Coling FEMTISE package repository
+## Clone FEMTISE package repository
 First of all you need to clone package from GitHub repository as follow
 ```bash
     @prompt$: cd ~/my_directory/

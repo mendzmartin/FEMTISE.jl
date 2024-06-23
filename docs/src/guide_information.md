@@ -29,7 +29,7 @@ This will download a folder called `FEMTISE.jl`, it is important to keep the `.j
     julia> Ctrl+]
     (@v1.9) pkg>
     (@v1.9) pkg> activate .
-    (@my_folder) pkg> instantiate()
+    (@my_folder) pkg> instantiate
     (@my_folder) pkg> dev ~/my_directory/FEMTISE.jl
     (@my_folder) pkg> add Revise
     julia> exit()
@@ -83,7 +83,7 @@ We can also run the package directly from Julia REPL by opening the terminal `Ct
     julia> Ctrl+]
     (@v1.9) pkg>
     (@v1.9) pkg> activate .
-    (@my_folder) pkg> instantiate()
+    (@my_folder) pkg> instantiate
     (@my_folder) pkg> dev ~/my_directory/FEMTISE.jl
     (@my_folder) pkg> add Revise
     julia> using FEMTISE

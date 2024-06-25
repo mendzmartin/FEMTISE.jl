@@ -133,7 +133,7 @@ Here you can see some plots from Package's simulations eg.:
 
 |    **Unidimensional Symmetric Finit Kronig-Penney**    |                                                   |
 |:------------:|:-------------:|
-| <img src="/images/kp1d_e3.png" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 300px; width:300px;"/> | <img src="/images/kp1d_e10.png" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 300px; width:300px;"/> |
+| <img src="/images/kp1d_e1to3.svg" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 300px; width:300px;"/> | <img src="/images/kp1d_e10.png" alt="Unidimensional Symmetric Finit Kronig-Penney" style="height: 300px; width:300px;"/> |
 
 |    **Unidimensional Quantum Harmonic Oscillator**      |    **Bidimensional Isotropic**                         <br />        **Quantum Harmonic Oscillator**                 |
 |:------------:|:-------------:|

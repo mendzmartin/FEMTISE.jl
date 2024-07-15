@@ -1,31 +1,3 @@
-#= ++++++++++++++++++++
-README
-
-This module defines the default eigenvalue problem for the quantum harmonic oscillator 1D, 
-quantum harmonic oscillator 2D, Kronig-Penney 1D, and finite well potential 1D.
-
-# Set atomic unit system
-const Bohr_radius_meter=5.29177210903e−11;                              # [m]
-const Angstrom_to_meter=1e−10;                                          # [m/Å]
-const Angstrom_to_au=Angstrom_to_meter*(1.0/Bohr_radius_meter);         # [au/Å]
-const Nanometer_to_au=(1e-9)*(1.0/Angstrom_to_meter)*Angstrom_to_au;    # [au/nm]
-const Electronvolt_to_au=0.036749405469679;                             # [au/Ev]
-
-set type of default potential could be the next
-    - Quantum Harmonic Oscillator 1D
-        - type_potential="qho_1d"
-        -  default values -> L=30.0,Δx=0.1,sigma=0.0
-    - Quantum Harmonic Oscillator 2D
-        - type_potential="qho_2d"
-        -  default values -> L=30.0,nx=ny=100,sigma=0.0
-    - Finit Kronig-Penney 1D
-        - type_potential="kronig_penney_1d"
-        -  default values -> L=30.0,Δx=0.1,sigma=V₀
-    - Finit Well Potential 1D
-        - type_potential="finite_well_1d"
-        -  default values -> L=30.0,Δx=0.1,sigma=V₀
-++++++++++++++++++++ =#
-
 module DefaultEigenProblem
 
 using Pkg
@@ -62,3 +34,34 @@ end
 ϵ,ϕ = default_solver_eigen_problem(type_potential,params)
 
 end
+
+#=
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+                        README
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+This module defines the default eigenvalue problem for the quantum harmonic oscillator 1D, 
+quantum harmonic oscillator 2D, Kronig-Penney 1D, and finite well potential 1D.
+
+# Set atomic unit system
+const Bohr_radius_meter=5.29177210903e−11;                              # [m]
+const Angstrom_to_meter=1e−10;                                          # [m/Å]
+const Angstrom_to_au=Angstrom_to_meter*(1.0/Bohr_radius_meter);         # [au/Å]
+const Nanometer_to_au=(1e-9)*(1.0/Angstrom_to_meter)*Angstrom_to_au;    # [au/nm]
+const Electronvolt_to_au=0.036749405469679;                             # [au/Ev]
+
+set type of default potential could be the next
+    - Quantum Harmonic Oscillator 1D
+        - type_potential="qho_1d"
+        -  default values -> L=30.0,Δx=0.1,sigma=0.0
+    - Quantum Harmonic Oscillator 2D
+        - type_potential="qho_2d"
+        -  default values -> L=30.0,nx=ny=100,sigma=0.0
+    - Finit Kronig-Penney 1D
+        - type_potential="kronig_penney_1d"
+        -  default values -> L=30.0,Δx=0.1,sigma=V₀
+    - Finit Well Potential 1D
+        - type_potential="finite_well_1d"
+        -  default values -> L=30.0,Δx=0.1,sigma=V₀
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+=#

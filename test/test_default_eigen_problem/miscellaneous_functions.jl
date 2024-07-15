@@ -36,6 +36,7 @@ function default_potential_sturm_liouville(type_potential::String,params::Tuple)
     return p,q,r;
 end
 
+export default_solver_eigen_problem
 """
     default_solver_eigen_problem(type_potential,params)
 
@@ -57,9 +58,7 @@ end
 - `ϵ::Array{ComplexF64}`: eigenvalues
 - `ϕ::Array{Array{ComplexF64,1},1}`: eigenvectors
 """
-export default_solver_eigen_problem
 function default_solver_eigen_problem(type_potential::String,params::Tuple)
-
     if type_potential=="qho_1d"
         L,Δx,ω,x₁,nev,sigma=params
         params_sturm_liouville=(ω,x₁)

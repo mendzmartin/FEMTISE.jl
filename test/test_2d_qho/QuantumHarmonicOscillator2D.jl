@@ -1,9 +1,11 @@
 module QuantumHarmonicOscillator2D
 
+# activate specific environment from FEMTISE package
 using Pkg
-Pkg.activate("../"); # activate specific environment from TimeIndependentSchrodingerEquation package
+Pkg.activate("../");
 Pkg.instantiate()
 
+# import necessary packages
 using FEMTISE
 using Gridap,Test
 
@@ -11,6 +13,7 @@ using Gridap,Test
 include("../useful_functions_to_FEM.jl")
 include("miscellaneous_functions.jl")
 
+# define domain and number of FE
 dom2D=(-30.0,30.0,-30.0,30.0);  # define domain 2D symetric concern origin
 nxy=(100,100);                  # define number of FE to use in each coordinate
 params_model=(dom2D,nxy);       # organize data in a tuple
@@ -19,7 +22,9 @@ grid_type="Cartesian2D";        # define type of FE grid
 # create mesh from specific parameters
 model2D=make_model(grid_type,params_model);
 
-BC_type="FullDirichlet"; # define type of boundary conditions (BC)
+# define boundary conditions
+BC_type="FullDirichlet";
+
 # create BC with data and labels
 FullDirichlet_values,FullDirichlet_tags=make_boundary_conditions(grid_type,BC_type,ComplexF64);
 
@@ -39,7 +44,6 @@ p,q,r = eigenvalue_problem_functions((1.0,0.0,0.0));
 ϵ_real=exactly_eigenvalues_2dqho(length(ϵ));
 
 # testing results
-
 @testset "Check eigenenergies" begin
     @test real(ϵ) ≈ ϵ_real atol=0.1
 end

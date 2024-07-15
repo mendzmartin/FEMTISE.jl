@@ -13,6 +13,13 @@
 
 # Output
 - `result::Vector`: integral value
+
+# Example
+```julia
+x=0:0.1:10;
+fx=sin.(x);
+result=uniform_trapezoidal_integration_method(x,fx)
+```
 """
 function uniform_trapezoidal_integration_method(x_vec::Vector,fx_vec::Vector)
     dim_x=length(x_vec);
@@ -39,6 +46,13 @@ end
 
 # Output
 - `result::Vector`: integral value
+
+# Example
+```julia
+x=0:0.1:10;
+params=(5.0,1.0,1,0.1);
+result=aprox_dirac_delta(x,params)
+```
 """
 function aprox_dirac_delta(x,params::Tuple{Float64,Float64,Int,Float64})
     x₀,δnorm,component,Δx=params
@@ -542,6 +556,13 @@ end
 
 # Output
 - `sigma::Array{Float64}`: array of standar deviation of specific coordinate
+
+# Example
+```julia
+expval=[1.0,2.0,3.0];
+var=[0.1,0.2,0.3];
+sigma=coord_standar_deviation(expval,var)
+```
 """
 function coord_standar_deviation(expval::Vector{Float64},var::Vector{Float64})
     return sqrt.(var.-(expval.*expval))

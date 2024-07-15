@@ -1,4 +1,26 @@
 export default_potential_sturm_liouville
+"""
+    default_potential_sturm_liouville(type_potential,params)
+
+# Aim
+- Define default potential for Sturm Liouville formulation
+
+# Arguments
+- `type_potential::String`: type of potential
+- `params::Tuple`: tuple with parameters of the potential
+  - `params[1]::String`: type of potential
+  - `params[2:end]::Tuple`: parameters of the potential
+
+# Example
+```julia
+p,q,r=default_potential_sturm_liouville("qho_1d",(1.0,0.1))
+```
+
+# Returns
+- `p::Function`: kinetic energy
+- `q::Function`: potential energy
+- `r::Function`: weight function
+"""
 function default_potential_sturm_liouville(type_potential::String,params::Tuple)
     if type_potential=="qho_1d"
         p,q,r=default_qho1d_sturm_liouville(params)
@@ -14,6 +36,27 @@ function default_potential_sturm_liouville(type_potential::String,params::Tuple)
     return p,q,r;
 end
 
+"""
+    default_solver_eigen_problem(type_potential,params)
+
+# Aim
+- Solve eigen problem for a specific potential
+
+# Arguments
+- `type_potential::String`: type of potential
+- `params::Tuple`: tuple with parameters of the potential
+  - `params[1]::String`: type of potential
+  - `params[2:end]::Tuple`: parameters of the potential
+
+# Example
+```julia
+ϵ,ϕ=default_solver_eigen_problem("qho_1d",(1.0,0.1,1.0,0.0,4,0.0))
+```
+
+# Returns
+- `ϵ::Array{ComplexF64}`: eigenvalues
+- `ϕ::Array{Array{ComplexF64,1},1}`: eigenvectors
+"""
 export default_solver_eigen_problem
 function default_solver_eigen_problem(type_potential::String,params::Tuple)
 
@@ -26,10 +69,10 @@ function default_solver_eigen_problem(type_potential::String,params::Tuple)
     elseif type_potential=="qho_2d"
         L,nx,ny,ω,x₁,y₁,nev,sigma=params
         params_sturm_liouville=(ω,x₁,y₁)
-        dom=(-0.5*L,0.5*L,-0.5*L,0.5*L);  # define domain 2D symetric concern origin
+        dom=(-0.5*L,0.5*L,-0.5*L,0.5*L);    # define domain 2D symetric concern origin
         nxy=(nx,ny);                        # define number of FE to use in each coordinate
-        params_model=(dom,nxy);       # organize data in a tuple
-        grid_type="Cartesian2D";        # define type of FE grid
+        params_model=(dom,nxy);             # organize data in a tuple
+        grid_type="Cartesian2D";            # define type of FE grid
         dimension="2D"
     elseif type_potential=="kronig_penney_1d"
         L,V₀,t,b,num_ions,Δx,nev,sigma=params

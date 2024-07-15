@@ -10,7 +10,8 @@ using Gridap.CellData;  # para construir condición inicial interpolando una fun
 using JLD2
 
 include("functions/default_running_structures.jl")
-include("functions/mesh_generator_function.jl");
+include("functions/post_proccesing_data_structures.jl")
+include("functions/mesh_generator_function.jl")
 include("functions/boundary_conditions_function.jl")
 include("functions/miscellaneous_functions.jl")
 include("functions/eigen_problem_definition_function.jl")
@@ -20,9 +21,14 @@ include("functions/default_running_miscellaneous_functions.jl")
 include("functions/default_running_input_data.jl")
 include("functions/default_eigen_problem.jl")
 include("functions/binary_file_io.jl")
+include("functions/post_proccesing_data_function.jl")
 
 # from default_running_structures
 export Params1D,Params2D,AnalysisParam,InputData,InputData1D,InputData2D
+# from post_proccesing_data_structures
+export DefaultBinEigenProblemReducedDensity,DefaultJLD2EigenProblem,
+ DefaultJLD2EigenProblemReducedDensity,DefaultJLD2AllEigenProblem,
+ DefaultJLD2AllEigenProblemReducedDensity,AnalysisParams
 # from mesh_generator_function
 export make_model
 # from boundary_conditions_function
@@ -51,5 +57,7 @@ export run_default_eigen_problem,run_default_eigen_problem_jld2,
  set_include,set_type_potential
 # from binary_file_io
 export write_bin,read_bin
+# from post_proccesing_data_function
+export collect_result_data
 
 end

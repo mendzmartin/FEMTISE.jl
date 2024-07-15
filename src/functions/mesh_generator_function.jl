@@ -1,7 +1,19 @@
-#=
-    References:
-        https://gitlab.onelab.info/gmsh/gmsh/blob/master/api/gmsh.jl
-=#
+"""
+    make_model(grid_type,params)
+
+# Aim
+- Create a mesh model using Gmsh
+
+# Arguments
+- `grid_type::String`: type of grid to create
+- `params::Tuple`: parameters to create the grid
+
+# Returns
+- `model::GmshDiscreteModel`: mesh model
+
+# References
+- https://gitlab.onelab.info/gmsh/gmsh/blob/master/api/gmsh.jl
+"""
 function make_model(grid_type::String,params::Tuple)
     GridapGmsh.gmsh.initialize()
     GridapGmsh.gmsh.option.setNumber("General.Terminal",1)

@@ -1,3 +1,26 @@
+"""
+    make_boundary_conditions(grid_type,BC_type,TypeData;<keyword arguments>)
+
+# Aim
+- Create boundary conditions for a given grid and type of boundary conditions
+
+# Arguments
+- `grid_type::String`: type of grid
+- `BC_type::String`: type of boundary conditions
+- `TypeData::Type`: type of data
+- `<keyword arguments>`:
+    - `homogeneous::Bool=true`: if boundary conditions are homogeneous
+    - `params::Tuple=(nothing,nothing)`: parameters for boundary conditions
+
+# Returns
+- `BC_values::Array{TypeData,1}`: values of boundary conditions
+- `BC_tags::Array{String,1}`: tags of boundary conditions
+
+# Example
+```julia
+BC_values,BC_tags=make_boundary_conditions("simple_line","FullDirichlet",Float64)
+```
+"""
 function make_boundary_conditions(grid_type::String,BC_type::String,TypeData::Type;homogeneous::Bool=true,params::Tuple=(nothing,nothing))
     if (grid_type == "simple_line")
         if (BC_type == "FullDirichlet")

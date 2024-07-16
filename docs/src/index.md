@@ -1,9 +1,5 @@
 # FEMTISE
 
-<picture>
-<img alt="FEMTISE logo" src="/images/logo_FEMTISE.svg" width="200" height="200" align="right">
-</picture>
-
 ## **Warning!**
 ***->> The package is under construction <<-***
 

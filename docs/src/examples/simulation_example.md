@@ -30,7 +30,6 @@ Create a folder where you want to save simuation data, from Bash terminal write
     (@v1.9) pkg>
     (@v1.9) pkg> activate .
     (@v1.9) pkg> dev ~/my_directory/FEMTISE.jl
-    (@v1.9) pkg> add Revise
     julia> exit()
 ```
 
@@ -41,7 +40,6 @@ Then, open a Julia file `@my_folder$: vi my_script.jl` and write the following c
         Pkg.activate("./")
         Pkg.instantiate()
         
-        using Revise
         using FEMTISE;
         
         run_default_eigen_problem(set_type_potential())
@@ -192,7 +190,6 @@ First open script file `@my_folder$: vi my_script.jl` and write the following co
         Pkg.activate("./")
         Pkg.instantiate()
         
-        using Revise
         using FEMTISE;
         
         path_input_data = "./my_input"

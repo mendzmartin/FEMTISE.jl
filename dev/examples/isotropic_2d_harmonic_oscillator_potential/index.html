@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Isotropic 2D Quantum Harmonic Oscillator Potential · FEMTISE</title><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">FEMTISE</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../guide_information/">Guide Information</a></li><li><a class="tocitem" href="../../function_information/">Function Information</a></li><li><span class="tocitem">Simulation Example</span><ul><li><a class="tocitem" href="../simulation_example/">General Simulation Examples</a></li><li><a class="tocitem" href="../symmetric_finite_1d_kronig_penney_potential/">Symmetric Finite 1D Kronig-Penney Potential</a></li><li><a class="tocitem" href="../isotropic_1d_harmonic_oscillator_potential/">Isotropic 1D Quantum Harmonic Oscillator Potential</a></li><li class="is-active"><a class="tocitem" href>Isotropic 2D Quantum Harmonic Oscillator Potential</a></li><li><a class="tocitem" href="../coulomb_interaction_2d_potential/">Two-Electrons Coulomb Interaction Potential</a></li></ul></li><li><a class="tocitem" href="../../contact_information/">Contact Information</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Simulation Example</a></li><li class="is-active"><a href>Isotropic 2D Quantum Harmonic Oscillator Potential</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Isotropic 2D Quantum Harmonic Oscillator Potential</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/mendzmartin/FEMTISE.jl/blob/main/docs/src/examples/isotropic_2d_harmonic_oscillator_potential.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator"><a class="docs-heading-anchor" href="#Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator">Tutorial To Simulate Isotropic Two Dimensional Harmonic Oscillator</a><a id="Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator" title="Permalink"></a></h1><h3 id="Create-simulation-directory"><a class="docs-heading-anchor" href="#Create-simulation-directory">Create simulation directory</a><a id="Create-simulation-directory-1"></a><a class="docs-heading-anchor-permalink" href="#Create-simulation-directory" title="Permalink"></a></h3><p>First of all we need to create a specific directory to save this specific simulation results </p><pre><code class="language-bash hljs">@prompt:~$ mkdir ~/my_directory_path/QHO2D
+@prompt:~$ cd ~/my_directory_path/QHO2D</code></pre><h3 id="Create-function-potential"><a class="docs-heading-anchor" href="#Create-function-potential">Create function potential</a><a id="Create-function-potential-1"></a><a class="docs-heading-anchor-permalink" href="#Create-function-potential" title="Permalink"></a></h3><p>We need to create a aspecific function potential for quantum harmonic oscillator 2D as following:</p><pre><code class="language-bash hljs">@prompt:~/my_directory_path/QHO2D$ vi adhoc_potential_function.jl</code></pre><p>Inside <code>adhoc_potential_function</code> write the following:</p><pre><code class="language-julia hljs">export qho_2d
+&quot;&quot;&quot;
+    qho_2d(x,params)
+
+# Aim:
+    This function is a simple implementation of the 2D quantum harmonic oscillator potential. 
+    It is used to test the simulation of the isotropic quantum harmonic oscillator in 2D.
+
+# Arguments
+    x::Array{Float64,1} : The position of the particle in 2D.
+    params::Tuple : A tuple containing the parameters of the potential. 
+        params[1]::Float64 : The frequency of the oscillator.
+        params[2]::Float64 : The position of the minimum of the potential in the x direction.
+        params[3]::Float64 : The position of the minimum of the potential in the y direction.
+&quot;&quot;&quot;
+function qho_2d(x,params::Tuple)
+    ω,x₁,y₁=params
+    return 0.5*(ω*ω)*((x[1]-x₁)*(x[1]-x₁)+(x[2]-y₁)*(x[2]-y₁))
+end</code></pre><h3 id="Input-file"><a class="docs-heading-anchor" href="#Input-file">Input file</a><a id="Input-file-1"></a><a class="docs-heading-anchor-permalink" href="#Input-file" title="Permalink"></a></h3><p>We need to create an input file to simulate using default solver function inside FEMTISE package</p><pre><code class="language-bash hljs">@prompt:~/my_directory_path/QHO2D$ vi input.dat</code></pre><p>Inside <code>input.dat</code> we need to write the following.</p><pre><code class="language-text hljs">full_path_name              = ~/my_directory_path/QHO2D/name_output_file
+dom_type                    = s
+nev                         = 10
+dimension                   = 2D
+sigma                       = 0.0
+adhoc_file_name             = ~/my_directory_path/QHO2D/adhoc_potential_function
+potential_function_name     = qho_2d
+params_potential_types      = f f f
+params_potential            = 1.0 0.0 0.0
+analysis_param              = false
+output_format_type          = jld2 eigen
+## ONLY FOR 1D EIGENPROBLEMS
+L                           = 
+Δx                          = 
+## ONLY FOR 2D EIGENPROBLEMS
+Lx                          = 10
+Ly                          = 10
+nx                          = 100
+ny                          = 100
+different_masses            = false
+reduced_density             = false</code></pre><p>Note that <code>~/my_path_repo/</code> is the directory path where we can find FEMTISE.jl package.</p><h3 id="Run-script"><a class="docs-heading-anchor" href="#Run-script">Run script</a><a id="Run-script-1"></a><a class="docs-heading-anchor-permalink" href="#Run-script" title="Permalink"></a></h3><p>Create Julia code as</p><pre><code class="language-bash hljs">@prompt:~/my_directory_path/QHO2D$ vi run.jl</code></pre><p>Inside <code>run.jl</code> we need to write the following.</p><pre><code class="language-julia hljs">begin
+    using Pkg
+    Pkg.activate(&quot;~/my_directory_path/QHO2D/&quot;)
+    develop_package = true; develop_package ? Pkg.develop(path=&quot;~/my_path_repo/FEMTISE.jl&quot;) : nothing
+    Pkg.instantiate()
+    using FEMTISE;
+    run_default_eigen_problem(set_type_potential(&quot;~/my_directory_path/QHO2D/input.dat&quot;))
+end</code></pre><p>After this we can run the simulation using Julia compiler (for example: using multithread running with four threads)</p><pre><code class="language-bash hljs">@prompt:~/my_directory_path/QHO2D$ julia -t 4 run.jl </code></pre><h3 id="Analysis"><a class="docs-heading-anchor" href="#Analysis">Analysis</a><a id="Analysis-1"></a><a class="docs-heading-anchor-permalink" href="#Analysis" title="Permalink"></a></h3><p>After running we obtain an output data file in jld2 format called <code>name_output_file_eigen_data.jld2</code>.</p><p>Then using Jupyter Notebook (by intermediate Visual Studio Code) we can analyse output file so:</p><pre><code class="language-bash hljs">@prompt:~/my_directory_path/QHO2D$ code QHO2D.ipynb</code></pre><p>Inside <code>QHO2D.ipynb</code> we need to write the following:</p><h4 id="Environment"><a class="docs-heading-anchor" href="#Environment">Environment</a><a id="Environment-1"></a><a class="docs-heading-anchor-permalink" href="#Environment" title="Permalink"></a></h4><p>Activate Julia environment</p><pre><code class="language-julia hljs">using Pkg
+Pkg.activate(&quot;~/my_directory_path/QHO2D/&quot;)
+Pkg.instantiate()</code></pre><p>Is necessary to mark FEMTISE package as developed package using specific path repository:</p><pre><code class="language-julia hljs">develop_package = true; develop_package ? Pkg.develop(path=&quot;~/my_path_repo/FEMTISE.jl&quot;) : nothing</code></pre><p>Now we install package (if is nesseary) and use specific packages to analyse output data:</p><pre><code class="language-julia hljs">install_pkg = true
+if install_pkg
+    Pkg.add(&quot;Plots&quot;)
+    Pkg.add(&quot;PlotlyJS&quot;)
+end
+using FEMTISE;
+using Plots;</code></pre><h4 id="Read-output-data"><a class="docs-heading-anchor" href="#Read-output-data">Read output data</a><a id="Read-output-data-1"></a><a class="docs-heading-anchor-permalink" href="#Read-output-data" title="Permalink"></a></h4><p>All the information that we need to specify is where we find input file then using specific functions we can collect output data</p><pre><code class="language-julia hljs">path_input_file_name=&quot;~/my_directory_path/QHO2D/input.dat&quot;
+simulation_info, output_data = collect_result_data(true,path_input_file_name)</code></pre><h4 id="Plotting-figures"><a class="docs-heading-anchor" href="#Plotting-figures">Plotting figures</a><a id="Plotting-figures-1"></a><a class="docs-heading-anchor-permalink" href="#Plotting-figures" title="Permalink"></a></h4><p>Defining functions to plot data we have:</p><pre><code class="language-julia hljs">&quot;&quot;&quot;
+    plot_eigenvalues(id,results;&lt;keyword arguments&gt;)
+
+# Aim
+- Plot the eigenvalues of the Hamiltonian operator.
+The eigenvalues are obtained from the diagonalization of the Hamiltonian operator.
+The keyword arguments are used to set the title, xlabel, ylabel, and legend of the plot.
+
+# Arguments
+- `id`: InputData or InputData1D or InputData2D object.
+- `results`: Results object.
+- `keyword arguments`:
+    - `set_title::String`: Title of the plot.
+    - `set_xlabel::String`: Label of the x-axis.
+    - `set_ylabel::String`: Label of the y-axis.
+    - `set_legend::Symbol`: Position of the legend.
+&quot;&quot;&quot;
+function plot_eigenvalues(id,results;
+    set_title::String=&quot;&quot;,
+    set_xlabel::String=&quot;Energy level (n)&quot;,set_ylabel::String=&quot;Eigen-energies (ϵn [au])&quot;,set_legend::Symbol=:bottomright)
+    if id.analysis_param == false
+        plotlyjs()
+        figure = scatter(real(results.ϵ),title=set_title,xlabel=set_xlabel,ylabel=set_ylabel,legend=set_legend)
+    else
+        println(&quot;PLOT ERROR.&quot;)
+        println(&quot;Check attributes, you are using the wrong function method. Analysis parameter is activated.&quot;)
+        figure = nothing
+    end
+    return figure
+end
+
+&quot;&quot;&quot;
+    density2D(x,y,phi_n)
+
+# Aim
+- Calculate the probability density of the eigenstates in 2D.
+
+# Arguments
+- `x::Array{Float64,1}`: Array of x-coordinates.
+- `y::Array{Float64,1}`: Array of y-coordinates.
+- `phi_n::Array{Complex{Float64},1}`: Array of eigenstates.
+&quot;&quot;&quot;
+function density2D(x,y,phi_n)
+    density=zeros(length(y),length(x))
+    for i in eachindex(y)
+        for j in eachindex(x)
+            index=(j-1)*length(y)+i
+            density[i,j]=real.(conj.(phi_n[index]).*phi_n[index])
+        end
+    end
+    return density
+end
+
+&quot;&quot;&quot;
+    plot_eigenstates(id,results,index_nev;&lt;keyword arguments&gt;)
+
+# Aim
+- Plot the eigenstates of the Hamiltonian operator.
+The eigenstates are obtained from the diagonalization of the Hamiltonian operator.
+The eigenstates are plotted for the energy level specified by the index_nev variable.
+The keyword arguments are used to set the color map of the plot (only for 2D plot).
+
+# Arguments
+- `id`: InputData or InputData1D or InputData2D object.
+- `results`: Results object.
+- `index_nev::Int`: Energy level to plot.
+- `keyword arguments`:
+    - `mapcolor::Symbol=:rainbow1`: Color map of the plot (only for 2D plot).
+&quot;&quot;&quot;
+function plot_eigenstates(id,results,index_nev::Int;mapcolor::Symbol=:rainbow1)
+    if id.analysis_param == false
+        if id.params.dimension == &quot;1D&quot;
+            plotlyjs();
+            if ((typeof(id) &lt;: InputData) || (typeof(id) &lt;: InputData1D &amp;&amp; id.output_format_type == (&quot;bin&quot;,&quot;eigen&quot;)))
+                rho = real.(conj.(results.ϕ[:,index_nev]).*(results.ϕ[:,index_nev]))
+            elseif (typeof(id) &lt;: InputData1D &amp;&amp; id.output_format_type in [(&quot;jld2&quot;,&quot;eigen&quot;),(&quot;jld2&quot;,&quot;all&quot;)])
+                rho = real.(conj.(results.ϕ[index_nev].(results.pts)).*(results.ϕ[index_nev].(results.pts)))
+            end
+            figure = plot(results.r,rho,lw=2,label=&quot;&quot;)
+            figure = scatter!(results.r,rho,label=&quot;n=$(index_nev)&quot;,lw=0.1)
+            figure = plot!(xlabel=&quot;Coordinate (x [au])&quot;,ylabel=&quot;Probability density (ρn(x))&quot;,ticks = :native)
+        elseif id.params.dimension == &quot;2D&quot;
+            gr();
+            if ((typeof(id) &lt;: InputData) || (typeof(id) &lt;: InputData2D &amp;&amp; id.output_format_type == (&quot;bin&quot;,&quot;eigen&quot;)))
+                if id.params.nx==id.params.ny
+                    rho = density2D(results.r[:,1],results.r[:,2],results.ϕ[:,index_nev])
+                    figure1 = contour(results.r[:,1],results.r[:,2],rho,levels=10, color=mapcolor, fill=true,lw=0)
+                else
+                    rho = density2D(results.r[1:id.params.nx,1],results.r[1:id.params.ny,2],results.ϕ[:,index_nev])
+                    figure1 = contour(results.r[1:id.params.nx,1],results.r[1:id.params.ny,2],rho, levels=10, color=mapcolor, fill=true,lw=0)
+                end
+            elseif (typeof(id) &lt;: InputData2D &amp;&amp; id.output_format_type in [(&quot;jld2&quot;,&quot;eigen&quot;),(&quot;jld2&quot;,&quot;all&quot;)])
+                rho = density2D(results.r[1],results.r[2],results.ϕ[index_nev].(results.pts))
+                figure1 = contour(results.r[1],results.r[2],rho,levels=10, color=mapcolor, fill=true,lw=0)
+            end
+            figure1 = plot(figure1,title=&quot;Probability density (ρ$(index_nev)(x))&quot;,xlabel=&quot;Coordinate (x [au])&quot;, ylabel=&quot;Coordinate (y [au])&quot;)
+    
+            if id.reduced_density
+                plotlyjs()
+                if ((typeof(id) &lt;: InputData) || (typeof(id) &lt;: InputData1D &amp;&amp; id.output_format_type == (&quot;bin&quot;,&quot;eigen&quot;)))
+                    if id.params.nx==id.params.ny
+                        figure2=plot(results.r[:,1],results.rhoDOF1[:,index_nev],label=&quot;ρn(x)&quot;)
+                        figure2=plot!(results.r[:,2],results.rhoDOF2[:,index_nev],label=&quot;ρn(y)&quot;)
+                    else
+                        figure2=plot(results.r[1:id.params.nx,1],results.rhoDOF1[:,index_nev],label=&quot;ρn(x)&quot;)
+                        figure2=plot!(results.r[1:id.params.ny,2],results.rhoDOF2[:,index_nev],label=&quot;ρn(y)&quot;)
+                    end
+                elseif (typeof(id) &lt;: InputData2D &amp;&amp; id.output_format_type in [(&quot;jld2&quot;,&quot;eigen&quot;),(&quot;jld2&quot;,&quot;all&quot;)])
+                    figure2 = plot(results.r[1],results.rhoDOF1[:,index_nev],label=&quot;ρn(x)&quot;)
+                    figure2 = plot!(results.r[2],results.rhoDOF2[:,index_nev],label=&quot;ρn(y)&quot;)
+                end
+                figure2=plot!(title=&quot;Reduced probability density for level n=$(index_nev)&quot;)
+                figure2=plot!(xlabel=&quot;Coordinate (x or y [au])&quot;,ylabel=&quot;&quot;,ticks = :native)
+
+                figure = plot(figure1,figure2,layout=2)
+            else
+                figure = figure1
+            end
+        end
+    else
+        println(&quot;PLOT ERROR.&quot;)
+        println(&quot;You can not plot eigenstate with activated analysis params.&quot;)
+        figure = nothing
+    end
+    return figure
+end</code></pre><p>Now we can plot eigenenergies:</p><pre><code class="language-julia hljs">fig1 = plot_eigenvalues(simulation_info, output_data)
+display(fig1)</code></pre><p>Also, we can export figures as <code>*pdf</code> format using</p><pre><code class="language-julia hljs">save(&quot;./eigen_energies.pdf&quot;,fig1)</code></pre><p>and eigenfunctions:</p><pre><code class="language-julia hljs">eigenstate_to_show=2
+fig2=plot_eigenstates(simulation_info, output_data,eigenstate_to_show;mapcolor=:turbo)
+display(fig2)</code></pre></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../isotropic_1d_harmonic_oscillator_potential/">« Isotropic 1D Quantum Harmonic Oscillator Potential</a><a class="docs-footer-nextpage" href="../coulomb_interaction_2d_potential/">Two-Electrons Coulomb Interaction Potential »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Tuesday 16 July 2024 14:09">Tuesday 16 July 2024</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

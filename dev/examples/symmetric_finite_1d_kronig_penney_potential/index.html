@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Symmetric Finite 1D Kronig-Penney Potential · FEMTISE</title><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><div class="docs-package-name"><span class="docs-autofit"><a href="../../">FEMTISE</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../guide_information/">Guide Information</a></li><li><a class="tocitem" href="../../function_information/">Function Information</a></li><li><span class="tocitem">Simulation Example</span><ul><li><a class="tocitem" href="../simulation_example/">General Simulation Examples</a></li><li class="is-active"><a class="tocitem" href>Symmetric Finite 1D Kronig-Penney Potential</a></li><li><a class="tocitem" href="../isotropic_1d_harmonic_oscillator_potential/">Isotropic 1D Quantum Harmonic Oscillator Potential</a></li><li><a class="tocitem" href="../isotropic_2d_harmonic_oscillator_potential/">Isotropic 2D Quantum Harmonic Oscillator Potential</a></li><li><a class="tocitem" href="../coulomb_interaction_2d_potential/">Two-Electrons Coulomb Interaction Potential</a></li></ul></li><li><a class="tocitem" href="../../contact_information/">Contact Information</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Simulation Example</a></li><li class="is-active"><a href>Symmetric Finite 1D Kronig-Penney Potential</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Symmetric Finite 1D Kronig-Penney Potential</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/mendzmartin/FEMTISE.jl/blob/main/docs/src/examples/symmetric_finite_1d_kronig_penney_potential.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Tutorial-To-Simulate-Symmetric-Finite-One-Dimensional-Kronig-Penney-Potential"><a class="docs-heading-anchor" href="#Tutorial-To-Simulate-Symmetric-Finite-One-Dimensional-Kronig-Penney-Potential">Tutorial To Simulate Symmetric Finite One Dimensional Kronig-Penney Potential</a><a id="Tutorial-To-Simulate-Symmetric-Finite-One-Dimensional-Kronig-Penney-Potential-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-To-Simulate-Symmetric-Finite-One-Dimensional-Kronig-Penney-Potential" title="Permalink"></a></h1><h3 id="Create-simulation-directory"><a class="docs-heading-anchor" href="#Create-simulation-directory">Create simulation directory</a><a id="Create-simulation-directory-1"></a><a class="docs-heading-anchor-permalink" href="#Create-simulation-directory" title="Permalink"></a></h3><p>First of all we need to create a specific directory to save this specific simulation results </p><pre><code class="language-bash hljs">@prompt:~$ mkdir ~/my_directory_path/SFKP1D
+@prompt:~$ cd ~/my_directory_path/SFKP1D</code></pre><h3 id="Create-function-potential"><a class="docs-heading-anchor" href="#Create-function-potential">Create function potential</a><a id="Create-function-potential-1"></a><a class="docs-heading-anchor-permalink" href="#Create-function-potential" title="Permalink"></a></h3><p>We need to create a aspecific function potential for Kronig-Penney potential as following:</p><pre><code class="language-bash hljs">@prompt:~/my_directory_path/SFKP1D$ vi adhoc_potential_function.jl</code></pre><p>Inside <code>adhoc_potential_function</code> write the following:</p><pre><code class="language-julia hljs">&quot;&quot;&quot;
+    kronig_penney_sturm_liouville(params)
+
+# Aim
+    - Compute Kronig-Penney potential as Sturm-Liouville problem
+
+# Arguments
+    - `params::Tuple`: tuple with parameters
+&quot;&quot;&quot;
+function kronig_penney_sturm_liouville(params::Tuple)
+    num_ions,a,b,V₀=params
+    ħ=1.0;m=1.0;
+    p(x) = 0.5*(ħ*ħ)*(1.0/m);
+    q(x) = symetric_kronig_penney(x[1],num_ions,a,b,V₀)
+    r(x) = 1.0;
+    return p,q,r;
+end
+
+function heaviside(x)
+    return 0.5*(sign(x)+1)==true
+ end
+
+function sym_rect_pot_barr(x,b::Real,V₀::Real)
+   return V₀*(heaviside(x+0.5*b)-heaviside(x-0.5*b))
+end
+
+function kronig_penney_center(x,b::Real,V₀::Real)
+    return sym_rect_pot_barr.(x,b,V₀)
+end
+
+function kronig_penney_left(x,num_ions::Integer,a::Real,b::Real,V₀::Real)
+    result=0.0
+    for i in 1:num_ions
+        result = result .+ sym_rect_pot_barr.(x.+i*a,b,V₀)
+    end
+    return result
+end
+
+function kronig_penney_right(x,num_ions::Integer,a::Real,b::Real,V₀::Real)
+    return kronig_penney_left(-x,num_ions,a,b,V₀)
+end
+
+export symetric_kronig_penney
+&quot;&quot;&quot;
+    symetric_kronig_penney(x,num_ions,a,b,V₀)
+
+# Aim
+    - Compute symetric Kronig-Penney potential
+
+# Arguments
+    - `x::Real`: input value
+    - `num_ions::Integer`: number of ions
+    - `a::Real`: distance between ions
+    - `b::Real`: width of barrier
+    - `V₀::Real`: height of barrier
+&quot;&quot;&quot;
+function symetric_kronig_penney(x,num_ions::Integer,a::Real,b::Real,V₀::Real)
+    if (mod(num_ions,2) == 0)
+        error(&quot;num_ions keyword need to be odd&quot;)
+        stop()
+    elseif (num_ions==1)
+        kp = kronig_penney_center(x,b,V₀)
+    else
+        kp = kronig_penney_center(x,b,V₀) .+ kronig_penney_left(x,convert(Int,(num_ions-1)/2),a,b,V₀) .+ kronig_penney_right(x,convert(Int,(num_ions-1)/2),a,b,V₀)
+    end
+    return kp
+end</code></pre><p>Then using Jupyter Notebook (by intermediate Visual Studio Code) we can analyse output file so:</p><pre><code class="language-bash hljs">@prompt:~/my_directory_path/SFKP1D$ code SFKP1D.ipynb</code></pre><p>Inside <code>SFKP1D.ipynb</code> we need to write the following:</p><h3 id="Environment-Activation"><a class="docs-heading-anchor" href="#Environment-Activation">Environment Activation</a><a id="Environment-Activation-1"></a><a class="docs-heading-anchor-permalink" href="#Environment-Activation" title="Permalink"></a></h3><p>Activate the specific environment for this simulation, note that within the <code>activate</code> function we must place the path where we want to locate this environment.</p><pre><code class="language-julia hljs">using Pkg
+Pkg.activate(&quot;.&quot;)
+Pkg.instantiate()</code></pre><h4 id="Develop-Package"><a class="docs-heading-anchor" href="#Develop-Package">Develop Package</a><a id="Develop-Package-1"></a><a class="docs-heading-anchor-permalink" href="#Develop-Package" title="Permalink"></a></h4><p>In case it is necessary, we must add the FEMTISE package to the environment with the local location.</p><pre><code class="language-julia hljs">develop_package = false
+path_repo=&quot;~/my_path_repo/&quot;
+develop_package ? Pkg.develop(path=path_repo*&quot;FEMTISE.jl&quot;) : nothing</code></pre><h4 id="Adding-Packages"><a class="docs-heading-anchor" href="#Adding-Packages">Adding Packages</a><a id="Adding-Packages-1"></a><a class="docs-heading-anchor-permalink" href="#Adding-Packages" title="Permalink"></a></h4><p>We install (if necessary) and use specific packages for the simulation.</p><pre><code class="language-julia hljs">install_pkg = false
+if install_pkg
+    Pkg.add(&quot;Gridap&quot;)
+    Pkg.add(&quot;Plots&quot;)
+end
+using FEMTISE;
+using Gridap;
+using Plots;</code></pre><h3 id="Miscellaneous-functions"><a class="docs-heading-anchor" href="#Miscellaneous-functions">Miscellaneous functions</a><a id="Miscellaneous-functions-1"></a><a class="docs-heading-anchor-permalink" href="#Miscellaneous-functions" title="Permalink"></a></h3><p>We include the potential function defined in specific Julia file:</p><pre><code class="language-julia hljs">include(&quot;~/my_directory_path/SFKP1D/adhoc_potential_function.jl&quot;)</code></pre><h3 id="Potential-parameters"><a class="docs-heading-anchor" href="#Potential-parameters">Potential parameters</a><a id="Potential-parameters-1"></a><a class="docs-heading-anchor-permalink" href="#Potential-parameters" title="Permalink"></a></h3><p>We define the properties of the potential</p><pre><code class="language-julia hljs">grid_size_length=276;
+potential_depth=-0.5;
+distance_between_wells=11;
+well_width=1;
+num_ions=23;
+space_discretization=0.01;
+
+unit_cell_potential=distance_between_wells+well_width;</code></pre><h4 id="Checking-representation"><a class="docs-heading-anchor" href="#Checking-representation">Checking representation</a><a id="Checking-representation-1"></a><a class="docs-heading-anchor-permalink" href="#Checking-representation" title="Permalink"></a></h4><p>Taking into account the finite size of the FE grid and the dimensions of the potential wells (width and separation), we can check if the number of sites can be represented correctly.</p><pre><code class="language-julia hljs">quantity_check = num_ions*unit_cell_potential;
+(grid_size_length ≥ quantity_check) ? println(&quot;The value of grid size length is ok (≥ $(quantity_check)).&quot;) : println(&quot;Increase grid size length, must be grid_size_length ≥ $(quantity_check).&quot;)</code></pre><h3 id="Grid-Building"><a class="docs-heading-anchor" href="#Grid-Building">Grid Building</a><a id="Grid-Building-1"></a><a class="docs-heading-anchor-permalink" href="#Grid-Building" title="Permalink"></a></h3><p>We create the one-dimensional FE grid.</p><pre><code class="language-julia hljs">grid_type=&quot;simple_line&quot;;
+params_model=(&quot;./&quot;,&quot;model1D&quot;,(-0.5*grid_size_length,0.5*grid_size_length),space_discretization);
+model1D=make_model(grid_type,params_model);
+rm(params_model[1]*params_model[2]*&quot;.msh&quot;)</code></pre><p>The last step could be omitted if you want to save the grid in <code>.msh</code> format for external visualization.</p><h4 id="Grid-points"><a class="docs-heading-anchor" href="#Grid-points">Grid points</a><a id="Grid-points-1"></a><a class="docs-heading-anchor-permalink" href="#Grid-points" title="Permalink"></a></h4><p>We construct the point vectors (grid evaluation points) and coordinate vectors.</p><pre><code class="language-julia hljs">point_number=round(Int,abs(grid_size_length/space_discretization)+1)
+space_coordinate,points=space_coord((-0.5*grid_size_length,0.5*grid_size_length),space_discretization,point_number-1;dimension=&quot;1D&quot;)</code></pre><h4 id="Plotting-potential-function"><a class="docs-heading-anchor" href="#Plotting-potential-function">Plotting potential function</a><a id="Plotting-potential-function-1"></a><a class="docs-heading-anchor-permalink" href="#Plotting-potential-function" title="Permalink"></a></h4><pre><code class="language-julia hljs">fig = plot(space_coordinate,symetric_kronig_penney(space_coordinate,num_ions,unit_cell_potential,well_width,potential_depth),label=&quot;&quot;)
+fig = plot!(fig,xlabel=&quot;space coordinate (x [au])&quot;,ylabel=&quot;potential depth (v [au])&quot;)
+display(fig)</code></pre><h3 id="Boundary-conditions"><a class="docs-heading-anchor" href="#Boundary-conditions">Boundary conditions</a><a id="Boundary-conditions-1"></a><a class="docs-heading-anchor-permalink" href="#Boundary-conditions" title="Permalink"></a></h3><p>We define the boundary conditions of the system, in our case we define homogeneous boundary conditions throughout the boundary.</p><pre><code class="language-julia hljs">BC_type=&quot;FullDirichlet&quot;;
+FullDirichlet_values,FullDirichlet_tags=make_boundary_conditions(grid_type,BC_type,ComplexF64);</code></pre><h3 id="FE-Domains"><a class="docs-heading-anchor" href="#FE-Domains">FE Domains</a><a id="FE-Domains-1"></a><a class="docs-heading-anchor-permalink" href="#FE-Domains" title="Permalink"></a></h3><p>We construct the FE domains of the grid: interior and boundary. Additionally, we construct the differentials of these domains.</p><pre><code class="language-julia hljs">interior_FE_domain,differential_interior_FE_domain,boundary_FE_domain,differential_boundary_FE_domain = measures(model1D,3,FullDirichlet_tags)</code></pre><h3 id="FE-Reference"><a class="docs-heading-anchor" href="#FE-Reference">FE Reference</a><a id="FE-Reference-1"></a><a class="docs-heading-anchor-permalink" href="#FE-Reference" title="Permalink"></a></h3><p>We define the interpolation polynomials to be used and create the Test and Trial spaces associated with the weak formulations of the problem.</p><pre><code class="language-julia hljs">reff = ReferenceFE(lagrangian,Float64,2)
+TestSpace,TrialSpace = fe_spaces(model1D,reff,grid_type;BC_type=BC_type,TypeData=ComplexF64)</code></pre><h3 id="Sturm-Liouville-formulation"><a class="docs-heading-anchor" href="#Sturm-Liouville-formulation">Sturm-Liouville formulation</a><a id="Sturm-Liouville-formulation-1"></a><a class="docs-heading-anchor-permalink" href="#Sturm-Liouville-formulation" title="Permalink"></a></h3><p>We define the functions to use the Sturm-Liouville type formulation.</p><pre><code class="language-julia hljs">p,q,r = kronig_penney_sturm_liouville((num_ions,unit_cell_potential,well_width,potential_depth))</code></pre><h3 id="Eigen-value-problem"><a class="docs-heading-anchor" href="#Eigen-value-problem">Eigen value problem</a><a id="Eigen-value-problem-1"></a><a class="docs-heading-anchor-permalink" href="#Eigen-value-problem" title="Permalink"></a></h3><p>We solve the eigenvalue problem</p><pre><code class="language-julia hljs">eigen_energies,eigen_states = eigen_values_and_eigen_vectors(p,q,r,differential_interior_FE_domain,TrialSpace,TestSpace;
+params=(10,1e-9,500,:none,potential_depth))</code></pre><h3 id="Plotting-results"><a class="docs-heading-anchor" href="#Plotting-results">Plotting results</a><a id="Plotting-results-1"></a><a class="docs-heading-anchor-permalink" href="#Plotting-results" title="Permalink"></a></h3><pre><code class="language-julia hljs">fig=plot()
+probability_densities=FEMTISE.density(eigen_states)
+for i in 1:3#eachindex(ϕ)
+    fig=plot!(space_coordinate,probability_densities[i].(points),
+    label=&quot;probability density of energy=$(round(real(eigen_energies[i]),digits=4))&quot;,
+    legend=:bottomleft)
+end
+
+fig=plot!(xlabel=&quot;space coordinate (x [au])&quot;,ylabel=&quot; &quot;)
+fig=plot!(space_coordinate,0.1 .* symetric_kronig_penney(space_coordinate,num_ions,unit_cell_potential,well_width,potential_depth),
+label=&quot;0.1*Kronig-Penney potential [au]&quot;)
+
+display(fig)</code></pre><p>We can save de figure using <code>savefig(fig,&quot;example_kronig_penney.pdf&quot;)</code>.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../simulation_example/">« General Simulation Examples</a><a class="docs-footer-nextpage" href="../isotropic_1d_harmonic_oscillator_potential/">Isotropic 1D Quantum Harmonic Oscillator Potential »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Tuesday 16 July 2024 14:09">Tuesday 16 July 2024</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

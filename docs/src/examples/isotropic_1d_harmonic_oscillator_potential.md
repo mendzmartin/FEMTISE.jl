@@ -211,7 +211,7 @@ function plot_eigenstates(id,results,range_to_show::StepRange{Int, Int};
             elseif (typeof(id) <: InputData1D && id.output_format_type in [("jld2","eigen"),("jld2","all")])
                 rho = real.(conj.((results.ϕ[i]).(results.pts)).*((results.ϕ[i]).(results.pts)))
             end
-            figure = plot!(results.r,rho,lw=2,lc=:black;label="")
+            figure = plot!(results.r,rho,lw=2,lc=:black,label="")
             figure = scatter!(results.r,rho,label="n=$(i)",lw=0.1)
         end
         figure = plot!(xlabel=set_xlabel,ylabel=set_ylabel,ticks=:native)

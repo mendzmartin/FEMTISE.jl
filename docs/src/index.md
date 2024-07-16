@@ -14,6 +14,3 @@ Julia package repository to resolve Time-Independent Schrödinger equation by (F
 Project carried out in my PhD studies of Physics at:
 * [Faculty of Mathematics, Astronomy, Physics and Computation (FaMAF)](https://www.famaf.unc.edu.ar/)
 * The Enrique Gaviola Institute of Physics (IFEG)
-
-## **Contact**
-Please, contact the project administrator [Méndez Martín](mailto:martinmendez@mi.unc.edu.ar) for any improve suggestion or questions about package use.

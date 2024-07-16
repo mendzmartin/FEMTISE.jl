@@ -223,5 +223,5 @@ display(fig1)
 
 Also, we can export figures as `*pdf` format using
 ```julia
-save("./eigen_energies_vs_parameter.pdf",fig1)
+savefig(fig1,"./eigen_energies_vs_parameter.pdf")
 ```

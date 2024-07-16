@@ -227,7 +227,7 @@ function plot_eigenstates(id,results,index_nev::Int;mapcolor::Symbol=:rainbow1)
             elseif (typeof(id) <: InputData1D && id.output_format_type in [("jld2","eigen"),("jld2","all")])
                 rho = real.(conj.(results.ϕ[index_nev].(results.pts)).*(results.ϕ[index_nev].(results.pts)))
             end
-            figure = plot(results.r,rho,lw=2,label="")
+            figure = plot(results.r,rho,lw=2,lc=:black,label="")
             figure = scatter!(results.r,rho,label="n=$(index_nev)",lw=0.1)
             figure = plot!(xlabel="Coordinate (x [au])",ylabel="Probability density (ρn(x))",ticks = :native)
         elseif id.params.dimension == "2D"
@@ -285,7 +285,7 @@ display(fig1)
 
 Also, we can export figures as `*pdf` format using
 ```julia
-save("./eigen_energies.pdf",fig1)
+savefig(fig1,"./eigen_energies.pdf")
 ```
 
 and eigenfunctions:

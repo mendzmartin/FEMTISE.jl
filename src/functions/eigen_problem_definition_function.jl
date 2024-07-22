@@ -24,14 +24,14 @@ struct EigenProblem <: FEOperator
 end
 
 """
-    eigen_problem(weakformₖ,weakformₘ,test,trial;; <keyword arguments>)
+    eigen_problem(weakform_k,weakform_m,test,trial; <keyword arguments>)
 
 # Aim
 - Define eigen problem as an input to solve function where we compute eigen problem by Arpack eigs function.
 
 # Arguments
-- `weakformₖ::Function`: forma bilineal lado izquierdo de la formulación débil
-- `weakformₘ::Function`: forma bilineal lado derecho de la formulación débil
+- `weakform_k::Function`: forma bilineal lado izquierdo de la formulación débil
+- `weakform_m::Function`: forma bilineal lado derecho de la formulación débil
 - `test::FESpace`: espacio de prueba, puede ser MultiFieldFESpace
 - `trial::FESpace`: espacio de solución, puede ser MultiFieldFESpace
 - `nev::Int=10`: número de autovalores requeridos
@@ -47,15 +47,19 @@ end
   - `=:SR`: eigenvalues of smallest real part
   - `=:LI`: eigenvalues of largest imaginary part (nonsymmetric or complex matrix only)
   - `=:SI`: eigenvalues of smallest imaginary part (nonsymmetric or complex matrix only)
-  - `=:BE`: compute half of the eigenvalues from each end of the spectrum, biased in favor of the high end. (real symmetric matrix only)
+  - `=:BE`: compute half of the eigenvalues from each end of the spectrum, biased in favor of the high end.
+            (real symmetric matrix only)
+
+# Returns
+- `EigenProblem`: problem definition
 """
-function eigen_problem(weakformₖ::Function,weakformₘ::Function,test::FESpace,trial::FESpace;
+function eigen_problem(weakform_k::Function,weakform_m::Function,test::FESpace,trial::FESpace;
     nev::Int=10,which::Symbol=:LM,explicittransform::Symbol=:none,tol::Float64=10^(-6),
     maxiter::Int=100,sigma=0.0)
     # source vector (always need to be zero for eigen problems)
     F(v) = 0.0;
-    opH = AffineFEOperator(weakformₖ, F, test, trial)
-    opE = AffineFEOperator(weakformₘ, F, test, trial)
+    opH = AffineFEOperator(weakform_k, F, test, trial)
+    opE = AffineFEOperator(weakform_m, F, test, trial)
     op = EigenOperator(opH.op.matrix,opE.op.matrix)
     return EigenProblem(trial,test,op,nev,which,explicittransform,tol,maxiter,sigma)
 end
@@ -68,11 +72,15 @@ end
 
 # Arguments
 - `prob::EigenProblem`: problem deinition
+
+# Returns
+- `eigenvalues::Vector{Float64}`: eigenvalues
+- `eigenvectors::Vector{CellField}`: eigenvectors
 """
 function solve(prob::EigenProblem)
-    ϵ,eigenvecs = eigs(prob.op.hamiltonian,prob.op.energy;
+    eigenvalues,eigenvecs = eigs(prob.op.hamiltonian,prob.op.energy;
         nev=prob.nev,which=prob.which,explicittransform=prob.explicittransform,
         tol=prob.tol,maxiter=prob.maxiter,sigma=prob.sigma)
-    ϕ::Vector{CellField}=[FEFunction(prob.trial, eigenvecs[:,m]) for m=1:prob.nev]
-    return ϵ,ϕ
+    eigenvectors::Vector{CellField}=[FEFunction(prob.trial, eigenvecs[:,m]) for m=1:prob.nev]
+    return eigenvalues,eigenvectors
 end

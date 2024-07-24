@@ -140,7 +140,7 @@ Harmonic Oscillator frecuency [au]            ω::Float64          = 1.0
 Harmonic Oscillator center [au]               x₁::Float64         = 0.0
 
 Number of threads                                                           = 4
-´´´
+```
 
 Be carefull when you set the numbers 5 or 6 because you need to do a little more steps before to run over this simulations (see the next).
 

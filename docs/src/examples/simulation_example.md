@@ -158,7 +158,7 @@ Inside `adhoc_potentials/` folder we need to create a Julia file with name `my_j
 Inside our `my_julia_file.jl` folder the format to write custom potential function need to be like follows:
 
 **Unidimensional potential**
-```
+```julia
     export my_potential_1d
     function my_potential_1d(x,params::Tuple)
         λ₁,λ₂,λ₃...=params
@@ -169,7 +169,7 @@ Inside our `my_julia_file.jl` folder the format to write custom potential functi
 Here params is a Tuple with potential parameters (can be Integers, Floats, Complex, etc) and `f(x[1],λ₁,λ₂,λ₃...)` is an expresion(function) of `x[1]` (unidmensional DOF) and `λᵢ`'s (parameters).
 
 **Bidimensional potential**
-```
+```julia
     export my_potential_2d
     function my_potential_2d(x,params::Tuple)
         λ₁,λ₂,λ₃...=params
@@ -183,7 +183,7 @@ Here params is a Tuple with potential parameters (can be Integers, Floats, Compl
 
 In some specific folder we need to create a data folder `@my_folder$: vi my_input.dat` with custom potential input information behing the following format (the data next to equal sign is only for example information)
 
-```dat
+```bash
 full_path_name              = ../my_folder_name/my_file_name
 dom_type                    = s
 nev                         = 10

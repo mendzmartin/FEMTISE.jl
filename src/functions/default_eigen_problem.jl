@@ -390,7 +390,7 @@ function run_default_eigen_problem(simulation_data::Tuple)
             eigen_values_output = full_path_name*"_eigen_values.bin"
             coordinates_output = full_path_name*"_coordinates.bin"
             if params.dimension == "1D"
-                ϕ_matrix=Matrix{ComplexF64}(undef,length(x),length(ϵ))
+                ϕ_matrix=Matrix{ComplexF64}(undef,length(r),length(ϵ))
             elseif params.dimension == "2D"
                 ϕ_matrix=Matrix{ComplexF64}(undef,length(r[1])*length(r[2]),length(ϵ))
             end
@@ -439,10 +439,18 @@ end
 
 function set_type_potential()
     println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
-    println("The types of default potential can be:")
+    println("####### ####### #     # #######   ###    #####  #######")
+    println("#       #       ##   ##    #       #    #     # #                     #  #")
+    println("#       #       # # # #    #       #    #       #                     #  #")
+    println("#####   #####   #  #  #    #       #     #####  #####                 #  #")
+    println("#       #       #     #    #       #          # #         ###         #  #")
+    println("#       #       #     #    #       #    #     # #         ###    #    #  #")
+    println("#       ####### #     #    #      ###    #####  #######   ###     ####   ######")
+    println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
+    println("The type of default potential can be:")
     println("   - Unidimensional Quantum Harmonic Oscillator            --> set (1)")
     println("   - Unidimensional Symmetric Finit Kronig-Penney          --> set (2)")
-    println("   - Unidimensional Finit Well Potential                   --> set (3)")
+    println("   - Unidimensional Finite Well Potential                  --> set (3)")
     println("   - Bidimensional Isotropic Quantum Harmonic Oscillator   --> set (4)")
     println("   - Ad hoc potential from input file                      --> set (5)")
     print("Please, set some number to specify the type potential: ")

@@ -40,6 +40,9 @@ Then, open a Julia file `@my_folder$: vi my_script.jl` and write the following c
         Pkg.activate("./")
         Pkg.instantiate()
         
+        # if you did the previous step from REPL you don't need this
+        Pkg.develop(path="~/my_directory/FEMTISE.jl")
+
         using FEMTISE;
         
         run_default_eigen_problem(set_type_potential())
@@ -48,20 +51,98 @@ Then, open a Julia file `@my_folder$: vi my_script.jl` and write the following c
 After save the changes you can run the script and see de following
 ```bash
     @my_folder$: julia my_script.jl
-  Activating project at `~/test_default_eigen_problem_from_input`
+  Activating project at `~/my_folder`
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-The types of default potential can be:
+####### ####### #     # #######   ###    #####  #######
+#       #       ##   ##    #       #    #     # #                     #  #
+#       #       # # # #    #       #    #       #                     #  #
+#####   #####   #  #  #    #       #     #####  #####                 #  #
+#       #       #     #    #       #          # #         ###         #  #
+#       #       #     #    #       #    #     # #         ###    #    #  #
+#       ####### #     #    #      ###    #####  #######   ###     ####   ######
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The type of default potential can be:
    - Unidimensional Quantum Harmonic Oscillator            --> set (1)
    - Unidimensional Symmetric Finit Kronig-Penney          --> set (2)
-   - Unidimensional Finit Well Potential                   --> set (3)
+   - Unidimensional Finite Well Potential                  --> set (3)
    - Bidimensional Isotropic Quantum Harmonic Oscillator   --> set (4)
-   - Ad hoc potential                                      --> set (5)
-   - Ad hoc potential from input file                      --> set (6)
+   - Ad hoc potential from input file                      --> set (5)
 Please, set some number to specify the type potential:
 ```
 
-Then you can specify the set number to run a specific potential. Be carefull when you set the numbers 5 or 6 because you need to do a little more steps before to run over this simulations (see the next).
+Then you can specify the set number to run a specific potential. Then the running is interactive so in each step you need to configurate the potential and simulation properties.
 
+### 1D Harmonic Oscillator Example
+
+Just to show how we can simulate the Unidimensional Quantum Hamonic Oscillator we need to specify befor the set number 1, then the properties to configurate are like following:
+
+```bash
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Set full path name (e.g: "./my_directory/my_name") where you want to write problem results and press Enter = ./qho1d
+Mandatory input data
+Number of eigenvalues: nev::Int = 10
+Finite element domain length [au] (default L=30.0 press Enter): L::Float64 = 
+Set domain type (for symetric domain {-L/2,L/2} set "s" and for non-symetric domain {0,L} set "ns": dom_type::String = s
+Finite element size [au] (default Δx=0.1 press Enter): Δx::Float64 = 
+Harmonic Oscillator frecuency [au]: ω::Float64 = 1
+Harmonic Oscillator center [au]: x₁::Float64 = 0
+Level shift used in inverse iteration [au] (default sigma=0.0 press Enter): sigma::Float64 = 0
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+... Running ...
+Building the grid model ...
+Info    : Meshing 1D...
+Info    : Meshing curve 1 (Line)
+Info    : Done meshing 1D (Wall 0.000265359s, CPU 0.000267s)
+Info    : 301 nodes 302 elements
+Info    : Writing './model1D.msh'...
+Info    : Done writing './model1D.msh'
+Info    : Reading './model1D.msh'...
+Info    : 3 entities
+Info    : 301 nodes
+Info    : 302 elements
+Info    : Done reading './model1D.msh'
+Solving eigen problem ...
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Transforming data from FE object to complex value...
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Moving result data to trash if data exists ...
+Saving data ...
+Saved data.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Moving result data to trash if data exists ...
+Saving data ...
+Saved data.
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Moving result data to trash if data exists ...
+Saving data ...
+Saved data.
+```
+
+Note that if we don't specify explicit data we choose the default propertie. Finally the output are four files called:
+```bash
+    @my_folder$: ls *.dat
+qho1d_eigen_problem_attributes.dat 
+    @my_folder$: ls *.bin
+qho1d_coordinates.bin  qho1d_eigen_values.bin  qho1d_eigen_vectors.bin
+```
+and we note that the results are in binary otuput data file and the attributes of simulation are inside data file (see bellow the file information).
+
+```bash
+    @my_folder$: cat qho1d_eigen_problem_attributes.dat
+Quantum Harmonic Oscillator 1D
+Dimension of eigen value problem              dimension::String   = 1D
+Number of eigenvalues                         nev::Int          = 10
+Finite element domain length [au]             L::Float64          = 30.0
+Domain type                                   dom_type::String    = s
+Level shift used in inverse iteration [au]    sigma::Float64      = 0.0
+Finite element size [au]                      Δx::Float64         = 0.1
+Harmonic Oscillator frecuency [au]            ω::Float64          = 1.0
+Harmonic Oscillator center [au]               x₁::Float64         = 0.0
+
+Number of threads                                                           = 4
+´´´
+
+Be carefull when you set the numbers 5 or 6 because you need to do a little more steps before to run over this simulations (see the next).
 
 ## Simulate custom potential
 
@@ -168,19 +249,27 @@ reduced_density             =
 Then you can run the script and set options `5` or `6` like this:
 ```bash
     @my_folder$: julia my_script.jl
-  Activating project at `~/test_default_eigen_problem_from_input`
+  Activating project at `~/my_folder`
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-The types of default potential can be:
+####### ####### #     # #######   ###    #####  #######
+#       #       ##   ##    #       #    #     # #                     #  #
+#       #       # # # #    #       #    #       #                     #  #
+#####   #####   #  #  #    #       #     #####  #####                 #  #
+#       #       #     #    #       #          # #         ###         #  #
+#       #       #     #    #       #    #     # #         ###    #    #  #
+#       ####### #     #    #      ###    #####  #######   ###     ####   ######
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+The type of default potential can be:
    - Unidimensional Quantum Harmonic Oscillator            --> set (1)
    - Unidimensional Symmetric Finit Kronig-Penney          --> set (2)
-   - Unidimensional Finit Well Potential                   --> set (3)
+   - Unidimensional Finite Well Potential                  --> set (3)
    - Bidimensional Isotropic Quantum Harmonic Oscillator   --> set (4)
-   - Ad hoc potential                                      --> set (5)
-   - Ad hoc potential from input file                      --> set (6)
+   - Ad hoc potential from input file                      --> set (5)
 Please, set some number to specify the type potential: 6
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 Set full path name (e.g: "./my_directory/my_input_data") where the data is specified and press Enter =
 ```
+
 Where we were specified the full path name of our input data (only for option `6`). Also, we can specify this full path name inside Julia script like following:
 
 First open script file `@my_folder$: vi my_script.jl` and write the following comands:

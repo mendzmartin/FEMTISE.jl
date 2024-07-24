@@ -257,4 +257,8 @@ display(fig)
 <img alt="Figure 1" src="figures/kronig_penney_eigenstates.jpg" style="width:512px;" align="center">
 </picture>
 
+<picture>
+<img alt="Figure 1" src="figures/kronig_penney_eigenstates.jpg" width="512" align="center">
+</picture>
+
 We can save de figure using `savefig(fig,"example_kronig_penney.pdf")`.

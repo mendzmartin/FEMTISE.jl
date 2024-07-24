@@ -283,7 +283,9 @@ fig1 = plot_eigenvalues(simulation_info, output_data)
 display(fig1)
 ```
 
-<img src="figures/qho2d_eigenenergies.jpg" alt="Figure 1" style="width:512px;"/>
+<picture>
+<img src="figures/qho2d_eigenenergies.jpg" alt="Figure 1" style="width:512px;" align="center">
+</picture>
 
 Also, we can export figures as `*pdf` format using
 ```julia
@@ -292,9 +294,21 @@ savefig(fig1,"./eigen_energies.pdf")
 
 and eigenfunctions:
 ```julia
+eigenstate_to_show=1
+fig2=plot_eigenstates(simulation_info, output_data,eigenstate_to_show;mapcolor=:turbo)
+display(fig2)
+```
+
+<picture>
+<img src="figures/qho2d_eigenstate_n1.jpg" alt="Figure 2" style="width:512px;" align="center">
+</picture>
+
+```julia
 eigenstate_to_show=2
 fig2=plot_eigenstates(simulation_info, output_data,eigenstate_to_show;mapcolor=:turbo)
 display(fig2)
 ```
 
-<img src="figures/qho2d_eigenstate_n2.jpg" alt="Figure 2" style="width:512px;"/>
+<picture>
+<img src="figures/qho2d_eigenstate_n2.jpg" alt="Figure 3" style="width:512px;" align="center">
+</picture>

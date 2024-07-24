@@ -229,9 +229,8 @@ Now we can plot eigenenergies:
 fig1 = plot_eigenvalues(simulation_info, output_data)
 display(fig1)
 ```
-<picture>
-<img src="figures/qho1d_eigenvalues.jpg" alt="Figure 1" style="width:512px;" align="center">
-</picture>
+
+![figure](../assets/qho1d_eigenvalues.jpg)
 
 and eigenfunctions:
 ```julia
@@ -240,6 +239,4 @@ fig2 = plot_eigenstates(simulation_info, output_data,range_to_show)
 display(fig2)
 ```
 
-<picture>
-<img src="figures/qho1d_eigenstates.jpg" alt="Figure 2" style="width:512px;" align="center">
-</picture>
+![figure](../assets/qho1d_eigenstates.jpg)

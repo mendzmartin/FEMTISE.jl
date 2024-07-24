@@ -253,12 +253,6 @@ label="0.1*Kronig-Penney potential [au]")
 display(fig)
 ```
 
-<picture>
-<img alt="Figure 1" src="figures/kronig_penney_eigenstates.jpg" style="width:512px;" align="center">
-</picture>
-
-<picture>
-<img alt="Figure 1" src="figures/kronig_penney_eigenstates.jpg" width="512" align="center">
-</picture>
+![figure](../assets/kronig_penney_eigenstates.jpg)
 
 We can save de figure using `savefig(fig,"example_kronig_penney.pdf")`.

@@ -221,7 +221,14 @@ fig1=plot_eigenvalues(simulation_info,output_data,1:1:10;show_label=true)
 display(fig1)
 ```
 
+<img src="figures/effec_Yukawa_pot_2e_eigenenergies_vs_param.jpg" alt="Figure 1" style="width:512px;"/>
+
 Also, we can export figures as `*pdf` format using
 ```julia
 savefig(fig1,"./eigen_energies_vs_parameter.pdf")
 ```
+
+Following the same logic we can simulate for this coulombic potential and the eigenstates for the first two energy levels are:
+
+<img src="figures/effec_Yukawa_pot_2e_eigenstate_energy_01.jpg" alt="Figure 2" style="width:512px;"/>
+<img src="figures/effec_Yukawa_pot_2e_eigenstate_energy_02.jpg" alt="Figure 3" style="width:512px;"/>

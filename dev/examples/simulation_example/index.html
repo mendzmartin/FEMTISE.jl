@@ -103,66 +103,40 @@ Number of threads                                                           = 4<
     function my_potential_2d(x,params::Tuple)
         λ₁,λ₂,λ₃...=params
         return f(x[1],x[2],λ₁,λ₂,λ₃...)
-    end</code></pre><p>Here params is a Tuple with potential parameters (can be Integers, Floats, Complex, etc) and <code>f(x[1],x[2],λ₁,λ₂,λ₃...)</code> is an expresion(function) of <code>x[1]</code> (unidmensional DOF), <code>x[2]</code> (unidmensional DOF) and <code>λᵢ</code>&#39;s (parameters).</p><h3 id="Building-input-data-for-custom-potential-simulations"><a class="docs-heading-anchor" href="#Building-input-data-for-custom-potential-simulations">Building input data for custom potential simulations</a><a id="Building-input-data-for-custom-potential-simulations-1"></a><a class="docs-heading-anchor-permalink" href="#Building-input-data-for-custom-potential-simulations" title="Permalink"></a></h3><p>In some specific folder we need to create a data folder <code>@my_folder$: vi my_input.dat</code> with custom potential input information behing the following format (the data next to equal sign is only for example information)</p><pre><code class="language-bash hljs">full_path_name              = ../my_folder_name/my_file_name
-dom_type                    = s
-nev                         = 10
-dimension                   = 1D
-sigma                       = 0.0
-adhoc_file_name             = my_adhoc_potentials
-potential_function_name     = my_potential
-params_potential_types      = f f f
-params_potential            = 1.0 0.1 10.0
-analysis_param              = 2 0.0 0.1 0.01
+    end</code></pre><p>Here params is a Tuple with potential parameters (can be Integers, Floats, Complex, etc) and <code>f(x[1],x[2],λ₁,λ₂,λ₃...)</code> is an expresion(function) of <code>x[1]</code> (unidmensional DOF), <code>x[2]</code> (unidmensional DOF) and <code>λᵢ</code>&#39;s (parameters).</p><h3 id="Building-input-data-for-custom-potential-simulations"><a class="docs-heading-anchor" href="#Building-input-data-for-custom-potential-simulations">Building input data for custom potential simulations</a><a id="Building-input-data-for-custom-potential-simulations-1"></a><a class="docs-heading-anchor-permalink" href="#Building-input-data-for-custom-potential-simulations" title="Permalink"></a></h3><p>In some specific folder we need to create a data folder <code>@my_folder$: vi my_input.dat</code> with custom potential input information behing the following format:</p><pre><code class="language-bash hljs">full_path_name              = ##########
+dom_type                    = ##########
+nev                         = ##########
+dimension                   = ##########
+sigma                       = ##########
+adhoc_file_name             = ##########
+potential_function_name     = ##########
+params_potential_types      = ##########
+params_potential            = ##########
+analysis_param              = ##########
+output_format_type          = ##########
 ## ONLY FOR 1D EIGENPROBLEMS
-L                           = 100.0
-Δx                          = 0.1
+L                           = ##########
+Δx                          = ##########
 ## ONLY FOR 2D EIGENPROBLEMS
-Lx                          = 
-Ly                          = 
-nx                          = 
-ny                          = 
-different_masses            = 
-reduced_density             = 
-
-
-# #################################################################################################
-    full_path_name::String:           Full path name where you want to write problem results
-    dom_type::String                  Domain type (symetric (s) or non-symetric (ns) domain)
-    nev::Integer:                     Number of eigenvalues
-    dimension::String:                Dimension of eigen value problem
-    sigma::Real:                      Level shift used in inverse iteration [au]
-    adhoc_file_name::String:          Julia file name with ad hoc potential
-    potential_function_name::String:  Name of ad hoc potential function
-    params_potential_types:           Paremters type -&gt; f (Float), i (Integer), c (Complex)
-    params_potential:                 Parameters of ad hoc potential function
-    analysis_param
-        only if want to sweap a parameter from params_potential
-            analysis_param = λindex::Integer λi λf Δλ
-        else
-            analysis_param = false
-    only if dimension == 1D
-        L::Real:                      Finite element domain length [au]
-        Δx::Real:                     Finite element size [au]
-    only if dimension == 2D
-        Lx::Real:                     Finite element domain length of x direction [au]
-        Ly::Real:                     Finite element domain length of y direction [au]
-        nx::Integer:                  Number of finite element of x direction
-        ny::Integer:                  Number of finite element of y direction
-        different_masses
-            only if want to simulate 2 particles with different masses
-                different_masses::Real = DOF2mass
-            else
-                different_masses::Bool = false
-        reduced_density
-            if want to compute reduced densities
-                reduced_density::Bool = true
-            else
-                reduced_density::Bool = false
-# #################################################################################################
-
-# #################################################################################################
-    WARNIG! Beware of whitespace between data values and do not use spaces in variables named
-    full_path_name, adhoc_file_name and potential_function_name.</code></pre><p>Then you can run the script and set options <code>5</code> or <code>6</code> like this:</p><pre><code class="language-bash hljs">    @my_folder$: julia my_script.jl
+Lx                          = ##########
+Ly                          = ##########
+nx                          = ##########
+ny                          = ##########
+different_masses            = ##########
+reduced_density             = ##########</code></pre><p>where we use <code>##########</code> to symbolize that we need to set an specific configuration of parameters on that place.</p><blockquote><p>WARNING: Please obey the format structure of input data. </p></blockquote><hr/><h4 id="Giving-more-details"><a class="docs-heading-anchor" href="#Giving-more-details">Giving more details</a><a id="Giving-more-details-1"></a><a class="docs-heading-anchor-permalink" href="#Giving-more-details" title="Permalink"></a></h4><p>Here we give more details (including examples) about how to configurate input data file:</p><ul><li><code>full_path_name::String</code>: Full path name where you want to write problem results. Beware of whitespace between data values and do not use spaces in variables named. E.g.:</li></ul><pre><code class="language-bash hljs">full_path_name = ~/my_folder/adhoc_potential
+full_path_name = ./adhoc_potential</code></pre><ul><li><code>dom_type::String</code>: Domain type. Can set <code>s</code> for symetric domain or <code>ns</code> for non-symetric domain. E.g.:</li></ul><pre><code class="language-bash hljs">dom_type = s
+dom_type = ns</code></pre><ul><li><code>nev::Integer</code>: Number of eigenvalues. E.g.:</li></ul><pre><code class="language-bash hljs">nev = 10</code></pre><ul><li><code>dimension::String</code>: Dimension of eigen value problem. Can set <code>1D</code> for unidimensonal problems or <code>2D</code> for bidimensional problems. E.g.:</li></ul><pre><code class="language-bash hljs">dimension = 1D
+dimension = 2D</code></pre><ul><li><code>sigma::Real</code>: Level shift used in inverse iteration to compute only a subset of eigen pair. Sigma is an specific energy (in atomic units) where we want to centre de eigen problem. E.g.:</li></ul><pre><code class="language-bash hljs">sigma = -10.0
+sigma = 100.0</code></pre><ul><li><code>adhoc_file_name::String</code>: Julia file name with ad hoc potential. Beware of whitespace between data values and do not use spaces in variables named. E.g.:</li></ul><pre><code class="language-bash hljs">adhoc_file_name = my_julia_file</code></pre><ul><li><code>potential_function_name::String</code>: Name of ad hoc potential function. E.g.:</li></ul><pre><code class="language-bash hljs">potential_function_name = my_potential_1d
+potential_function_name = my_potential_2d</code></pre><ul><li><code>params_potential_types</code>: Parameter types of adhoc potential function. Can set <code>f</code> for float type, <code>i</code> for integer type or <code>c</code> for complex type. Use space character to separate differents types. E.g.:</li></ul><pre><code class="language-bash hljs">params_potential_types = f f f
+params_potential_types = i i f</code></pre><ul><li><code>params_potential</code>: Parameter values of ad hoc potential function. Need to be consistent with parameter types. Use space character to separate differents values. E.g.:</li></ul><pre><code class="language-bash hljs">params_potential = 1.0 0.1 10.0
+params_potential  = -5 1 -1.54</code></pre><ul><li><code>analysis_param</code>: Setting if you want an analysis parameter simulation or not. Set <code>analysis_param::Tuple = λindex::Integer λi::T λf::T Δλ::T</code> only if want to modify an specific parameter from params<em>potential. Use space character to separate differents values. Also you can set `analysis</em>param::Bool = false` if you don&#39;t want any parametric analysis simulation. E.g.:</li></ul><pre><code class="language-bash hljs">analysis_param = 2 0.0 0.1 0.01
+analysis_param = 5 -5 10 1
+analysis_param = false</code></pre><ul><li><code>output_format_type::Tuple</code>: Setting what type fo format do you want for output results and whta type of data do you want to write. For first property set <code>bin</code> if you want a binary output format or <code>jld2</code> if you want a JLD2 output format. For second property set <code>eigen</code> if you want to save only eigenenergies and eigenstates or <code>all</code> if you want to save all finite element objects (only activate for <code>jld2</code> format) Set E.g.:</li></ul><pre><code class="language-bash hljs">output_format_type = bin eigen
+output_format_type = jld2 eigen
+output_format_type = jld2 all</code></pre><h5 id="Unidimensional-problems"><a class="docs-heading-anchor" href="#Unidimensional-problems">Unidimensional problems</a><a id="Unidimensional-problems-1"></a><a class="docs-heading-anchor-permalink" href="#Unidimensional-problems" title="Permalink"></a></h5><p>Only use if you set <code>dimension = 1D</code></p><ul><li><code>L::Float</code>: Set the lenght of finite element domain in atomic unit system. E.g.:</li></ul><pre><code class="language-bash hljs">L = 100.0</code></pre><ul><li><code>Δx::Float</code>: Set discretization size of finite elements (for default potential simulation you can set uniform grid). E.g:</li></ul><pre><code class="language-bash hljs">Δx = 0.1</code></pre><h5 id="Bidimensional-problems"><a class="docs-heading-anchor" href="#Bidimensional-problems">Bidimensional problems</a><a id="Bidimensional-problems-1"></a><a class="docs-heading-anchor-permalink" href="#Bidimensional-problems" title="Permalink"></a></h5><p>Only use if you set <code>dimension = 2D</code></p><ul><li><code>Lx::Float</code>: set finite element domain length of x direction in atomic unit system. E.g.:</li></ul><pre><code class="language-bash hljs">Lx = 100.0</code></pre><ul><li><code>Ly::Float</code>: set finite element domain length of y direction in atomic unit system. E.g.:</li></ul><pre><code class="language-bash hljs">Ly = 50.0</code></pre><ul><li><code>nx::Integer</code>: set number of finite element of x direction. E.g:</li></ul><pre><code class="language-bash hljs">nx = 100</code></pre><ul><li><code>nx::Integer</code>: set number of finite element of y direction. E.g:</li></ul><pre><code class="language-bash hljs">ny = 50</code></pre><ul><li><code>different_masses</code>: set if you want to consider different masses or not. Set <code>different_masses::Float = mass2_value</code> if you want to consider another mass value for second DOF in atomic unit system. The mass associated with DOF1 has a value of 1 [au]. Set <code>different_masses::Bool = false</code> if you want the same mass values of DOFs (two unidimensional particles or one bidimensional particle). E.g.:</li></ul><pre><code class="language-bash hljs">different_masses = 5.0
+different_masses = false</code></pre><ul><li><code>reduced_density::Bool</code>: set <code>true</code> if you want to compute reduced densities or <code>false</code> if not. E.g.:</li></ul><pre><code class="language-bash hljs">reduced_density = true
+reduced_density = false</code></pre><hr/><h3 id="Running-an-input-data-file"><a class="docs-heading-anchor" href="#Running-an-input-data-file">Running an input data file</a><a id="Running-an-input-data-file-1"></a><a class="docs-heading-anchor-permalink" href="#Running-an-input-data-file" title="Permalink"></a></h3><p>Then you can run the script and set option <code>5</code> like this:</p><pre><code class="language-bash hljs">    @my_folder$: julia my_script.jl
   Activating project at `~/my_folder`
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ####### ####### #     # #######   ###    #####  #######
@@ -179,9 +153,9 @@ The type of default potential can be:
    - Unidimensional Finite Well Potential                  --&gt; set (3)
    - Bidimensional Isotropic Quantum Harmonic Oscillator   --&gt; set (4)
    - Ad hoc potential from input file                      --&gt; set (5)
-Please, set some number to specify the type potential: 6
+Please, set some number to specify the type potential: 5
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Set full path name (e.g: &quot;./my_directory/my_input_data&quot;) where the data is specified and press Enter =</code></pre><p>Where we were specified the full path name of our input data (only for option <code>6</code>). Also, we can specify this full path name inside Julia script like following:</p><p>First open script file <code>@my_folder$: vi my_script.jl</code> and write the following comands:</p><pre><code class="language-julia hljs">    begin
+Set full path name (e.g: &quot;./my_directory/my_input_data&quot;) where the data is specified and press Enter = ./my_input</code></pre><p>Where we were specified the full path name of our input data. Also, we can specify this full path name inside Julia script like following:</p><p>First open script file <code>@my_folder$: vi my_script.jl</code> and write the following comands:</p><pre><code class="language-julia hljs">    begin
         using Pkg
         Pkg.activate(&quot;./&quot;)
         Pkg.instantiate()
@@ -190,4 +164,4 @@ Set full path name (e.g: &quot;./my_directory/my_input_data&quot;) where the dat
         
         path_input_data = &quot;./my_input&quot;
         run_default_eigen_problem(set_type_potential(path_input_data))
-    end</code></pre><p>Then you can run the script <code>@my_folder$: julia my_script.jl</code> and wait for simulation results.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../function_information/">« Function Information</a><a class="docs-footer-nextpage" href="../symmetric_finite_1d_kronig_penney_potential/">Symmetric Finite 1D Kronig-Penney Potential »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Wednesday 24 July 2024 18:16">Wednesday 24 July 2024</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+    end</code></pre><p>Then you can run the script <code>@my_folder$: julia my_script.jl</code> and wait for simulation results.</p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../../function_information/">« Function Information</a><a class="docs-footer-nextpage" href="../symmetric_finite_1d_kronig_penney_potential/">Symmetric Finite 1D Kronig-Penney Potential »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Thursday 25 July 2024 15:10">Thursday 25 July 2024</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

@@ -29,7 +29,8 @@ function avoided_divergence(DOF,b)
     return func
 end
 
-function reduced_confinement_function(DOF1,DOF2,confinement_length,Yukawa_length,atomic_number)
+function reduced_confinement_function(DOF1,DOF2,confinement_length,Yukawa_length,
+atomic_number)
     a=atomic_number*π*sqrt(π)*0.5*(1.0/confinement_length);
     b=confinement_length*0.5*(1.0/abs(Yukawa_length));
     coordinate=distance(DOF1,DOF2)*(1.0/confinement_length);
@@ -41,8 +42,10 @@ export effective_Yukawa_potential_2e
     effective_Yukawa_potential_2e(x,params)
 
 # Aim:
-    This function calculates the effective Yukawa potential between two electrons in a 1D system. 
-    The potential is calculated using the reduced confinement function and the avoided divergence function.
+    This function calculates the effective Yukawa potential between two electrons in a 1D 
+    system. 
+    The potential is calculated using the reduced confinement function and the avoided 
+    divergence function.
 
 # Arguments
     x::Array{Float64,1} : The position of the two electrons in 1D.
@@ -58,9 +61,12 @@ export effective_Yukawa_potential_2e
 """
 function effective_Yukawa_potential_2e(x,params::Tuple)
     confinement_length,Yukawa_length,nuclei_coord,atomic_number,switch_factor=params;
-    return (switch_factor*(reduced_confinement_function(x[1],x[2],confinement_length,Yukawa_length,1.0)
-    -reduced_confinement_function(x[1],nuclei_coord,confinement_length,Yukawa_length,atomic_number)
-    -reduced_confinement_function(nuclei_coord,x[2],confinement_length,Yukawa_length,atomic_number)))
+    return (switch_factor*(reduced_confinement_function(x[1],x[2],confinement_length,
+    Yukawa_length,1.0)
+    -reduced_confinement_function(x[1],nuclei_coord,confinement_length,Yukawa_length,
+    atomic_number)
+    -reduced_confinement_function(nuclei_coord,x[2],confinement_length,Yukawa_length,
+    atomic_number)))
 end
 ```
 
@@ -73,7 +79,7 @@ We need to create an input file to simulate using default solver function inside
 ```
 Inside `input.dat` we need to write the following.
 
-```text
+```plaintext
 full_path_name              = ~/my_directory_path/C2D/name_output_file
 dom_type                    = s
 nev                         = 50
@@ -111,7 +117,8 @@ Inside `run.jl` we need to write the following.
 begin
     using Pkg
     Pkg.activate("../")
-    develop_package = true; develop_package ? Pkg.develop(path="~/my_path_repo/FEMTISE.jl") : nothing
+    develop_package = true; develop_package ? Pkg.develop(path="~/my_path_repo/FEMTISE.jl") 
+    : nothing
     Pkg.instantiate()
     using FEMTISE;
     run_default_eigen_problem(set_type_potential("~/my_directory_path/C2D/input.dat"))
@@ -181,7 +188,8 @@ Building functions to plot figures we have:
 - Plot the eigenvalues of the Hamiltonian operator.
 The eigenvalues are plotted as a function of the parameter λ.
 The eigenvalues are obtained from the diagonalization of the Hamiltonian operator.
-The eigenvalues are plotted for the range of energy levels specified by the range_to_show variable.
+The eigenvalues are plotted for the range of energy levels specified by the range_to_show 
+variable.
 The keyword arguments are used to set the title, xlabel, ylabel, and legend of the plot.
 
 # Arguments
@@ -197,16 +205,20 @@ The keyword arguments are used to set the title, xlabel, ylabel, and legend of t
 function plot_eigenvalues(id,results,range_to_show::StepRange{Int, Int};show_label=true)
     if id.analysis_param == false
         println("PLOT ERROR.")
-        println("Check attributes, you are using the wrong function method. Analysis parameter is not activated.")
+        println("Check attributes, you are using the wrong function method. Analysis 
+        parameter is not activated.")
         figure = nothing
     else
         plotlyjs()
-        figure = plot(xlabel="Parameter λ",ylabel="Eigen-energies (ϵn(λ) [au])",ticks = :native)
+        figure = plot(xlabel="Parameter λ",ylabel="Eigen-energies (ϵn(λ) [au])",ticks = 
+        :native)
         for i in range_to_show
             if show_label
-                figure = scatter!(real.(results.λvector),real(results.ϵ_matrix[i,:]), label="n=$(i)",legend=:top)
+                figure = scatter!(real.(results.λvector),real(results.ϵ_matrix[i,:]), 
+                label="n=$(i)",legend=:top)
             else
-                figure = scatter!(real.(results.λvector),real(results.ϵ_matrix[i,:]), label="")
+                figure = scatter!(real.(results.λvector),real(results.ϵ_matrix[i,:]), 
+                label="")
             end
             figure = plot!(real.(results.λvector),real(results.ϵ_matrix[i,:]),label="")
         end

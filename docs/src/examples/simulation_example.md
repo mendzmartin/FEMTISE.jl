@@ -76,17 +76,20 @@ Then you can specify the set number to run a specific potential. Then the runnin
 
 Just to show how we can simulate the Unidimensional Quantum Hamonic Oscillator we need to specify befor the set number 1, then the properties to configurate are like following:
 
-```bash
+```julia
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Set full path name (e.g: "./my_directory/my_name") where you want to write problem results and press Enter = ./qho1d
+Set full path name (e.g: "./my_directory/my_name") where you want to write problem results 
+and press Enter = ./qho1d
 Mandatory input data
 Number of eigenvalues: nev::Int = 10
 Finite element domain length [au] (default L=30.0 press Enter): L::Float64 = 
-Set domain type (for symetric domain {-L/2,L/2} set "s" and for non-symetric domain {0,L} set "ns": dom_type::String = s
+Set domain type (for symetric domain {-L/2,L/2} set "s" and for non-symetric domain {0,L} 
+set "ns": dom_type::String = s
 Finite element size [au] (default Δx=0.1 press Enter): Δx::Float64 = 
 Harmonic Oscillator frecuency [au]: ω::Float64 = 1
 Harmonic Oscillator center [au]: x₁::Float64 = 0
-Level shift used in inverse iteration [au] (default sigma=0.0 press Enter): sigma::Float64 = 0
+Level shift used in inverse iteration [au] (default sigma=0.0 press Enter): sigma::Float64 
+= 0
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 ... Running ...
 Building the grid model ...
@@ -129,6 +132,8 @@ and we note that the results are in binary otuput data file and the attributes o
 
 ```bash
     @my_folder$: cat qho1d_eigen_problem_attributes.dat
+```
+```plaintex
 Quantum Harmonic Oscillator 1D
 Dimension of eigen value problem              dimension::String   = 1D
 Number of eigenvalues                         nev::Int          = 10
@@ -183,7 +188,7 @@ Here params is a Tuple with potential parameters (can be Integers, Floats, Compl
 
 In some specific folder we need to create a data folder `@my_folder$: vi my_input.dat` with custom potential input information behing the following format:
 
-```bash
+```plaintext
 full_path_name              = ##########
 dom_type                    = ##########
 nev                         = ##########
@@ -216,57 +221,57 @@ where we use `##########` to symbolize that we need to set an specific configura
 Here we give more details (including examples) about how to configurate input data file:
 
 + `full_path_name::String`: Full path name where you want to write problem results. Beware of whitespace between data values and do not use spaces in variables named. E.g.:
-```bash
+```plaintext
 full_path_name = ~/my_folder/adhoc_potential
 full_path_name = ./adhoc_potential
 ```
 + `dom_type::String`: Domain type. Can set `s` for symetric domain or `ns` for non-symetric domain. E.g.:
-```bash
+```plaintext
 dom_type = s
 dom_type = ns
 ```
 + `nev::Integer`: Number of eigenvalues. E.g.:
-```bash
+```plaintext
 nev = 10
 ```
 + `dimension::String`: Dimension of eigen value problem. Can set `1D` for unidimensonal problems or `2D` for bidimensional problems. E.g.:
-```bash
+```plaintext
 dimension = 1D
 dimension = 2D
 ```
 + `sigma::Real`: Level shift used in inverse iteration to compute only a subset of eigen pair. Sigma is an specific energy (in atomic units) where we want to centre de eigen problem. E.g.:
-```bash
+```plaintext
 sigma = -10.0
 sigma = 100.0
 ```
 + `adhoc_file_name::String`: Julia file name with ad hoc potential. Beware of whitespace between data values and do not use spaces in variables named. E.g.:
-```bash
+```plaintext
 adhoc_file_name = my_julia_file
 ```
 + `potential_function_name::String`: Name of ad hoc potential function. E.g.:
-```bash
+```plaintext
 potential_function_name = my_potential_1d
 potential_function_name = my_potential_2d
 ```
 + `params_potential_types`: Parameter types of adhoc potential function. Can set `f` for float type, `i` for integer type or `c` for complex type. Use space character to separate differents types. E.g.:
-```bash
+```plaintext
 params_potential_types = f f f
 params_potential_types = i i f
 ```
 + `params_potential`: Parameter values of ad hoc potential function. Need to be consistent with parameter types. Use space character to separate differents values. E.g.:
-```bash
+```plaintext
 params_potential = 1.0 0.1 10.0
 params_potential  = -5 1 -1.54
 ```
 + `analysis_param`: Setting if you want an analysis parameter simulation or not. Set `analysis_param::Tuple = λindex::Integer λi::T λf::T Δλ::T` only if want to modify an specific parameter from params_potential. Use space character to separate differents values. Also you can set `analysis_param::Bool = false` if you don't want any parametric analysis simulation. E.g.:
-```bash
+```plaintext
 analysis_param = 2 0.0 0.1 0.01
 analysis_param = 5 -5 10 1
 analysis_param = false
 ```
 
 + `output_format_type::Tuple`: Setting what type fo format do you want for output results and whta type of data do you want to write. For first property set `bin` if you want a binary output format or `jld2` if you want a JLD2 output format. For second property set `eigen` if you want to save only eigenenergies and eigenstates or `all` if you want to save all finite element objects (only activate for `jld2` format) Set E.g.:
-```bash
+```plaintext
 output_format_type = bin eigen
 output_format_type = jld2 eigen
 output_format_type = jld2 all
@@ -275,39 +280,39 @@ output_format_type = jld2 all
 ##### Unidimensional problems
 Only use if you set `dimension = 1D`
 + `L::Float`: Set the lenght of finite element domain in atomic unit system. E.g.:
-```bash
+```plaintext
 L = 100.0
 ```
 + `Δx::Float`: Set discretization size of finite elements (for default potential simulation you can set uniform grid). E.g:
-```bash
+```plaintext
 Δx = 0.1
 ```
 
 ##### Bidimensional problems
 Only use if you set `dimension = 2D`
 + `Lx::Float`: set finite element domain length of x direction in atomic unit system. E.g.:
-```bash
+```plaintext
 Lx = 100.0
 ```
 + `Ly::Float`: set finite element domain length of y direction in atomic unit system. E.g.:
-```bash
+```plaintext
 Ly = 50.0
 ```
 + `nx::Integer`: set number of finite element of x direction. E.g:
-```bash
+```plaintext
 nx = 100
 ```
 + `nx::Integer`: set number of finite element of y direction. E.g:
-```bash
+```plaintext
 ny = 50
 ```
 + `different_masses`: set if you want to consider different masses or not. Set `different_masses::Float = mass2_value` if you want to consider another mass value for second DOF in atomic unit system. The mass associated with DOF1 has a value of 1 [au]. Set `different_masses::Bool = false` if you want the same mass values of DOFs (two unidimensional particles or one bidimensional particle). E.g.:
-```bash
+```plaintext
 different_masses = 5.0
 different_masses = false
 ```
 + `reduced_density::Bool`: set `true` if you want to compute reduced densities or `false` if not. E.g.:
-```bash
+```plaintext
 reduced_density = true
 reduced_density = false
 ```
@@ -337,7 +342,8 @@ The type of default potential can be:
    - Ad hoc potential from input file                      --> set (5)
 Please, set some number to specify the type potential: 5
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
-Set full path name (e.g: "./my_directory/my_input_data") where the data is specified and press Enter = ./my_input
+Set full path name (e.g: "./my_directory/my_input_data") where the data is specified and 
+press Enter = ./my_input
 ```
 
 Where we were specified the full path name of our input data. Also, we can specify this full path name inside Julia script like following:

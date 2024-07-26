@@ -24,7 +24,8 @@ export qho_1d
     qho_1d(x,params)
 
 # Aim: 
-    This function is a simple implementation of the 1D quantum harmonic oscillator potential. 
+    This function is a simple implementation of the 1D quantum harmonic oscillator 
+    potential. 
     It is used to test the simulation of the isotropic quantum harmonic oscillator in 1D.
 
 # Arguments
@@ -87,7 +88,8 @@ Inside `run.jl` we need to write the following.
 begin
     using Pkg
     Pkg.activate("~/my_directory_path/QHO1D/")
-    develop_package = true; develop_package ? Pkg.develop(path="~/my_path_repo/FEMTISE.jl") : nothing
+    develop_package = true; develop_package ? Pkg.develop(path="~/my_path_repo/FEMTISE.jl") 
+    : nothing
     Pkg.instantiate()
     using FEMTISE;
     run_default_eigen_problem(set_type_potential("~/my_directory_path/QHO1D/input.dat"))
@@ -170,13 +172,16 @@ The keyword arguments are used to set the title, xlabel, ylabel, and legend of t
 """
 function plot_eigenvalues(id,results;
     set_title::String="",
-    set_xlabel::String="Energy level (n)",set_ylabel::String="Eigen-energies (ϵn [au])",set_legend::Symbol=:bottomright)
+    set_xlabel::String="Energy level (n)",set_ylabel::String="Eigen-energies (ϵn [au])",
+    set_legend::Symbol=:bottomright)
     if id.analysis_param == false
         plotlyjs()
-        figure = scatter(real(results.ϵ),title=set_title,xlabel=set_xlabel,ylabel=set_ylabel,legend=set_legend)
+        figure = scatter(real(results.ϵ),title=set_title,xlabel=set_xlabel,
+        ylabel=set_ylabel,legend=set_legend)
     else
         println("PLOT ERROR.")
-        println("Check attributes, you are using the wrong function method. Analysis parameter is activated.")
+        println("Check attributes, you are using the wrong function method. Analysis 
+        parameter is activated.")
         figure = nothing
     end
     return figure
@@ -188,7 +193,8 @@ end
 # Aim
 - Plot the eigenstates of the Hamiltonian operator.
 The eigenstates are obtained from the diagonalization of the Hamiltonian operator.
-The eigenstates are plotted for the range of energy levels specified by the range_to_show variable.
+The eigenstates are plotted for the range of energy levels specified by the range_to_show 
+variable.
 The keyword arguments are used to set the title, xlabel, ylabel, and legend of the plot.
 
 # Arguments
@@ -200,16 +206,20 @@ The keyword arguments are used to set the title, xlabel, ylabel, and legend of t
     - `set_ylabel::String`: Label of the y-axis.
 """
 function plot_eigenstates(id,results,range_to_show::StepRange{Int, Int};
-    set_xlabel::String="Coordinate (x [au])",set_ylabel::String="Probability density (ρ(x))")
+    set_xlabel::String="Coordinate (x [au])",set_ylabel::String="Probability density (ρ(x))
+    ")
     if id.params.dimension == "1D"
         plotlyjs();
         figure = plot()
         rho=zeros(Float64,length(results.r))
         Threads.@threads for i in range_to_show
-            if ((typeof(id) <: InputData) || (typeof(id) <: InputData1D && id.output_format_type == ("bin","eigen")))
+            if ((typeof(id) <: InputData) || (typeof(id) <: InputData1D && id.
+            output_format_type == ("bin","eigen")))
                 rho=real.(conj.((results.ϕ)[:,i]).*((results.ϕ)[:,i]))
-            elseif (typeof(id) <: InputData1D && id.output_format_type in [("jld2","eigen"),("jld2","all")])
-                rho = real.(conj.((results.ϕ[i]).(results.pts)).*((results.ϕ[i]).(results.pts)))
+            elseif (typeof(id) <: InputData1D && id.output_format_type in [("jld2","eigen"),
+            ("jld2","all")])
+                rho = real.(conj.((results.ϕ[i]).(results.pts)).*((results.ϕ[i]).(results.
+                pts)))
             end
             figure = plot!(results.r,rho,lw=2,lc=:black,label="")
             figure = scatter!(results.r,rho,label="n=$(i)",lw=0.1)
@@ -217,7 +227,8 @@ function plot_eigenstates(id,results,range_to_show::StepRange{Int, Int};
         figure = plot!(xlabel=set_xlabel,ylabel=set_ylabel,ticks=:native)
     else
         println("PLOT ERROR.")
-        println("Check attributes, you are using the wrong function method. 2D dimension problem is activated.")
+        println("Check attributes, you are using the wrong function method. 2D dimension 
+        problem is activated.")
         figure = nothing
     end
     return figure

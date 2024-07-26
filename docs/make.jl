@@ -6,6 +6,8 @@ makedocs(
     modules  = [FEMTISE],
     pages = [
         "Home" => "index.md",
+        "Introduction" => "math_fundation.md",
+        "Computing details" => "computing_details.md",
         "Guide Information"=>"guide_information.md",
         "Function Information" => "function_information.md",
         "Simulation Example" => [

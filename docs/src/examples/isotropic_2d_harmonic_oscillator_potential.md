@@ -24,15 +24,18 @@ export qho_2d
     qho_2d(x,params)
 
 # Aim:
-    This function is a simple implementation of the 2D quantum harmonic oscillator potential. 
+    This function is a simple implementation of the 2D quantum harmonic oscillator 
+    potential. 
     It is used to test the simulation of the isotropic quantum harmonic oscillator in 2D.
 
 # Arguments
     x::Array{Float64,1} : The position of the particle in 2D.
     params::Tuple : A tuple containing the parameters of the potential. 
         params[1]::Float64 : The frequency of the oscillator.
-        params[2]::Float64 : The position of the minimum of the potential in the x direction.
-        params[3]::Float64 : The position of the minimum of the potential in the y direction.
+        params[2]::Float64 : The position of the minimum of the potential in the x 
+        direction.
+        params[3]::Float64 : The position of the minimum of the potential in the y 
+        direction.
 """
 function qho_2d(x,params::Tuple)
     ω,x₁,y₁=params
@@ -222,41 +225,59 @@ function plot_eigenstates(id,results,index_nev::Int;mapcolor::Symbol=:rainbow1)
     if id.analysis_param == false
         if id.params.dimension == "1D"
             plotlyjs();
-            if ((typeof(id) <: InputData) || (typeof(id) <: InputData1D && id.output_format_type == ("bin","eigen")))
+            if ((typeof(id) <: InputData) || (typeof(id) <: InputData1D && id.
+            output_format_type == ("bin","eigen")))
                 rho = real.(conj.(results.ϕ[:,index_nev]).*(results.ϕ[:,index_nev]))
-            elseif (typeof(id) <: InputData1D && id.output_format_type in [("jld2","eigen"),("jld2","all")])
-                rho = real.(conj.(results.ϕ[index_nev].(results.pts)).*(results.ϕ[index_nev].(results.pts)))
+            elseif (typeof(id) <: InputData1D && id.output_format_type in [("jld2","eigen"),
+            ("jld2","all")])
+                rho = real.(conj.(results.ϕ[index_nev].(results.pts)).*(results.ϕ
+                [index_nev].(results.pts)))
             end
             figure = plot(results.r,rho,lw=2,lc=:black,label="")
             figure = scatter!(results.r,rho,label="n=$(index_nev)",lw=0.1)
-            figure = plot!(xlabel="Coordinate (x [au])",ylabel="Probability density (ρn(x))",ticks = :native)
+            figure = plot!(xlabel="Coordinate (x [au])",ylabel="Probability density (ρn(x))
+            ",ticks = :native)
         elseif id.params.dimension == "2D"
             gr();
-            if ((typeof(id) <: InputData) || (typeof(id) <: InputData2D && id.output_format_type == ("bin","eigen")))
+            if ((typeof(id) <: InputData) || (typeof(id) <: InputData2D && id.
+            output_format_type == ("bin","eigen")))
                 if id.params.nx==id.params.ny
                     rho = density2D(results.r[:,1],results.r[:,2],results.ϕ[:,index_nev])
-                    figure1 = contour(results.r[:,1],results.r[:,2],rho,levels=10, color=mapcolor, fill=true,lw=0)
+                    figure1 = contour(results.r[:,1],results.r[:,2],rho,levels=10, 
+                    color=mapcolor, fill=true,lw=0)
                 else
-                    rho = density2D(results.r[1:id.params.nx,1],results.r[1:id.params.ny,2],results.ϕ[:,index_nev])
-                    figure1 = contour(results.r[1:id.params.nx,1],results.r[1:id.params.ny,2],rho, levels=10, color=mapcolor, fill=true,lw=0)
+                    rho = density2D(results.r[1:id.params.nx,1],results.r[1:id.params.ny,2],
+                    results.ϕ[:,index_nev])
+                    figure1 = contour(results.r[1:id.params.nx,1],results.r[1:id.params.ny,
+                    2],rho, levels=10, color=mapcolor, fill=true,lw=0)
                 end
-            elseif (typeof(id) <: InputData2D && id.output_format_type in [("jld2","eigen"),("jld2","all")])
-                rho = density2D(results.r[1],results.r[2],results.ϕ[index_nev].(results.pts))
-                figure1 = contour(results.r[1],results.r[2],rho,levels=10, color=mapcolor, fill=true,lw=0)
+            elseif (typeof(id) <: InputData2D && id.output_format_type in [("jld2","eigen"),
+            ("jld2","all")])
+                rho = density2D(results.r[1],results.r[2],results.ϕ[index_nev].(results.
+                pts))
+                figure1 = contour(results.r[1],results.r[2],rho,levels=10, color=mapcolor, 
+                fill=true,lw=0)
             end
-            figure1 = plot(figure1,title="Probability density (ρ$(index_nev)(x))",xlabel="Coordinate (x [au])", ylabel="Coordinate (y [au])")
+            figure1 = plot(figure1,title="Probability density (ρ$(index_nev)(x))",
+            xlabel="Coordinate (x [au])", ylabel="Coordinate (y [au])")
     
             if id.reduced_density
                 plotlyjs()
-                if ((typeof(id) <: InputData) || (typeof(id) <: InputData1D && id.output_format_type == ("bin","eigen")))
+                if ((typeof(id) <: InputData) || (typeof(id) <: InputData1D && id.
+                output_format_type == ("bin","eigen")))
                     if id.params.nx==id.params.ny
-                        figure2=plot(results.r[:,1],results.rhoDOF1[:,index_nev],label="ρn(x)")
-                        figure2=plot!(results.r[:,2],results.rhoDOF2[:,index_nev],label="ρn(y)")
+                        figure2=plot(results.r[:,1],results.rhoDOF1[:,index_nev],label="ρn
+                        (x)")
+                        figure2=plot!(results.r[:,2],results.rhoDOF2[:,index_nev],label="ρn
+                        (y)")
                     else
-                        figure2=plot(results.r[1:id.params.nx,1],results.rhoDOF1[:,index_nev],label="ρn(x)")
-                        figure2=plot!(results.r[1:id.params.ny,2],results.rhoDOF2[:,index_nev],label="ρn(y)")
+                        figure2=plot(results.r[1:id.params.nx,1],results.rhoDOF1[:,
+                        index_nev],label="ρn(x)")
+                        figure2=plot!(results.r[1:id.params.ny,2],results.rhoDOF2[:,
+                        index_nev],label="ρn(y)")
                     end
-                elseif (typeof(id) <: InputData2D && id.output_format_type in [("jld2","eigen"),("jld2","all")])
+                elseif (typeof(id) <: InputData2D && id.output_format_type in [("jld2",
+                "eigen"),("jld2","all")])
                     figure2 = plot(results.r[1],results.rhoDOF1[:,index_nev],label="ρn(x)")
                     figure2 = plot!(results.r[2],results.rhoDOF2[:,index_nev],label="ρn(y)")
                 end

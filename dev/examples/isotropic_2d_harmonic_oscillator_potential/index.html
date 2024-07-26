@@ -1,19 +1,22 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Isotropic 2D Quantum Harmonic Oscillator Potential · FEMTISE</title><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../"><img src="../../assets/logo.png" alt="FEMTISE logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../">FEMTISE</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../guide_information/">Guide Information</a></li><li><a class="tocitem" href="../../function_information/">Function Information</a></li><li><span class="tocitem">Simulation Example</span><ul><li><a class="tocitem" href="../simulation_example/">General Simulation Examples</a></li><li><a class="tocitem" href="../symmetric_finite_1d_kronig_penney_potential/">Symmetric Finite 1D Kronig-Penney Potential</a></li><li><a class="tocitem" href="../isotropic_1d_harmonic_oscillator_potential/">Isotropic 1D Quantum Harmonic Oscillator Potential</a></li><li class="is-active"><a class="tocitem" href>Isotropic 2D Quantum Harmonic Oscillator Potential</a></li><li><a class="tocitem" href="../coulomb_interaction_2d_potential/">Two-Electrons Coulomb Interaction Potential</a></li></ul></li><li><a class="tocitem" href="../../contact_information/">Contact Information</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Simulation Example</a></li><li class="is-active"><a href>Isotropic 2D Quantum Harmonic Oscillator Potential</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Isotropic 2D Quantum Harmonic Oscillator Potential</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/mendzmartin/FEMTISE.jl/blob/main/docs/src/examples/isotropic_2d_harmonic_oscillator_potential.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator"><a class="docs-heading-anchor" href="#Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator">Tutorial To Simulate Isotropic Two Dimensional Harmonic Oscillator</a><a id="Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator" title="Permalink"></a></h1><h3 id="Create-simulation-directory"><a class="docs-heading-anchor" href="#Create-simulation-directory">Create simulation directory</a><a id="Create-simulation-directory-1"></a><a class="docs-heading-anchor-permalink" href="#Create-simulation-directory" title="Permalink"></a></h3><p>First of all we need to create a specific directory to save this specific simulation results </p><pre><code class="language-bash hljs">@prompt:~$ mkdir ~/my_directory_path/QHO2D
+<html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/><title>Isotropic 2D Quantum Harmonic Oscillator Potential · FEMTISE</title><script data-outdated-warner src="../../assets/warner.js"></script><link href="https://cdnjs.cloudflare.com/ajax/libs/lato-font/3.0.0/css/lato-font.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/juliamono/0.045/juliamono.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/fontawesome.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/solid.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/brands.min.css" rel="stylesheet" type="text/css"/><link href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.13.24/katex.min.css" rel="stylesheet" type="text/css"/><script>documenterBaseURL="../.."</script><script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" data-main="../../assets/documenter.js"></script><script src="../../siteinfo.js"></script><script src="../../../versions.js"></script><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-dark.css" data-theme-name="documenter-dark" data-theme-primary-dark/><link class="docs-theme-link" rel="stylesheet" type="text/css" href="../../assets/themes/documenter-light.css" data-theme-name="documenter-light" data-theme-primary/><script src="../../assets/themeswap.js"></script></head><body><div id="documenter"><nav class="docs-sidebar"><a class="docs-logo" href="../../"><img src="../../assets/logo.png" alt="FEMTISE logo"/></a><div class="docs-package-name"><span class="docs-autofit"><a href="../../">FEMTISE</a></span></div><form class="docs-search" action="../../search/"><input class="docs-search-query" id="documenter-search-query" name="q" type="text" placeholder="Search docs"/></form><ul class="docs-menu"><li><a class="tocitem" href="../../">Home</a></li><li><a class="tocitem" href="../../math_fundation/">Introduction</a></li><li><a class="tocitem" href="../../computing_details/">Computing details</a></li><li><a class="tocitem" href="../../guide_information/">Guide Information</a></li><li><a class="tocitem" href="../../function_information/">Function Information</a></li><li><span class="tocitem">Simulation Example</span><ul><li><a class="tocitem" href="../simulation_example/">General Simulation Examples</a></li><li><a class="tocitem" href="../symmetric_finite_1d_kronig_penney_potential/">Symmetric Finite 1D Kronig-Penney Potential</a></li><li><a class="tocitem" href="../isotropic_1d_harmonic_oscillator_potential/">Isotropic 1D Quantum Harmonic Oscillator Potential</a></li><li class="is-active"><a class="tocitem" href>Isotropic 2D Quantum Harmonic Oscillator Potential</a></li><li><a class="tocitem" href="../coulomb_interaction_2d_potential/">Two-Electrons Coulomb Interaction Potential</a></li></ul></li><li><a class="tocitem" href="../../contact_information/">Contact Information</a></li></ul><div class="docs-version-selector field has-addons"><div class="control"><span class="docs-label button is-static is-size-7">Version</span></div><div class="docs-selector control is-expanded"><div class="select is-fullwidth is-size-7"><select id="documenter-version-selector"></select></div></div></div></nav><div class="docs-main"><header class="docs-navbar"><nav class="breadcrumb"><ul class="is-hidden-mobile"><li><a class="is-disabled">Simulation Example</a></li><li class="is-active"><a href>Isotropic 2D Quantum Harmonic Oscillator Potential</a></li></ul><ul class="is-hidden-tablet"><li class="is-active"><a href>Isotropic 2D Quantum Harmonic Oscillator Potential</a></li></ul></nav><div class="docs-right"><a class="docs-edit-link" href="https://github.com/mendzmartin/FEMTISE.jl/blob/main/docs/src/examples/isotropic_2d_harmonic_oscillator_potential.md" title="Edit on GitHub"><span class="docs-icon fab"></span><span class="docs-label is-hidden-touch">Edit on GitHub</span></a><a class="docs-settings-button fas fa-cog" id="documenter-settings-button" href="#" title="Settings"></a><a class="docs-sidebar-button fa fa-bars is-hidden-desktop" id="documenter-sidebar-button" href="#"></a></div></header><article class="content" id="documenter-page"><h1 id="Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator"><a class="docs-heading-anchor" href="#Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator">Tutorial To Simulate Isotropic Two Dimensional Harmonic Oscillator</a><a id="Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator-1"></a><a class="docs-heading-anchor-permalink" href="#Tutorial-To-Simulate-Isotropic-Two-Dimensional-Harmonic-Oscillator" title="Permalink"></a></h1><h3 id="Create-simulation-directory"><a class="docs-heading-anchor" href="#Create-simulation-directory">Create simulation directory</a><a id="Create-simulation-directory-1"></a><a class="docs-heading-anchor-permalink" href="#Create-simulation-directory" title="Permalink"></a></h3><p>First of all we need to create a specific directory to save this specific simulation results </p><pre><code class="language-bash hljs">@prompt:~$ mkdir ~/my_directory_path/QHO2D
 @prompt:~$ cd ~/my_directory_path/QHO2D</code></pre><h3 id="Create-function-potential"><a class="docs-heading-anchor" href="#Create-function-potential">Create function potential</a><a id="Create-function-potential-1"></a><a class="docs-heading-anchor-permalink" href="#Create-function-potential" title="Permalink"></a></h3><p>We need to create a aspecific function potential for quantum harmonic oscillator 2D as following:</p><pre><code class="language-bash hljs">@prompt:~/my_directory_path/QHO2D$ vi adhoc_potential_function.jl</code></pre><p>Inside <code>adhoc_potential_function</code> write the following:</p><pre><code class="language-julia hljs">export qho_2d
 &quot;&quot;&quot;
     qho_2d(x,params)
 
 # Aim:
-    This function is a simple implementation of the 2D quantum harmonic oscillator potential. 
+    This function is a simple implementation of the 2D quantum harmonic oscillator 
+    potential. 
     It is used to test the simulation of the isotropic quantum harmonic oscillator in 2D.
 
 # Arguments
     x::Array{Float64,1} : The position of the particle in 2D.
     params::Tuple : A tuple containing the parameters of the potential. 
         params[1]::Float64 : The frequency of the oscillator.
-        params[2]::Float64 : The position of the minimum of the potential in the x direction.
-        params[3]::Float64 : The position of the minimum of the potential in the y direction.
+        params[2]::Float64 : The position of the minimum of the potential in the x 
+        direction.
+        params[3]::Float64 : The position of the minimum of the potential in the y 
+        direction.
 &quot;&quot;&quot;
 function qho_2d(x,params::Tuple)
     ω,x₁,y₁=params
@@ -127,41 +130,59 @@ function plot_eigenstates(id,results,index_nev::Int;mapcolor::Symbol=:rainbow1)
     if id.analysis_param == false
         if id.params.dimension == &quot;1D&quot;
             plotlyjs();
-            if ((typeof(id) &lt;: InputData) || (typeof(id) &lt;: InputData1D &amp;&amp; id.output_format_type == (&quot;bin&quot;,&quot;eigen&quot;)))
+            if ((typeof(id) &lt;: InputData) || (typeof(id) &lt;: InputData1D &amp;&amp; id.
+            output_format_type == (&quot;bin&quot;,&quot;eigen&quot;)))
                 rho = real.(conj.(results.ϕ[:,index_nev]).*(results.ϕ[:,index_nev]))
-            elseif (typeof(id) &lt;: InputData1D &amp;&amp; id.output_format_type in [(&quot;jld2&quot;,&quot;eigen&quot;),(&quot;jld2&quot;,&quot;all&quot;)])
-                rho = real.(conj.(results.ϕ[index_nev].(results.pts)).*(results.ϕ[index_nev].(results.pts)))
+            elseif (typeof(id) &lt;: InputData1D &amp;&amp; id.output_format_type in [(&quot;jld2&quot;,&quot;eigen&quot;),
+            (&quot;jld2&quot;,&quot;all&quot;)])
+                rho = real.(conj.(results.ϕ[index_nev].(results.pts)).*(results.ϕ
+                [index_nev].(results.pts)))
             end
             figure = plot(results.r,rho,lw=2,lc=:black,label=&quot;&quot;)
             figure = scatter!(results.r,rho,label=&quot;n=$(index_nev)&quot;,lw=0.1)
-            figure = plot!(xlabel=&quot;Coordinate (x [au])&quot;,ylabel=&quot;Probability density (ρn(x))&quot;,ticks = :native)
+            figure = plot!(xlabel=&quot;Coordinate (x [au])&quot;,ylabel=&quot;Probability density (ρn(x))
+            &quot;,ticks = :native)
         elseif id.params.dimension == &quot;2D&quot;
             gr();
-            if ((typeof(id) &lt;: InputData) || (typeof(id) &lt;: InputData2D &amp;&amp; id.output_format_type == (&quot;bin&quot;,&quot;eigen&quot;)))
+            if ((typeof(id) &lt;: InputData) || (typeof(id) &lt;: InputData2D &amp;&amp; id.
+            output_format_type == (&quot;bin&quot;,&quot;eigen&quot;)))
                 if id.params.nx==id.params.ny
                     rho = density2D(results.r[:,1],results.r[:,2],results.ϕ[:,index_nev])
-                    figure1 = contour(results.r[:,1],results.r[:,2],rho,levels=10, color=mapcolor, fill=true,lw=0)
+                    figure1 = contour(results.r[:,1],results.r[:,2],rho,levels=10, 
+                    color=mapcolor, fill=true,lw=0)
                 else
-                    rho = density2D(results.r[1:id.params.nx,1],results.r[1:id.params.ny,2],results.ϕ[:,index_nev])
-                    figure1 = contour(results.r[1:id.params.nx,1],results.r[1:id.params.ny,2],rho, levels=10, color=mapcolor, fill=true,lw=0)
+                    rho = density2D(results.r[1:id.params.nx,1],results.r[1:id.params.ny,2],
+                    results.ϕ[:,index_nev])
+                    figure1 = contour(results.r[1:id.params.nx,1],results.r[1:id.params.ny,
+                    2],rho, levels=10, color=mapcolor, fill=true,lw=0)
                 end
-            elseif (typeof(id) &lt;: InputData2D &amp;&amp; id.output_format_type in [(&quot;jld2&quot;,&quot;eigen&quot;),(&quot;jld2&quot;,&quot;all&quot;)])
-                rho = density2D(results.r[1],results.r[2],results.ϕ[index_nev].(results.pts))
-                figure1 = contour(results.r[1],results.r[2],rho,levels=10, color=mapcolor, fill=true,lw=0)
+            elseif (typeof(id) &lt;: InputData2D &amp;&amp; id.output_format_type in [(&quot;jld2&quot;,&quot;eigen&quot;),
+            (&quot;jld2&quot;,&quot;all&quot;)])
+                rho = density2D(results.r[1],results.r[2],results.ϕ[index_nev].(results.
+                pts))
+                figure1 = contour(results.r[1],results.r[2],rho,levels=10, color=mapcolor, 
+                fill=true,lw=0)
             end
-            figure1 = plot(figure1,title=&quot;Probability density (ρ$(index_nev)(x))&quot;,xlabel=&quot;Coordinate (x [au])&quot;, ylabel=&quot;Coordinate (y [au])&quot;)
+            figure1 = plot(figure1,title=&quot;Probability density (ρ$(index_nev)(x))&quot;,
+            xlabel=&quot;Coordinate (x [au])&quot;, ylabel=&quot;Coordinate (y [au])&quot;)
     
             if id.reduced_density
                 plotlyjs()
-                if ((typeof(id) &lt;: InputData) || (typeof(id) &lt;: InputData1D &amp;&amp; id.output_format_type == (&quot;bin&quot;,&quot;eigen&quot;)))
+                if ((typeof(id) &lt;: InputData) || (typeof(id) &lt;: InputData1D &amp;&amp; id.
+                output_format_type == (&quot;bin&quot;,&quot;eigen&quot;)))
                     if id.params.nx==id.params.ny
-                        figure2=plot(results.r[:,1],results.rhoDOF1[:,index_nev],label=&quot;ρn(x)&quot;)
-                        figure2=plot!(results.r[:,2],results.rhoDOF2[:,index_nev],label=&quot;ρn(y)&quot;)
+                        figure2=plot(results.r[:,1],results.rhoDOF1[:,index_nev],label=&quot;ρn
+                        (x)&quot;)
+                        figure2=plot!(results.r[:,2],results.rhoDOF2[:,index_nev],label=&quot;ρn
+                        (y)&quot;)
                     else
-                        figure2=plot(results.r[1:id.params.nx,1],results.rhoDOF1[:,index_nev],label=&quot;ρn(x)&quot;)
-                        figure2=plot!(results.r[1:id.params.ny,2],results.rhoDOF2[:,index_nev],label=&quot;ρn(y)&quot;)
+                        figure2=plot(results.r[1:id.params.nx,1],results.rhoDOF1[:,
+                        index_nev],label=&quot;ρn(x)&quot;)
+                        figure2=plot!(results.r[1:id.params.ny,2],results.rhoDOF2[:,
+                        index_nev],label=&quot;ρn(y)&quot;)
                     end
-                elseif (typeof(id) &lt;: InputData2D &amp;&amp; id.output_format_type in [(&quot;jld2&quot;,&quot;eigen&quot;),(&quot;jld2&quot;,&quot;all&quot;)])
+                elseif (typeof(id) &lt;: InputData2D &amp;&amp; id.output_format_type in [(&quot;jld2&quot;,
+                &quot;eigen&quot;),(&quot;jld2&quot;,&quot;all&quot;)])
                     figure2 = plot(results.r[1],results.rhoDOF1[:,index_nev],label=&quot;ρn(x)&quot;)
                     figure2 = plot!(results.r[2],results.rhoDOF2[:,index_nev],label=&quot;ρn(y)&quot;)
                 end
@@ -184,4 +205,4 @@ display(fig1)</code></pre><p><img src="../../assets/qho2d_eigenenergies.jpg" alt
 fig2=plot_eigenstates(simulation_info, output_data,eigenstate_to_show;mapcolor=:turbo)
 display(fig2)</code></pre><p><img src="../../assets/qho2d_eigenstate_n1.jpg" alt="figure"/></p><pre><code class="language-julia hljs">eigenstate_to_show=2
 fig2=plot_eigenstates(simulation_info, output_data,eigenstate_to_show;mapcolor=:turbo)
-display(fig2)</code></pre><p><img src="../../assets/qho2d_eigenstate_n2.jpg" alt="figure"/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../isotropic_1d_harmonic_oscillator_potential/">« Isotropic 1D Quantum Harmonic Oscillator Potential</a><a class="docs-footer-nextpage" href="../coulomb_interaction_2d_potential/">Two-Electrons Coulomb Interaction Potential »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Thursday 25 July 2024 15:10">Thursday 25 July 2024</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>
+display(fig2)</code></pre><p><img src="../../assets/qho2d_eigenstate_n2.jpg" alt="figure"/></p></article><nav class="docs-footer"><a class="docs-footer-prevpage" href="../isotropic_1d_harmonic_oscillator_potential/">« Isotropic 1D Quantum Harmonic Oscillator Potential</a><a class="docs-footer-nextpage" href="../coulomb_interaction_2d_potential/">Two-Electrons Coulomb Interaction Potential »</a><div class="flexbox-break"></div><p class="footer-message">Powered by <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> and the <a href="https://julialang.org/">Julia Programming Language</a>.</p></nav></div><div class="modal" id="documenter-settings"><div class="modal-background"></div><div class="modal-card"><header class="modal-card-head"><p class="modal-card-title">Settings</p><button class="delete"></button></header><section class="modal-card-body"><p><label class="label">Theme</label><div class="select"><select id="documenter-themepicker"><option value="documenter-light">documenter-light</option><option value="documenter-dark">documenter-dark</option></select></div></p><hr/><p>This document was generated with <a href="https://github.com/JuliaDocs/Documenter.jl">Documenter.jl</a> version 0.27.25 on <span class="colophon-date" title="Friday 26 July 2024 20:54">Friday 26 July 2024</span>. Using Julia version 1.9.4.</p></section><footer class="modal-card-foot"></footer></div></div></div></body></html>

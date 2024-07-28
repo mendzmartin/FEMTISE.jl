@@ -20,3 +20,7 @@ Citations:
 + [3] [https://citeseerx.ist.psu.edu/document?doi=02b94ccb30bbefadc557938aee084c204e0629a1&repid=rep1&type=pdf](https://citeseerx.ist.psu.edu/document?doi=02b94ccb30bbefadc557938aee084c204e0629a1&repid=rep1&type=pdf)
 + [4] [https://stackoverflow.com/questions/33895423/what-is-high-performance-version-of-lapack-and-blas](https://stackoverflow.com/questions/33895423/what-is-high-performance-version-of-lapack-and-blas)
 + [5] [https://stackoverflow.com/questions/17858104/what-is-the-relation-between-blas-lapack-and-atlas](https://stackoverflow.com/questions/17858104/what-is-the-relation-between-blas-lapack-and-atlas)
+
+### Implementation of FEMTISE package
+
+[Here](https://github.com/mendzmartin/FEMTISE.jl/blob/c4c72d603e9e8516f08a37f966d3ee3b91e7f719/src/functions/eigen_problem_definition_function.jl#L67-L79) you can see the specific implementation of solve function to resolve eigen value problems.

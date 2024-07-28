@@ -363,7 +363,7 @@ end
 # Arguments
 - `r::Tuple{Vector{Float64},Vector{Float64}}`:
   - `x::Vector{Float64}`: array values of first coordinate
-  - `ỳ::Vector{Float64}`: array values of second coordinate
+  - `y::Vector{Float64}`: array values of second coordinate
 - `rho::Matrix{Float64}`: matrix values of probability density (where rows are rho(x) with fixed y and columns are rho(y) with fixed x)
 
 # Output
@@ -392,7 +392,7 @@ end
 # Arguments
 - `r::Tuple{Vector{Float64},Vector{Float64}}`:
   - `x::Vector{Float64}`: array values of first coordinate
-  - `ỳ::Vector{Float64}`: array values of second coordinate
+  - `y::Vector{Float64}`: array values of second coordinate
 - `rho::Matrix{Float64}`: matrix values of probability density (where rows are rho(x) with fixed y and columns are rho(y) with fixed x)
 - `renyi_factor::Float64`: Rényi factor (need to be a Real number)
 
@@ -443,7 +443,7 @@ end
 
 # Arguments
 - `psi::Vector{CellField}`: multifield quantum state (2D)
-- `TrialSpace::FESpace: Trial finite element space
+- `TrialSpace::FESpace`: Trial finite element space
 - `dOmega::Gridap.CellData.GenericMeasure`: integration domain
 
 # Output
@@ -475,7 +475,7 @@ end
 
 # Arguments
 - `psi::Vector{CellField}`: array of FE wave functions
-- `TrialSpace::FESpace: Trial finite element space
+- `TrialSpace::FESpace`: Trial finite element space
 - `Omega`: Finite element domain
 - `dOmega::Gridap.CellData.GenericMeasure`: integration domain
 - `x_component::Int`: component of specific coordinate variable
@@ -502,7 +502,7 @@ end
 
 # Arguments
 - `psi::Vector{CellField}`: array of FE wave functions
-- `TrialSpace::FESpace: Trial finite element space
+- `TrialSpace::FESpace`: Trial finite element space
 - `Omega`: Finite element domain
 - `dOmega::Gridap.CellData.GenericMeasure`: integration domain
 - `x_component::Int`: component of specific coordinate variable
@@ -530,7 +530,7 @@ end
 
 # Arguments
 - `psi::Vector{CellField}`: array of FE wave functions
-- `TrialSpace::FESpace: Trial finite element space
+- `TrialSpace::FESpace`: Trial finite element space
 - `Omega`: Finite element domain
 - `dOmega::Gridap.CellData.GenericMeasure`: integration domain
 - `x_component::Int`: component of specific coordinate variable

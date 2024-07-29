@@ -2,9 +2,9 @@
 
 > Méndez, Martín¹² & Pont, Federico M.¹²
 
-¹: Instituto de Física Enrique Gaviola (IFEG-FAMAF-CONICET)
+¹Instituto de Física Enrique Gaviola (IFEG-FAMAF-CONICET)
 
-²: Facultad de Matemática, Astronomía, Física y Computación (FAMAF), Universidad Nacional de Córdoba (UNC), 5000, Córdoba, Argentina
+²Facultad de Matemática, Astronomía, Física y Computación (FAMAF), Universidad Nacional de Córdoba (UNC), 5000, Córdoba, Argentina
 
 # Abstract
 
@@ -12,16 +12,16 @@
 
 # Statement of need
 
-`FEMTISE` permite resolver la TISE en sistemas unidimensionales y bidimensionales, sin embargo, es posible extender el paquete para resolver sistema de dimensión arbitraria (adaptando funciones existentes en el paquete [GRIDAP.jl](https://github.com/gridap/Gridap.jl) para crear grillas cartesianas multidimensionales). Al utilizar el FEM para resolver la TISE, y al ser este un método variacional, nos aseguramos que la energía del estado fundamental calculada numéricamente esté acotada inferiormente por su valor teórico. Además, permite resolver rápidamente la TISE a partir de un input file, definiendo potenciales arbitrarios. Otra utilidad muy valiosa es que permite calcular cómo se modifican las autoenergías de un hamiltoniano al variar cualquier parámetro del potencial.
+`FEMTISE` allows solving the TISE in one-dimensional and two-dimensional systems. However, it is possible to extend the package to solve systems of arbitrary dimensions (by adapting existing functions in the [GRIDAP.jl](https://github.com/gridap/Gridap.jl) package to create multidimensional cartesian grids). By using FEM to solve TISE, and because this is a variational method, we ensure that the numerically calculated ground state energy is bounded from below by its theoretical value. Additionally, it allows for quickly solving the TISE using an input file that defines arbitrary potentials. Another very valuable feature is that it enables the calculation of how eigenenergies of a Hamiltonian change when varying any potential parameter.
 
 # Capability of the package
-This package is under construction and is focus to resolve the TISE over high performance protocol using functions from **GRIDAP** package. Main specific features of the package are: possibility of multi-thread parallelization; solver function for usual potential (e.g.: one and two dimensional quantum harmonic oscillator, one dimensional finite well potential and symmetric finite one dimensional Kronig-Penney potential); compute eigenvalue as a function of arbitrary potential parameter; solver function for two particles problems with different masses; and involve JLD2 output format which allow us keep going the simulation or binary output which allow us write result data as value arrays to post-processing.
+This package is under construction and is focus to resolve the TISE over high performance protocol using functions from [GRIDAP.jl](https://github.com/gridap/Gridap.jl) package. Main specific features of the package are: possibility of multi-thread parallelization; solver function for usual potential (e.g.: one and two dimensional quantum harmonic oscillator, one dimensional finite well potential and symmetric finite one dimensional Kronig-Penney potential); compute eigenvalue as a function of arbitrary potential parameter; solver function for two particles problems with different masses; and involve [JLD2](https://github.com/JuliaIO/JLD2.jl) output format which allow us keep going the simulation or binary output which allow us write result data as value arrays to post-processing.
 
 # Weak formulation and eigenvalue problem (Galerkin Method)
 
 Considering the TISE we have $\hat{H}\ket{\psi } =\epsilon \ket{\psi }$ in coordinate representation we could write the equation by their Sturm-Liouville form as
 
-$\underbrace{\hat{H}\ket{\psi } =\epsilon \ket{\psi }}_{\mathrm{TISE}} \Rightarrow \overbrace{-\nabla \cdotp ( p\nabla \psi ) +q\psi =\lambda r\psi }^{\mathrm{Sturm-Liouville}} \text{  if} \ \hat{H} =-\frac{i\hbar }{2m}\vec{\nabla } +V( r) \Rightarrow \begin{cases} p( x) =\frac{\hbar ^{2}}{2m}(  >0)\\ q( x) =V( r)\\ r( x) =1(  >0) \end{cases}$
+$\underbrace{\hat{H}\ket{\psi } =\epsilon \ket{\psi }}_{\mathrm{TISE}} \Rightarrow \overbrace{-\nabla \cdotp ( p\nabla \psi ) +q\psi =\lambda r\psi }^{\mathrm{Sturm-Liouville}} \text{  if} \ \hat{H} =-\frac{\hbar^2}{2m}\nabla^2 +V( r) \Rightarrow \begin{cases} p( x) =\frac{\hbar ^{2}}{2m}(  >0)\\ q( x) =V( r)\\ r( x) =1(  >0) \end{cases}$
 
 For a variational problem first we approximate the wave function $\psi \in \mathcal{H}$ by a function $u\in U_{\mathrm{trial}}$ (where $\mathcal{H}$ is a Hilbert space of infinite dimension in principle and where $U_{\mathrm{trial}}$ is a approximate space of finite dimension for $\mathcal{H}$) and multiplying the PDE by a test function $v\in V_{\mathrm{space}}\left( C^{1}\right)$ (notice that we don't need that $v$ satisfy some boundary condition) and integrating over $\Omega$ using the Green formula which says
 

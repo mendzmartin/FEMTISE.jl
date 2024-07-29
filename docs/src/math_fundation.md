@@ -31,7 +31,7 @@ where $n_{j} =\vec{n} \cdotp e_{j}$ is the $j$-th of $\vec{n}$ on the canonical 
 
 $-\nabla \cdotp ( p\nabla \psi ) +q\psi =\lambda r\psi \mathrm{\ }(\mathrm{in} \ \Omega ) \\ \mathrm{with} \ \begin{cases} \psi \Bigl|_{\partial \Omega =\Gamma } =0 & (\mathrm{Dirichlet} \ \mathrm{BC})\\ {\frac{\partial \psi }{\partial n}}{\Bigl|}{_{\partial \Omega =\Gamma }}{=\nabla \psi \cdotp }{\vec{n}}{=c} & (\mathrm{Neumann} \ \mathrm{BC}) \end{cases} \Rightarrow -\int _{\Omega }[ \nabla \cdotp ( p\nabla u)] vd\Omega +\int _{\Omega } quvd\Omega =\int _{\Omega } \lambda ruvd\Omega$
 
-* In some cases this method is equivalent to Rayleigh-Ritz method, that is, the Galerkin method is more general but both came from functinal minimization.
+> Note: In some cases this method is equivalent to Rayleigh-Ritz method, that is, the Galerkin method is more general but both came from functional minimization.
 
 if $\begin{cases} g:=v & \Rightarrow \partial g=\nabla v\\ \partial h:=\nabla \cdotp ( p\nabla u) & \Rightarrow h=( p\nabla u) \end{cases}$ then
 
@@ -41,7 +41,7 @@ and the problem to resolve would be like $a( u,v) =\lambda b( u,v)$ where we had
 
 $a( u,v) :=\int _{\Omega }[ p( \nabla u\cdotp \nabla v) +quv] d\Omega {-}{\int _{\Gamma }}{p}{(}{\nabla u\cdotp }{\vec{n}}{)}{vd\Gamma } \\ b( u,v) :=\int _{\Omega } ruvd\Omega$
 
-* Notice that integral over $\Gamma$ boundary will avoid if we are considering Dirichlet's boundary conditions or has a fixed value is we are considering Neumann's boundary conditions.
+> Note: The integral over $\Gamma$ boundary will avoid if we are considering Dirichlet's boundary conditions or has a fixed value is we are considering Neumann's boundary conditions.
 
 Now, we resolve the eigenvalue problem using the **ARPACK** package building affine operators (each affine operator has associated one matrix and one vector) like
 
@@ -72,3 +72,7 @@ this allow us to transform the original eigenvalue problem to another one with d
 + Sun, J. and Zhou, A., 2016. Finite element methods for eigenvalue problems. Chapman and Hall/CRC.
 + Lehoucq, R.B., Sorensen, D.C. and Yang, C., 1998. ARPACK users' guide: solution of large-scale eigenvalue problems with implicitly restarted Arnoldi methods. Society for Industrial and Applied Mathematics.
 + Verdugo, F. and Badia, S., 2022. The software design of Gridap: a finite element package based on the Julia JIT compiler. Computer Physics Communications, 276, p.108341.
+
+# Implementation of FEMTISE package
+
+[Here](https://github.com/mendzmartin/FEMTISE.jl/blob/c4c72d603e9e8516f08a37f966d3ee3b91e7f719/src/functions/eigen_problem_definition_function.jl#L67-L79) you can see the specific implementation of solve function to resolve eigen value problems.

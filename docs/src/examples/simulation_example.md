@@ -336,7 +336,7 @@ Then you can run the script and set option `5` like this:
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 The type of default potential can be:
    - Unidimensional Quantum Harmonic Oscillator            --> set (1)
-   - Unidimensional Symmetric Finit Kronig-Penney          --> set (2)
+   - Unidimensional Symmetric Finite Kronig-Penney         --> set (2)
    - Unidimensional Finite Well Potential                  --> set (3)
    - Bidimensional Isotropic Quantum Harmonic Oscillator   --> set (4)
    - Ad hoc potential from input file                      --> set (5)

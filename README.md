@@ -25,10 +25,10 @@
 - [Contact](#contact)
 
 ## **Usage**
-Julia package repository to resolve Time-Independent Schrödinger equation by (F)init (E)lement (M)ethod. This is an implementation of Gridap package for unidimensional and bidimensional grids.
+Julia package repository to resolve Time-Independent Schrödinger equation (TISE) by Finite Element Method (FEM). This is an implementation of [GRIDAP](https://github.com/gridap/Gridap.jl) package for unidimensional and bidimensional grids.
 
 Project carried out in my PhD studies of Physics at:
-* [Faculty of Mathematics, Astronomy, Physics and Computation (FaMAF)](https://www.famaf.unc.edu.ar/)
+* [Faculty of Mathematics, Astronomy, Physics and Computation (FAMAF)](https://www.famaf.unc.edu.ar/)
 * The Enrique Gaviola Institute of Physics (IFEG)
 
 ## **Installation**
@@ -37,10 +37,10 @@ Project carried out in my PhD studies of Physics at:
 - [Run from Julia REPL](https://mendzmartin.github.io/FEMTISE.jl/dev/guide_information/#Run-from-Julia-REPL)
 
 ## **Documentation**
-Check [here](https://mendzmartin.github.io/FEMTISE.jl/) The GitHub Page to see documentation.
+Check [here](https://mendzmartin.github.io/FEMTISE.jl/) the GitHub Page to see documentation.
 
 ## **Tutorials**
-See some use examples in [test folder](https://github.com/mendzmartin/FEMTISE.jl/tree/main/test) where you can find some tests of specific `FEMTISE` package's functions:
+See some use examples in [test folder](https://github.com/mendzmartin/FEMTISE.jl/tree/main/test) where you can find some tests of specific `FEMTISE` package functions:
 - Finite Well Potential 1D
 - Symmetric Finite Kronig-Penney Potential 1D
 - Isotropic Quantum Harmonic Oscillator 2D
@@ -55,4 +55,4 @@ Also, you can find tutorials in [FEMTISE_TUTORIAL](https://github.com/mendzmarti
 or check FEMTISE Package [GitHub Page](https://mendzmartin.github.io/FEMTISE.jl/) to see documentation.
 
 ## **Contact**
-Please, contact the project administrator [Méndez Martín](mailto:martinmendez@mi.unc.edu.ar) for any improve suggestion or questions about package use.
+Please, contact the project administrator [Mendez Martin](mailto:martinmendez@unc.edu.ar) for any improve suggestion or questions about package use.

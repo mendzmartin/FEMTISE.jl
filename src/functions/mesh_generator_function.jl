@@ -23,22 +23,22 @@ function make_model(grid_type::String,params::Tuple)
         path,name,dom,MeshSize=params
         GridapGmsh.gmsh.model.add(name)
 
-        GridapGmsh.gmsh.model.geo.addPoint(dom[1],0,0,MeshSize,1)    # 1 punto vértice izquierdo
-        GridapGmsh.gmsh.model.geo.addPoint(dom[2],0,0,MeshSize,2)    # 2 punto vértice derecho
+        GridapGmsh.gmsh.model.geo.addPoint(dom[1],0,0,MeshSize,1)    # 1 left vertex point
+        GridapGmsh.gmsh.model.geo.addPoint(dom[2],0,0,MeshSize,2)    # 2 right vertex point
 
         GridapGmsh.gmsh.model.geo.addLine(1,2,1)   # linea que une puntos 1 y 2
         GridapGmsh.gmsh.model.geo.synchronize()
         
-        GridapGmsh.gmsh.model.geo.addPhysicalGroup(0,[1],3)        # grupo formado por punto izquierdo
-        GridapGmsh.gmsh.model.setPhysicalName(0,3,"left_point")    # le damos nombre al grupo
+        GridapGmsh.gmsh.model.geo.addPhysicalGroup(0,[1],3)        # formed group by left point
+        GridapGmsh.gmsh.model.setPhysicalName(0,3,"left_point")    # setting name group
         GridapGmsh.gmsh.model.geo.synchronize()
 
-        GridapGmsh.gmsh.model.geo.addPhysicalGroup(0,[2],4)        # grupo formado por punto derecho
-        GridapGmsh.gmsh.model.setPhysicalName(0,4,"right_point")   # le damos nombre al grupo
+        GridapGmsh.gmsh.model.geo.addPhysicalGroup(0,[2],4)        # formed group by right point
+        GridapGmsh.gmsh.model.setPhysicalName(0,4,"right_point")   # setting name group
         GridapGmsh.gmsh.model.geo.synchronize()
         
-        GridapGmsh.gmsh.model.geo.addPhysicalGroup(1,[1],1)    # grupo formado por linea
-        GridapGmsh.gmsh.model.setPhysicalName(1,1,"segment")   # le damos nombre a la linea
+        GridapGmsh.gmsh.model.geo.addPhysicalGroup(1,[1],1)    # gformed group by segment
+        GridapGmsh.gmsh.model.setPhysicalName(1,1,"segment")   # setting name group
         GridapGmsh.gmsh.model.geo.synchronize()
 
         GridapGmsh.gmsh.model.mesh.generate(1)

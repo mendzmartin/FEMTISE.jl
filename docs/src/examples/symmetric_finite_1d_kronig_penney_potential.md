@@ -10,7 +10,7 @@ First of all we need to create a specific directory to save this specific simula
 
 ### Create function potential
 
-We need to create a aspecific function potential for Kronig-Penney potential as following:
+We need to create a specific function potential for Kronig-Penney potential as following:
 
 ```bash
 @prompt:~/my_directory_path/SFKP1D$ vi adhoc_potential_function.jl
@@ -117,7 +117,7 @@ develop_package ? Pkg.develop(path=path_repo*"FEMTISE.jl") : nothing
 
 #### Adding Packages
 
-We install (if necessary) and use specific packages for the simulation.
+We install (if it is necessary) and use specific packages for the simulation.
 
 ```julia
 install_pkg = false

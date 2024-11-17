@@ -10,7 +10,7 @@ First of all we need to create a specific directory to save this specific simula
 
 ### Create function potential
 
-We need to create a aspecific function potential for quantum harmonic oscillator 1D as following:
+We need to create a specific function potential for quantum harmonic oscillator 1D as following:
 
 ```bash
 @prompt:~/my_directory_path/QHO1D$ vi adhoc_potential_function.jl
@@ -128,7 +128,7 @@ Is necessary to mark FEMTISE package as developed package using specific path re
 develop_package = true; develop_package ? Pkg.develop(path="~/my_path_repo/FEMTISE.jl") : nothing
 ```
 
-Now we install package (if is nesseary) and use specific packages to analyse output data:
+Now we install package (if it is nesseary) and use specific packages to analyse output data:
 
 ```julia
 install_pkg = true

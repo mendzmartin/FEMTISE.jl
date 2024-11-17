@@ -10,7 +10,7 @@ First of all we need to create a specific directory to save this specific simula
 
 ### Create function potential
 
-We need to create a aspecific function potential for coulomb potential interaction as following:
+We need to create a specific function potential for coulomb potential interaction as following:
 
 ```bash
 @prompt:~/my_directory_path/C2D$ vi adhoc_potential_function.jl

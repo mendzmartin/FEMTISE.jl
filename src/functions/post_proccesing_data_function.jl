@@ -1,13 +1,13 @@
 """
-    charge_input_data(full_path_input_data)
+    load_input_data(full_path_input_data)
 
 # Aim
-- Charge input data from a file
+- Load input data from a file
 
 # Arguments
 - `full_path_input_data::String`: full path name to input data file
 """
-function charge_input_data(full_path_input_data::String)
+function load_input_data(full_path_input_data::String)
     return input_data(full_path_input_data)
 end
 
@@ -36,15 +36,15 @@ function build_input_data(full_path_name::String)
 end
 
 """
-    charge_results(id)
+    load_results(id)
 
 # Aim
-- Charge results from a file
+- Load results from a file
 
 # Arguments
 - `id::InputData`: input data
 """
-function charge_results(id::InputData)
+function load_results(id::InputData)
     if id.params.dimension == "1D"
         eigen_vectors_output= id.full_path_name*"_eigen_vectors.bin"
         eigen_values_output= id.full_path_name*"_eigen_values.bin"
@@ -101,15 +101,15 @@ end
 
 
 """
-    charge_results(id)
+    load_results(id)
 
 # Aim
-- Charge results from a file
+- Load results from a file
 
 # Arguments
 - `id::InputData1D`: input data
 """
-function charge_results(id::InputData1D)
+function load_results(id::InputData1D)
     if id.analysis_param == false
         if id.output_format_type == ("bin","eigen") # use DelimitedFiles package
             eigen_vectors_output= id.full_path_name*"_eigen_vectors.bin"
@@ -151,15 +151,15 @@ function charge_results(id::InputData1D)
 end
 
 """
-    charge_results(id)
+    load_results(id)
 
 # Aim
-- Charge results from a file
+- Load results from a file
 
 # Arguments
 - `id::InputData2D`: input data
 """
-function charge_results(id::InputData2D)
+function load_results(id::InputData2D)
     if id.analysis_param == false
         if id.output_format_type == ("bin","eigen") # use DelimitedFiles package
             eigen_vectors_output= id.full_path_name*"_eigen_vectors.bin"
@@ -228,6 +228,6 @@ end
 - `full_path_name::String`: full path name
 """
 function collect_result_data(switch_input_file::Bool,full_path_name::String)
-    switch_input_file ? (id = charge_input_data(full_path_name)) : (id = build_input_data(full_path_name))
-    return id, charge_results(id)
+    switch_input_file ? (id = load_input_data(full_path_name)) : (id = build_input_data(full_path_name))
+    return id, load_results(id)
 end

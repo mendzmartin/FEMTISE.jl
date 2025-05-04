@@ -487,7 +487,7 @@ function coord_first_moment(psi::Vector{CellField},TrialSpace::FESpace,Omega,dOm
     Gridap_factor=CellField(x->x[x_component],Omega);
     expval=zeros(Float64,length(psi));
     Threads.@threads for index in eachindex(psi)
-        psi_index=interpolate_everywhere(𝛹ₓₜ[index],TrialSpace)
+        psi_index=interpolate_everywhere(psi[index],TrialSpace)
         # ojo! tomamos la parte real porque se trata de la coord. espacial, pero puede ser complejo
         expval[index]=real(sum(integrate(conj(psi_index)*Gridap_factor*psi_index,dOmega)))
     end
@@ -514,7 +514,7 @@ function coord_second_moment(psi::Vector{CellField},TrialSpace::FESpace,Omega,dO
     Gridap_factor=CellField(x->x[x_component]*x[x_component],Omega);
     var=zeros(Float64,length(psi));
     Threads.@threads for index in eachindex(psi)
-        psi_index=interpolate_everywhere(𝛹ₓₜ[index],TrialSpace)
+        psi_index=interpolate_everywhere(psi[index],TrialSpace)
         # ojo! tomamos la parte real porque se trata de la coord. espacial, pero puede ser complejo
         var[index]=real(sum(integrate(conj(psi_index)*Gridap_factor*psi_index,dOmega)))
     end

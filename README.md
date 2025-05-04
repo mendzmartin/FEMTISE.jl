@@ -18,11 +18,14 @@
 
 ## Table of Contents
 
-- [Usage](#usage)
-- [Installation](#installation)
-- [Documentation](#contributing)
-- [Tutorials](#tutorials)
-- [Contact](#contact)
+- [**FEMTISE.jl**](#femtisejl)
+  - [**WARNING!**](#warning)
+  - [Table of Contents](#table-of-contents)
+  - [**Usage**](#usage)
+  - [**Installation**](#installation)
+  - [**Documentation**](#documentation)
+  - [**Tutorials**](#tutorials)
+  - [**Contact**](#contact)
 
 ## **Usage**
 Julia package repository to resolve Time-Independent Schrödinger equation (TISE) by Finite Element Method (FEM). This is an implementation of [GRIDAP](https://github.com/gridap/Gridap.jl) package for unidimensional and bidimensional grids.
@@ -37,7 +40,8 @@ Project carried out in my PhD studies of Physics at:
 - [Run from Julia REPL](https://mendzmartin.github.io/FEMTISE.jl/dev/guide_information/#Run-from-Julia-REPL)
 
 ## **Documentation**
-Check [here](https://mendzmartin.github.io/FEMTISE.jl/) the GitHub Page to see documentation.
+- Check [here](https://mendzmartin.github.io/FEMTISE.jl/) the GitHub Page to see documentation.
+- Check [here](https://deepwiki.com/mendzmartin/FEMTISE.jl) the DeepWiki Page to learn about FEMTISE software.
 
 ## **Tutorials**
 See some use examples in [test folder](https://github.com/mendzmartin/FEMTISE.jl/tree/main/test) where you can find some tests of specific `FEMTISE` package functions:

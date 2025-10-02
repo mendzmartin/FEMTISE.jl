@@ -273,8 +273,13 @@ function run_default_eigen_problem(simulation_data::Tuple)
             end
             if id.params.dom_type=="s"
                 dom=(-0.5*id.params.Lx,0.5*id.params.Lx,-0.5*id.params.Ly,0.5*id.params.Ly)
-            elseif params.dom_type=="ns"
+            elseif id.params.dom_type=="ns"
                 dom=(0.0,id.params.Lx,0.0,id.params.Ly)
+            # mmendez 2024-06-10: added new domain type for 2D
+            elseif id.params.dom_type=="sns"
+                dom=(-0.5*id.params.Lx,0.5*id.params.Lx,0.0,id.params.Ly)
+            elseif id.params.dom_type=="nss"
+                dom=(0.0,id.params.Lx,-0.5*id.params.Ly,0.5*id.params.Ly)
             end
             r,pts=space_coord(dom,(id.params.Lx/id.params.nx,id.params.Ly/id.params.ny),(id.params.nx,id.params.ny))
         end

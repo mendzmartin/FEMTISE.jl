@@ -25,6 +25,8 @@
   - [**Installation**](#installation)
   - [**Documentation**](#documentation)
   - [**Tutorials**](#tutorials)
+  - [**To cite this work**](#to-cite-this-work)
+    - [Publications](#publications)
   - [**Contact**](#contact)
 
 ## **Usage**
@@ -57,6 +59,24 @@ Also, you can find tutorials in [FEMTISE_TUTORIAL](https://github.com/mendzmarti
 - Tutorial To Simulate Coulomb 2D Interaction potential (Helium atom model)
 
 or check FEMTISE Package [GitHub Page](https://mendzmartin.github.io/FEMTISE.jl/) to see documentation.
+
+## **To cite this work**
+If you use this package in your research, please cite it using the following BibTeX entry:
+```bibtex
+  @misc{Mendez2024FEMTISE,
+    title = {mendzmartin/{FEMTISE}.jl},
+    copyright = {MIT},
+    url = {https://github.com/mendzmartin/FEMTISE.jl},
+    bstract = {Variational approximation by Gridap package to resolve T.I.S.E. in Julia},
+    urldate = {2024-07-19},
+    author = {Mendez, Martin},
+    year = {2024},
+  }
+```
+### Publications
+This package is used in the following publications:
++ [Mendez, M., & Pont, F. M. (2025). Dynamics of correlations and entanglement generation in electron-molecule inelastic scattering. Physical Review A, 111(5), 052411.](https://doi.org/10.1103/PhysRevA.111.052411)
+
 
 ## **Contact**
 Please, contact the project administrator [Mendez Martin](mailto:martinmendez@unc.edu.ar) for any improve suggestion or questions about package use.

@@ -9,6 +9,8 @@ using Gridap.CellData;  # para construir condición inicial interpolando una fun
 # using DataInterpolations;   # interpolation function package (https://github.com/PumasAI/DataInterpolations.jl)
 using JLD2
 
+import DataInterpolations: CubicSpline, LinearInterpolation, AkimaInterpolation
+
 include("functions/default_running_structures.jl")
 include("functions/post_proccesing_data_structures.jl")
 include("functions/mesh_generator_function.jl")

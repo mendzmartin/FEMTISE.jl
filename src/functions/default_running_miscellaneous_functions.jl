@@ -1,8 +1,8 @@
 function sturm_liouville_formulation(params::Tuple)
     # params=(potential_function_name::String,params_potential::Tuple)
     potential_function_name::Function=eval(Symbol(params[1]))
-    ħ=1.0;m=1.0;
-    p(x) = 0.5*(ħ*ħ)*(1.0/m);
+    hbar=1.0;mass1=1.0;
+    p(x) = 0.5*(hbar*hbar)*(1.0/mass1);
     q(x) = potential_function_name(x,params[2]);
     r(x) = 1.0;
     return p,q,r;
@@ -11,14 +11,14 @@ end
 function sturm_liouville_formulation(params::Tuple,different_masses::Tuple)
     # params=(potential_function_name::String,params_potential::Tuple)
     potential_function_name::Function=eval(Symbol(params[1]))
-    ħ=1.0;m=1.0;
+    hbar=1.0;mass1=1.0;
     if different_masses[1]
-        p₁(x) = 0.5*(ħ*ħ)*(1.0/m)
-        p₂(x) = p₁(x)*different_masses[2]
-        p=tuple(p₁,p₂)
+        p1(x) = 0.5*(hbar*hbar)*(1.0/mass1)
+        p2(x) = p1(x)*different_masses[2]
+        p=tuple(p1,p2)
     else
-        p₃(x) = 0.5*(ħ*ħ)*(1.0/m)
-        p=tuple(p₃)
+        p3(x) = 0.5*(hbar*hbar)*(1.0/mass1)
+        p=tuple(p3)
     end
     q(x) = potential_function_name(x,params[2]);
     r(x) = 1.0;
@@ -32,43 +32,43 @@ function heaviside(x)
     return 0.5*(sign(x)+1)==true
  end
 
-function sym_rect_pot_barr(x,b::Real,V₀::Real)
-   return V₀*(heaviside(x+0.5*b)-heaviside(x-0.5*b))
+function sym_rect_pot_barr(x,b::Real,V0::Real)
+   return V0*(heaviside(x+0.5*b)-heaviside(x-0.5*b))
 end
 
-function kronig_penney_center(x,b::Real,V₀::Real)
-    return sym_rect_pot_barr.(x,b,V₀)
+function kronig_penney_center(x,b::Real,V0::Real)
+    return sym_rect_pot_barr.(x,b,V0)
 end
 
-function kronig_penney_left(x,num_ions::Integer,a::Real,b::Real,V₀::Real)
+function kronig_penney_left(x,num_ions::Integer,a::Real,b::Real,V0::Real)
     result=0.0
     for i in 1:num_ions
-        result = result .+ sym_rect_pot_barr.(x.+i*a,b,V₀)
+        result = result .+ sym_rect_pot_barr.(x.+i*a,b,V0)
     end
     return result
 end
 
-function kronig_penney_right(x,num_ions::Integer,a::Real,b::Real,V₀::Real)
-    return kronig_penney_left(-x,num_ions,a,b,V₀)
+function kronig_penney_right(x,num_ions::Integer,a::Real,b::Real,V0::Real)
+    return kronig_penney_left(-x,num_ions,a,b,V0)
 end
 
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 # Potential functions
 # +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 function finite_well_1d(x,params::Tuple)
-    V₀::Real,b::Real=params
-    return kronig_penney_center(x[1],b,V₀)
+    V0::Real,b::Real=params
+    return kronig_penney_center(x[1],b,V0)
 end
 
 # symmetric Kronig-Peney potential 1D
 function kronig_penney_1d(x,params::Tuple)
-    V₀::Real,t::Real,b::Real,num_ions::Integer=params
+    V0::Real,t::Real,b::Real,num_ions::Integer=params
     a = t+b
     if (mod(num_ions,2) == 0)
         error("num_ions keyword need to be odd")
         stop()
     end
-    return kronig_penney_center(x[1],b,V₀) .+ kronig_penney_left(x[1],convert(Int,(num_ions-1)/2),a,b,V₀) .+ kronig_penney_right(x[1],convert(Int,(num_ions-1)/2),a,b,V₀)
+    return kronig_penney_center(x[1],b,V0) .+ kronig_penney_left(x[1],convert(Int,(num_ions-1)/2),a,b,V0) .+ kronig_penney_right(x[1],convert(Int,(num_ions-1)/2),a,b,V₀)
 end
 
 # unidimensional quantum harmonic osillator
@@ -139,6 +139,11 @@ function default_solver_eigen_problem(params::Params2D,different_masses::Tuple; 
         dom=(-0.5*params.Lx,0.5*params.Lx,-0.5*params.Ly,0.5*params.Ly)
     elseif params.dom_type=="ns"
         dom=(0.0,params.Lx,0.0,params.Ly)
+    # mmendez 2024-06-10: added new domain type for 2D
+    elseif params.dom_type=="sns"
+        dom=(-0.5*params.Lx,0.5*params.Lx,0.0,params.Ly)
+    elseif params.dom_type=="nss"
+        dom=(0.0,params.Lx,-0.5*params.Ly,0.5*params.Ly)
     end
     nxy=(params.nx,params.ny);  # define number of FE to use in each coordinate
     params_model=(dom,nxy);     # organize data in a tuple
@@ -188,6 +193,11 @@ function create_and_remove_model(params::Params2D)
         dom=(-0.5*params.Lx,0.5*params.Lx,-0.5*params.Ly,0.5*params.Ly)
     elseif params.dom_type=="ns"
         dom=(0.0,params.Lx,0.0,params.Ly)
+    # mmendez 2024-06-10: added new domain type for 2D
+    elseif params.dom_type=="sns"
+        dom=(-0.5*params.Lx,0.5*params.Lx,0.0,params.Ly)
+    elseif params.dom_type=="nss"
+        dom=(0.0,params.Lx,-0.5*params.Ly,0.5*params.Ly)
     end
     nxy=(params.nx,params.ny);  # define number of FE to use in each coordinate
     params_model=(dom,nxy);     # organize data in a tuple

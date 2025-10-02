@@ -2,3 +2,7 @@
 Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
 FEMTISE = "0bd82848-28f8-4e57-bc39-0a3ec24854bf"
 LiveServer = "16fef848-5104-11e9-1b77-fb7a48bbb589"
+
+[compat]
+Documenter = "1"
+julia = "1.10"

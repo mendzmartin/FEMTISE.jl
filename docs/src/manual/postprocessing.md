@@ -29,11 +29,10 @@ the subspace is needed, orthonormalize it, e.g. with Gram–Schmidt using
 | [`density`](@ref)`(ϕ)` | ``\rho_n(\mathbf x) = |\phi_n(\mathbf x)|^2`` as finite element functions |
 | [`reduced_density`](@ref)`(ϕ, r, model)` | 2D: ``\rho^{(1)}(x)=\int\rho\,dy`` and ``\rho^{(2)}(y)=\int\rho\,dx`` sampled at the points `r = (x_vector, y_vector)` |
 
-!!! warning "Known issue in v0.1.0: normalization of reduced densities"
-    `reduced_density` returns ``(1-\Delta x/L)\,\rho^{(1)}`` instead of
-    ``\rho^{(1)}`` (``\Delta x`` is the spacing of the sampling points and ``L`` the
-    length of the domain). The shape is correct: divide by the integral of the
-    returned values to normalize.
+!!! note "Version 0.1.0"
+    In v0.1.0, `reduced_density` returned ``(1-\Delta x/L)\,\rho^{(1)}``. Fixed in
+    v0.1.1; results computed with v0.1.0 can be corrected by dividing by their
+    integral.
 
 ## Moments of the coordinates
 
@@ -48,7 +47,7 @@ the subspace is needed, orthonormalize it, e.g. with Gram–Schmidt using
 | Function | Computes |
 |---|---|
 | [`time_indep_entropy`](@ref)`(ϕ, U, dΩ)` | Shannon entropy ``S=-\int\rho\log_2\rho\,d\Omega`` (bits) |
-| [`time_indep_entropy`](@ref)`(ϕ, U, dΩ, α)` | Rényi entropy ``S_\alpha=\frac{1}{1-\alpha}\log_2\int\rho^\alpha d\Omega`` — see the known issue below |
+| [`time_indep_entropy`](@ref)`(ϕ, U, dΩ, α)` | Rényi entropy ``S_\alpha=\frac{1}{1-\alpha}\log_2\int\rho^\alpha d\Omega`` |
 | [`reduced_time_indep_entropy`](@ref)`(r, ρ)` | for a density ``\rho(x_i, y_j)`` sampled on a grid: ``-\int\rho(x_i,y)\log_2\rho(x_i,y)\,dy`` for every ``x_i``, and the analogous quantity for every ``y_j`` (trapezoidal rule) |
 | [`time_indep_diff_mutual_information`](@ref)`(Sx, Sy, Sxy)` | ``I = S_x + S_y - S_{xy}`` |
 
@@ -58,11 +57,11 @@ number each) and the total entropy ``S``, then
 ``I = S^{(1)} + S^{(2)} - S``. For two particles, ``I`` measures the correlation
 between them; it vanishes for product states.
 
-!!! warning "Known issue in v0.1.0: Rényi entropy"
-    `time_indep_entropy(ϕ, U, dΩ, α)` evaluates ``\rho^{\alpha/\ln 2}`` instead of
-    ``\rho^\alpha``. Until it is fixed, compute the Rényi entropy directly:
-    `log2(sum(∫((z -> z^α) ∘ ρ) * dΩ)) / (1 - α)` with `ρ = density(ϕ)[n]`. The Shannon entropy
-    is correct.
+!!! note "Version 0.1.0"
+    In v0.1.0 the Rényi entropy evaluated ``\rho^{\alpha/\ln 2}`` instead of
+    ``\rho^\alpha``; fixed in v0.1.1. The Shannon entropy was always correct.
+    With v0.1.0, compute it directly as
+    `log2(sum(∫((z -> z^α) ∘ ρ) * dΩ)) / (1 - α)` with `ρ = density(ϕ)[n]`.
 
 ## Writing your own observables
 

@@ -14,7 +14,7 @@
 <!-- [![Codecov](https://app.codecov.io/gh/mendzmartin/FEMTISE.jl/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mendzmartin/FEMTISE.jl) -->
 
 ## **Status**
-Current release: **v0.1.0** (see [CHANGELOG.md](CHANGELOG.md)). The package is under
+Current release: **v0.1.1** (see [CHANGELOG.md](CHANGELOG.md)). The package is under
 active development: while the version is `0.x`, minor releases may change the API.
 Pin a release in your projects to keep results reproducible.
 
@@ -45,7 +45,7 @@ Project carried out in my PhD studies of Physics at:
 ## **Installation**
 Requires Julia ≥ 1.10. In the package manager (`]`) of your project:
 ```julia
-pkg> add https://github.com/mendzmartin/FEMTISE.jl#v0.1.0
+pkg> add https://github.com/mendzmartin/FEMTISE.jl#v0.1.1
 ```
 See the [installation guide](https://mendzmartin.github.io/FEMTISE.jl/stable/getting_started/installation/)
 for development installs and running scripts with threads.

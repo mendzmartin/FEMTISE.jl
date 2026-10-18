@@ -35,8 +35,8 @@ id, res = collect_result_data(true, "path/to/input")    # same path given to set
 
 | Container | Fields |
 |---|---|
-| `DefaultBinEigenProblem` | `ϵ`, `ϕ`, `r` — see the known issue below |
-| `DefaultBinEigenProblemReducedDensity` | the above + `rhoDOF1`, `rhoDOF2` — see the known issue below |
+| `DefaultBinEigenProblem` | `ϵ`, `ϕ` (matrix of sampled values, one column per state), `r` |
+| `DefaultBinEigenProblemReducedDensity` | the above + `rhoDOF1`, `rhoDOF2` (one column per state) |
 | `DefaultJLD2EigenProblem` | `ϵ`, `ϕ` (`Vector{CellField}`), `r`, `pts` |
 | `DefaultJLD2AllEigenProblem` | the above + `Ω`, `dΩ`, `Γ`, `dΓ`, `USpace`, `VSpace`, `model` |
 | `AnalysisParams` (sweeps) | `ϵ_matrix`, `λvector` |
@@ -53,16 +53,13 @@ directly:
 x2 = coord_second_moment(res.ϕ, res.USpace, res.Ω, res.dΩ, 1)
 ```
 
-!!! warning "Known issue in v0.1.0: reloading the `bin eigen` format"
-    For non-sweep runs with `output_format_type = bin eigen`, `collect_result_data`
-    fails with a `MethodError`: the result containers expect finite element functions,
-    while the binary files contain sampled values. Read the files directly with
-    [`read_bin`](@ref), as shown below. JLD2 outputs and parameter sweeps are not
-    affected.
+For results produced with the interactive console (no input file), pass the
+output prefix and `false`: `collect_result_data(false, "path/to/prefix")`.
 
-Results of the interactive console (no input file) are written in the binary
-format; in v0.1.0 read them with `read_bin` as well. (`collect_result_data(false, prefix)`
-is the intended reloader for that case and is affected by the same issue.)
+!!! note "Version 0.1.0"
+    In v0.1.0, `collect_result_data` could not reload non-sweep results written in
+    the `bin eigen` format. This was fixed in v0.1.1; with v0.1.0, read the files
+    directly as shown below.
 
 ## Reading binary files directly
 

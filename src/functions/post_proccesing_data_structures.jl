@@ -1,15 +1,27 @@
+"""
+    DefaultBinEigenProblem
+
+Results reloaded from the `bin eigen` output format: eigenvalues `ϵ`, eigenfunctions
+`ϕ` sampled on the output grid (one column per state) and grid coordinates `r`.
+"""
 struct DefaultBinEigenProblem{T}
     ϵ::Vector{ComplexF64}
-    ϕ::Vector{CellField}
+    ϕ::Matrix{ComplexF64}
     r::T
 end
 
+"""
+    DefaultBinEigenProblemReducedDensity
+
+As [`DefaultBinEigenProblem`](@ref), plus the reduced densities `rhoDOF1` and
+`rhoDOF2` (one column per state) of a two-dimensional problem.
+"""
 struct DefaultBinEigenProblemReducedDensity{T}
     ϵ::Vector{ComplexF64}
-    ϕ::Vector{CellField}
+    ϕ::Matrix{ComplexF64}
     r::T
-    rhoDOF1::Vector{Float64}
-    rhoDOF2::Vector{Float64}
+    rhoDOF1::Matrix{Float64}
+    rhoDOF2::Matrix{Float64}
 end
 
 struct DefaultJLD2EigenProblem{T1,T2}

@@ -30,11 +30,8 @@
         @test S[1] ≈ 0.5 * log2(π * ℯ) atol = 1e-6
     end
 
-    @testset "Rényi entropy (known issue in v0.1.0)" begin
-        # time_indep_entropy evaluates ρ^(α/ln 2) instead of ρ^α (see CHANGELOG).
-        # When the bug is fixed this test will report "unexpected pass": replace
-        # @test_broken by @test.
+    @testset "Rényi entropy" begin
         S2 = time_indep_entropy(ϕ[1:1], U, dΩ, 2.0)
-        @test_broken S2[1] ≈ 0.5 * log2(2π) atol = 1e-6
+        @test S2[1] ≈ 0.5 * log2(2π) atol = 1e-6
     end
 end

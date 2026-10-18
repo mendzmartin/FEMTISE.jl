@@ -28,7 +28,7 @@ r(x) = 1.0
 # 5. Forms, matrices and eigenpairs
 a, b = bilineal_forms(p, q, r, dΩ)
 problem = eigen_problem(a, b, U, V; nev = 8, sigma = -1.0, tol = 1e-10, maxiter = 500)
-ε, ϕ = FEMTISE.solve(problem)
+ε, ϕ = solve(problem)
 
 # Step 5 in a single call:
 ε, ϕ = eigen_values_and_eigen_vectors(p, q, r, dΩ, U, V;
@@ -39,8 +39,9 @@ problem = eigen_problem(a, b, U, V; nev = 8, sigma = -1.0, tol = 1e-10, maxiter 
 `Arpack.eigs`. Note that `fe_spaces` returns `(V, U)` (test space first).
 
 !!! note "`solve` and Gridap"
-    Gridap also exports a function called `solve`. When both packages are loaded,
-    write `FEMTISE.solve(problem)`.
+    Since v0.1.1, FEMTISE adds a method to Gridap's own `solve` function, so `solve`
+    can be used directly when both packages are loaded. (In v0.1.0 it had to be
+    written `FEMTISE.solve`, which still works.)
 
 ## Choosing the discretization
 

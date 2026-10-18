@@ -1,28 +1,31 @@
 name = "FEMTISE"
 uuid = "0bd82848-28f8-4e57-bc39-0a3ec24854bf"
 authors = ["Martín Méndez <martinmendez@mi.unc.edu.ar>"]
-version = "0.1.0"
+version = "0.1.1"
 
 [deps]
 Arpack = "7d9fca2a-8960-54d3-9f78-7d1dccf2cb97"
-DataInterpolations = "82cc6244-b520-54b8-b5a6-8a565e85f1d0"
 DelimitedFiles = "8bb1440f-4735-579b-a4ab-409b98df4dab"
-Documenter = "e30172f5-a6a5-5a46-863b-614d45cd2de4"
-DocumenterTools = "35a29f4d-8980-5a13-9543-d66fff28ecb8"
 FileIO = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
 Gmsh = "705231aa-382f-11e9-3f0c-b7cb4346fdeb"
 Gridap = "56d4f2e9-7ea1-5844-9cf6-b9c51ca7ce8e"
 GridapGmsh = "3025c34a-b394-11e9-2a55-3fee550c04c8"
 JLD2 = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
-KeywordDispatch = "5888135b-5456-5c80-a1b6-c91ef8180460"
 LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
-Pkg = "44cfe95a-1eb2-52ea-b672-e2afdf69b78f"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 
 [compat]
-DataInterpolations = "8.6.0"
-Documenter = "1"
+Arpack = "0.5"
+DelimitedFiles = "1"
+FileIO = "1"
+Gmsh = "0.3"
+Gridap = "0.19"
+GridapGmsh = "0.7"
+JLD2 = "0.5"
+LinearAlgebra = "1"
+SparseArrays = "1"
+SpecialFunctions = "2"
 julia = "1.10"
 
 [extras]

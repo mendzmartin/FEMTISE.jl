@@ -10,10 +10,10 @@ the package evolves. In the Julia REPL press `]` to enter the package manager, t
 
 ```julia
 (@v1.10) pkg> activate .                                          # project of your calculation
-(my_project) pkg> add https://github.com/mendzmartin/FEMTISE.jl#v0.1.0
+(my_project) pkg> add https://github.com/mendzmartin/FEMTISE.jl#v0.1.1
 ```
 
-The `#v0.1.0` suffix selects the release tag. The exact version is recorded in the
+The `#v0.1.1` suffix selects the release tag. The exact version is recorded in the
 `Manifest.toml` of your project; keep that file next to your scripts. The list of
 releases and what changed in each one is in the [Changelog](@ref).
 
@@ -22,7 +22,7 @@ Equivalently, from a script:
 ```julia
 using Pkg
 Pkg.activate(".")
-Pkg.add(url = "https://github.com/mendzmartin/FEMTISE.jl", rev = "v0.1.0")
+Pkg.add(url = "https://github.com/mendzmartin/FEMTISE.jl", rev = "v0.1.1")
 ```
 
 ## Install the development version

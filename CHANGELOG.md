@@ -16,6 +16,43 @@ explicitly.
 
 Nothing yet.
 
+## [0.1.1] - 2026-10-18
+
+Bug-fix release. The public API is unchanged; code written for 0.1.0 keeps
+working. Two fixes change numerical results (marked below).
+
+### Fixed
+- **(changes results)** `time_indep_entropy(ψ, U, dΩ, α)` now computes the Rényi
+  entropy with ``ρ^α``; 0.1.0 evaluated ``ρ^{α/\ln 2}``. The Shannon entropy is
+  unchanged.
+- **(changes results)** `reduced_density` / `reduced_integration` now normalize the
+  approximate Dirac delta with the side lengths of the domain. In 0.1.0 the span of
+  the sampling points (``L-\Delta x``) was used, which scaled the reduced densities
+  by ``1-\Delta x/L``.
+- `collect_result_data` can reload non-sweep results written in the `bin eigen`
+  format: `DefaultBinEigenProblem` and `DefaultBinEigenProblemReducedDensity` now
+  store the sampled eigenfunctions and reduced densities as matrices.
+- `make_boundary_conditions("simple_rectangle_v2", ...)` returns its boundary tags
+  (an `==` was used instead of `=`).
+- `solve(::EigenProblem)` is now a method of Gridap's `solve` instead of a separate
+  function with the same name, so `using FEMTISE, Gridap` no longer makes `solve`
+  ambiguous. `FEMTISE.solve` keeps working.
+
+### Changed
+- `[compat]` bounds for every dependency (required for registration in the
+  General registry).
+- Tutorials in the documentation rewritten (1D and 2D harmonic oscillators, finite
+  Kronig–Penney chain, two-electron helium model): each one now runs from the
+  [FEMTISE_TUTORIAL](https://github.com/mendzmartin/FEMTISE_TUTORIAL) repository
+  with a single script, checks the results against exact or physical references,
+  and shows figures generated from those simulations (black-and-white and
+  colour-blind safe).
+
+### Removed
+- Unused dependencies: `DataInterpolations`, `KeywordDispatch`, `Documenter`,
+  `DocumenterTools` and `Pkg`. Loading FEMTISE is faster and no longer installs the
+  documentation tools.
+
 ## [0.1.0] - 2026-10-18
 
 First versioned release. It freezes the state of the package used in the
@@ -92,5 +129,6 @@ are documented in the *Accuracy and best practices* page of the manual.
   defined by the potential file is "too new" for that function; use
   `Base.invokelatest(run_default_eigen_problem, set_type_potential(path))`.
 
-[Unreleased]: https://github.com/mendzmartin/FEMTISE.jl/compare/v0.1.0...HEAD
+[Unreleased]: https://github.com/mendzmartin/FEMTISE.jl/compare/v0.1.1...HEAD
+[0.1.1]: https://github.com/mendzmartin/FEMTISE.jl/compare/v0.1.0...v0.1.1
 [0.1.0]: https://github.com/mendzmartin/FEMTISE.jl/releases/tag/v0.1.0

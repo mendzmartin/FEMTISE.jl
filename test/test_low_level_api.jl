@@ -9,7 +9,9 @@
 #   2. A priori convergence rate: the eigenvalue error decreases as h^(2ℓ) for
 #      Lagrange elements of degree ℓ.
 #   3. The eigenvectors are orthonormal in L².
-#   4. `eigen_problem` + `solve` and `eigen_values_and_eigen_vectors` agree.
+#   4. `eigen_problem` + `solve` and `eigen_values_and_eigen_vectors` agree, and
+#      `solve` is the same function as Gridap's (no name clash).
+#   5. Boundary tags of the built-in mesh types.
 
 @testset "Low-level interface (1D harmonic oscillator)" begin
     domain = (-10.0, 10.0)
@@ -46,7 +48,8 @@
                          BC_data = (zero(ComplexF64), "boundary"))
         a, b = bilineal_forms(electron_kinetic, harmonic_1d, x -> 1.0, dΩ)
         problem = eigen_problem(a, b, U, V; nev = 4, sigma = 0.0, tol = 1e-12, maxiter = 1000)
-        ε_two_steps, _ = FEMTISE.solve(problem)
+        ε_two_steps, _ = solve(problem)          # Gridap's `solve`, extended by FEMTISE
+        @test FEMTISE.solve === Gridap.solve
 
         ε_one_call, = solve_on_mesh(model; p = electron_kinetic, q = harmonic_1d, nev = 4)
         @test sort(real.(ε_two_steps)) ≈ ε_one_call rtol = 1e-10
@@ -54,5 +57,15 @@
         relative_asymmetry(M) = norm(M - transpose(M)) / norm(M)
         @test relative_asymmetry(A) < 1e-12                # A = Aᵀ (Hermitian form)
         @test relative_asymmetry(B) < 1e-12                # B = Bᵀ (mass matrix)
+    end
+
+    @testset "Boundary tags of the built-in mesh types" begin
+        @test make_boundary_conditions("simple_line", "FullDirichlet", ComplexF64)[2] ==
+              ["left_point", "right_point"]
+        @test make_boundary_conditions("simple_rectangle_v1", "FullDirichlet", ComplexF64)[2] ==
+              ["ext_points", "ext_lines"]
+        @test make_boundary_conditions("simple_rectangle_v2", "FullDirichlet", ComplexF64)[2] ==
+              ["ext_vertices", "ext"]
+        @test make_boundary_conditions("Cartesian2D", "FullDirichlet", ComplexF64)[2] == "boundary"
     end
 end

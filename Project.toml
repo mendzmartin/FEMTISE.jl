@@ -1,7 +1,7 @@
 name = "FEMTISE"
 uuid = "0bd82848-28f8-4e57-bc39-0a3ec24854bf"
 authors = ["Martín Méndez <martinmendez@mi.unc.edu.ar>"]
-version = "0.1.1"
+version = "0.2.0"
 
 [deps]
 Arpack = "7d9fca2a-8960-54d3-9f78-7d1dccf2cb97"
@@ -15,6 +15,12 @@ LinearAlgebra = "37e2e46d-f89d-539d-b4ee-838fcccc9c8e"
 SparseArrays = "2f01184e-e22b-5df5-ae63-d93ebab69eaf"
 SpecialFunctions = "276daf66-3868-5448-9aa4-cd146d93841b"
 
+[weakdeps]
+Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
+
+[extensions]
+FEMTISEMakieExt = "Makie"
+
 [compat]
 Arpack = "0.5"
 DelimitedFiles = "1"
@@ -24,12 +30,14 @@ Gridap = "0.19"
 GridapGmsh = "0.7"
 JLD2 = "0.5"
 LinearAlgebra = "1"
+Makie = "0.21, 0.22, 0.23, 0.24"
 SparseArrays = "1"
 SpecialFunctions = "2"
 julia = "1.10"
 
 [extras]
+Makie = "ee78f7c6-11fb-53f2-987a-cfe4a2b5a57a"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
-test = ["Test"]
+test = ["Makie", "Test"]

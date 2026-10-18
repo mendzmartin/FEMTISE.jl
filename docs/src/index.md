@@ -30,6 +30,10 @@ element size ``h`` and the polynomial degree ``\ell``.
   reduced densities, moments, Shannon and Rényi entropies, mutual information.
 - **Outputs** as compact binary arrays or JLD2 files that can be reloaded to
   compute new observables without solving again.
+- **New in v0.2.0**: particles of any mass, potentials read from data files,
+  two-parameter sweeps with energy maps, autocorrelation functions and spectra of
+  wave packets, and problems with three coordinates such as a nucleus, an electron
+  and a cavity photon mode (Pauli–Fierz Hamiltonian).
 
 ## Where to start
 
@@ -37,7 +41,9 @@ element size ``h`` and the polynomial degree ``\ell``.
 |---|---|
 | New to the package | [Installation](@ref) → [Quick start](@ref) → one of the tutorials |
 | Running calculations from input files | [Input file reference](@ref) and [Output files and reloading results](@ref) |
-| Writing your own scripts | [Low-level interface](@ref) and [Post-processing](manual/postprocessing.md) |
+| Writing your own scripts | [Masses, data files and sweeps](manual/new_inputs.md) (`solve_tise`), [Low-level interface](@ref) and [Post-processing](manual/postprocessing.md) |
+| Computing spectra of wave packets | [Autocorrelation and spectra](manual/autocorrelation.md) |
+| Solving molecules in cavities | [Three coordinates and cavity QED](manual/pauli_fierz.md) |
 | Checking the reliability of a result | [Theory](@ref) and [Accuracy and best practices](@ref) |
 | Upgrading between versions | [Changelog](@ref) |
 | Looking up a function | [API reference](@ref) |

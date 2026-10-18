@@ -66,14 +66,25 @@ function dispatch_solver(dimension::String,type_simulation::String,parameters)
 end
 
 """
-    run_default_eigen_problem
+    run_default_eigen_problem(simulation_data)
 
-# Aim
-- Function to simulate eigen problems from default potential or custom potential
+Run the simulation described by an input file and write its results to disk.
+`simulation_data` is the tuple returned by `set_type_potential(path)`, where `path`
+is the input file without the `.dat` extension:
+
+```julia
+run_default_eigen_problem(set_type_potential("path/to/input"))
+```
+
+Input files with optional settings (masses, potential data files, two-parameter
+sweeps, 3D problems; FEMTISE ≥ v0.2.0) are solved with the general solver.
 """
-
 function run_default_eigen_problem(simulation_data::Tuple)
     type_potential,id=simulation_data
+    # Input files with optional settings (v0.2.0) or 3D problems use the extended driver.
+    if type_potential == "5" && uses_extended_driver(id)
+        return run_extended_eigen_problem(id)
+    end
     println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++")
     if type_potential ≠ "5"
         print("Set full path name (e.g: \"./my_directory/my_name\") where you want to write problem results and press Enter = ")
@@ -438,8 +449,15 @@ function set_include()
     print("Set full path name (e.g: \"./my_directory/my_input_data\") where the data is specified and press Enter = ")
     full_path_input_data_name = readline()
     id=input_data(full_path_input_data_name)
-    include((id.adhoc_file_name)*".jl")
+    load_potential_file(id)
     return id
+end
+
+"Include the potential file of the input (none is needed for a tabulated potential)."
+function load_potential_file(id)
+    isempty(id.adhoc_file_name) && return nothing
+    include((id.adhoc_file_name)*".jl")
+    return nothing
 end
 
 function set_type_potential()
@@ -466,6 +484,6 @@ end
 
 function set_type_potential(full_path_input_data_name::String)
     id=input_data(full_path_input_data_name)
-    include((id.adhoc_file_name)*".jl")
+    load_potential_file(id)
     return tuple("5",id)
 end

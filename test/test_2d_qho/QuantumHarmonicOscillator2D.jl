@@ -1,9 +1,5 @@
 module QuantumHarmonicOscillator2D
 
-# activate specific environment from FEMTISE package
-using Pkg
-Pkg.activate("../");
-Pkg.instantiate()
 
 # import necessary packages
 using FEMTISE
@@ -54,9 +50,15 @@ end
     end
 end
 
+# Eigenvectors of different eigenvalues are orthogonal. Within a degenerate
+# subspace (here ε = 2, 2) the complex ARPACK driver returns linearly independent
+# but not necessarily orthogonal vectors, so those pairs are not checked.
 @testset "Check orthogonalization" begin
-    for i in eachindex(ϕ)
-        @test Float64(orthogonality_check(ϕ,dΩ)[i]) ≈ zero(Float64) atol=Float64(0.1)
+    for i in eachindex(ϕ), j in 1:(i - 1)
+        degenerate = abs(real(ϵ[i]) - real(ϵ[j])) < 1e-3
+        degenerate && continue
+        overlap = abs(sum(∫(ϕ[j]' * ϕ[i]) * dΩ))
+        @test overlap < 1e-6
     end
 end
 

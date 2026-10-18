@@ -13,14 +13,15 @@
 
 <!-- [![Codecov](https://app.codecov.io/gh/mendzmartin/FEMTISE.jl/branch/main/graph/badge.svg)](https://app.codecov.io/gh/mendzmartin/FEMTISE.jl) -->
 
-## **WARNING!**
-***->> The package is under construction <<-***
+## **Status**
+Current release: **v0.1.0** (see [CHANGELOG.md](CHANGELOG.md)). The package is under
+active development: while the version is `0.x`, minor releases may change the API.
+Pin a release in your projects to keep results reproducible.
 
 ## Table of Contents
 
 - [**FEMTISE.jl**](#femtisejl)
-  - [**WARNING!**](#warning)
-  - [Table of Contents](#table-of-contents)
+  - [**Status**](#status)
   - [**Usage**](#usage)
   - [**Installation**](#installation)
   - [**Documentation**](#documentation)
@@ -30,35 +31,41 @@
   - [**Contact**](#contact)
 
 ## **Usage**
-Julia package repository to resolve Time-Independent Schrödinger equation (TISE) by Finite Element Method (FEM). This is an implementation of [GRIDAP](https://github.com/gridap/Gridap.jl) package for unidimensional and bidimensional grids.
+Julia package to solve the Time-Independent Schrödinger Equation (TISE) by the Finite
+Element Method (FEM), built on [Gridap](https://github.com/gridap/Gridap.jl) and
+[ARPACK](https://github.com/JuliaLinearAlgebra/Arpack.jl). It solves 1D and 2D problems
+with arbitrary potentials, position-dependent masses and two particles of different
+masses, computes eigenvalues as functions of potential parameters, and provides
+post-processing tools (densities, moments, entropies, mutual information).
 
 Project carried out in my PhD studies of Physics at:
 * [Faculty of Mathematics, Astronomy, Physics and Computation (FAMAF)](https://www.famaf.unc.edu.ar/)
 * The Enrique Gaviola Institute of Physics (IFEG)
 
 ## **Installation**
-- [Clone Package](https://mendzmartin.github.io/FEMTISE.jl/dev/guide_information/#**1.-Clone-FEMTISE-package**)
-- [Build Julia code to use FEMTISE package](https://mendzmartin.github.io/FEMTISE.jl/dev/guide_information/#**2.-Build-Julia-code-to-use-FEMTISE-package**)
-- [Run from Julia REPL](https://mendzmartin.github.io/FEMTISE.jl/dev/guide_information/#Run-from-Julia-REPL)
+Requires Julia ≥ 1.10. In the package manager (`]`) of your project:
+```julia
+pkg> add https://github.com/mendzmartin/FEMTISE.jl#v0.1.0
+```
+See the [installation guide](https://mendzmartin.github.io/FEMTISE.jl/stable/getting_started/installation/)
+for development installs and running scripts with threads.
 
 ## **Documentation**
-- Check [here](https://mendzmartin.github.io/FEMTISE.jl/) the GitHub Page to see documentation.
-- Check [here](https://deepwiki.com/mendzmartin/FEMTISE.jl) the DeepWiki Page to learn about FEMTISE software.
+- [Stable documentation](https://mendzmartin.github.io/FEMTISE.jl/stable/) (latest release) and
+  [development documentation](https://mendzmartin.github.io/FEMTISE.jl/dev/) (`main` branch):
+  quick start, theory, input-file reference, low-level interface, post-processing,
+  accuracy guidelines and API reference.
+- [DeepWiki page](https://deepwiki.com/mendzmartin/FEMTISE.jl) about the FEMTISE software.
 
 ## **Tutorials**
-See some use examples in [test folder](https://github.com/mendzmartin/FEMTISE.jl/tree/main/test) where you can find some tests of specific `FEMTISE` package functions:
-- Finite Well Potential 1D
-- Symmetric Finite Kronig-Penney Potential 1D
-- Isotropic Quantum Harmonic Oscillator 2D
-- Default Eigen Value Problem
-
-Also, you can find tutorials in [FEMTISE_TUTORIAL](https://github.com/mendzmartin/FEMTISE_TUTORIAL) repository of specific problems like:
-- Tutorial To Simulate Symmetric Finite One Dimensional Kronig-Penney Potential
-- Tutorial To Simulate Isotropic One Dimensional Harmonic Oscillator
-- Tutorial To Simulate Isotropic Two Dimensional Harmonic Oscillator
-- Tutorial To Simulate Coulomb 2D Interaction potential (Helium atom model)
-
-or check FEMTISE Package [GitHub Page](https://mendzmartin.github.io/FEMTISE.jl/) to see documentation.
+See the [test folder](https://github.com/mendzmartin/FEMTISE.jl/tree/main/test) for
+validation tests against analytic solutions, and the
+[FEMTISE_TUTORIAL](https://github.com/mendzmartin/FEMTISE_TUTORIAL) repository for
+complete tutorials:
+- Symmetric finite one-dimensional Kronig–Penney potential
+- Isotropic one-dimensional harmonic oscillator
+- Isotropic two-dimensional harmonic oscillator
+- Coulomb 2D interaction potential (helium atom model)
 
 ## **To cite this work**
 If you use this package in your research, please cite it using the following BibTeX entry:

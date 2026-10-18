@@ -11,7 +11,7 @@ version you used (the version is listed in your project's `Manifest.toml`):
   title     = {{FEMTISE.jl}: a {Julia} package for the time-independent
                {Schr\"odinger} equation by the finite element method},
   year      = {2024},
-  version   = {0.1.0},
+  version   = {0.1.1},
   publisher = {GitHub},
   url       = {https://github.com/mendzmartin/FEMTISE.jl}
 }

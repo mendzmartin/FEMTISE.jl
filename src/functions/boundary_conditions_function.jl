@@ -40,7 +40,7 @@ function make_boundary_conditions(grid_type::String,BC_type::String,TypeData::Ty
     elseif grid_type == "simple_rectangle_v2"
         if (BC_type=="FullDirichlet")
             BC_values = [zero(TypeData),zero(TypeData)];
-            BC_tags == ["ext_vertices","ext"]
+            BC_tags = ["ext_vertices","ext"]
         end
     elseif (grid_type == "Cartesian2D")
         if (BC_type == "FullDirichlet")

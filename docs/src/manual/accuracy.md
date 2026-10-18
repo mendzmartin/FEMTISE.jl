@@ -82,18 +82,17 @@ the ``(n+1)``-fold degeneracies are split by ``\sim 10^{-5}``–``10^{-4}`` for
 - Start Julia with threads (`julia -t 4`) to accelerate post-processing.
 - The first call of each function includes compilation time. Time the second call.
 
-## Known issues (v0.1.0)
+## Known issues
+
+Open issues in the current release (v0.1.1):
 
 | Issue | Workaround |
 |---|---|
-| Rényi entropy uses ``\rho^{\alpha/\ln2}`` | compute ``\frac{1}{1-\alpha}\log_2\int\rho^\alpha`` directly (see [Post-processing](postprocessing.md)) |
-| `solve` is also exported by Gridap | call `FEMTISE.solve` |
 | Driver quadrature ``k_q=3`` | low-level interface with ``k_q\ge2\ell+2`` |
 | Sweeps start at ``\lambda_i+\Delta\lambda`` | start one step earlier |
-| `make_boundary_conditions("simple_rectangle_v2", ...)` does not set the tags | use `"simple_rectangle_v1"` or `"Cartesian2D"` |
-| `collect_result_data` fails for `bin eigen` outputs (non-sweep runs) | read the files with `read_bin` (see [Output files and reloading results](@ref)) |
-| Reduced densities are scaled by ``1-\Delta x/L`` | divide by their integral (their shape is correct) |
 | Eigenvectors of degenerate levels are not mutually orthogonal (complex ARPACK driver) | orthonormalize within the degenerate subspace (see [Post-processing](postprocessing.md)) |
 | Driver called from inside a function: "method too new" error | `Base.invokelatest(run_default_eigen_problem, set_type_potential(path))` (see [Input file reference](@ref)) |
 
-These will be fixed in upcoming releases; see the [Changelog](@ref).
+Fixed in v0.1.1 (present in v0.1.0): Rényi entropy, normalization of reduced
+densities, reloading of `bin eigen` results, the `solve` name clash with Gridap,
+and the boundary tags of `"simple_rectangle_v2"`. See the [Changelog](@ref).

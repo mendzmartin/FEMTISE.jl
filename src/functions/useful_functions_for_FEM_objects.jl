@@ -61,6 +61,18 @@ function aprox_dirac_delta(x,params::Tuple{Float64,Float64,Int,Float64})
 end
 
 """
+    domain_side_lengths(Ω)
+
+Side lengths `(L₁, L₂)` of the bounding box of a two-dimensional triangulation `Ω`.
+"""
+function domain_side_lengths(Ω)
+    nodes = Gridap.Geometry.get_node_coordinates(Ω)
+    L₁ = maximum(p -> p[1], nodes) - minimum(p -> p[1], nodes)
+    L₂ = maximum(p -> p[2], nodes) - minimum(p -> p[2], nodes)
+    return L₁, L₂
+end
+
+"""
     reduced_integration(FE_function,r_vector,Ω,dΩ)
 
 # Aim
@@ -81,8 +93,11 @@ end
 """
 function reduced_integration(FE_function::Vector{CellField},r_vector::Tuple{Vector{Float64},Vector{Float64}},
     Ω,dΩ::Gridap.CellData.GenericMeasure)
-    N_DOF1=abs(r_vector[1][end]-r_vector[1][1]);
-    N_DOF2=abs(r_vector[2][end]-r_vector[2][1]);
+    # The approximate Dirac delta δ(x - xᵢ) is a strip of width Δx. Its numerical
+    # integral over the whole domain (δnorm) must equal the length of the domain in
+    # the other coordinate; the side lengths of the domain are therefore used here
+    # (not the span of the sampling points, which is shorter by one spacing).
+    N_DOF1,N_DOF2=domain_side_lengths(Ω);
 
     Δr_DOF1=abs(r_vector[1][2]-r_vector[1][1]);
     Δr_DOF2=abs(r_vector[2][2]-r_vector[2][1]);
@@ -331,7 +346,7 @@ function time_indep_entropy(psi::Vector{CellField},TrialSpace::FESpace,dOmega::G
         psi_index=interpolate_everywhere(psi[i],TrialSpace);
         psi_index=psi_index*(1.0/norm_l2(psi_index,dOmega));
         rho_index=real(conj(psi_index)*psi_index)
-        (sum(integrate(rho_index,dOmega))==0.0) ? (S[i]=0.0) : (S[i]=log2(sum(integrate(exp∘(renyi_factor*(log2∘rho_index)),dOmega))))
+        (sum(integrate(rho_index,dOmega))==0.0) ? (S[i]=0.0) : (S[i]=log2(sum(integrate(exp2∘(renyi_factor*(log2∘rho_index)),dOmega))))   # ρ^α = 2^(α log₂ρ)
     end
     return S .* (1.0/(1.0-renyi_factor));
 end

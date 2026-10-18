@@ -1,15 +1,14 @@
 module FEMTISE
 
-using Gridap,GridapGmsh,Gmsh,FileIO
-using LinearAlgebra,SparseArrays,Arpack
-using DelimitedFiles,SpecialFunctions,KeywordDispatch
-using Gridap.CellData;  # para construir condición inicial interpolando una función conocida
-# using Gridap.FESpaces;  # para crear matrices afines a partir de formas bilineales
-# using Gridap.Algebra;   # para utilizar operaciones algebraicas con Gridap
-# using DataInterpolations;   # interpolation function package (https://github.com/PumasAI/DataInterpolations.jl)
+using Gridap, GridapGmsh, Gmsh, FileIO
+using Gridap.CellData
+using LinearAlgebra, SparseArrays, Arpack
+using DelimitedFiles, SpecialFunctions
 using JLD2
 
-import DataInterpolations: CubicSpline, LinearInterpolation, AkimaInterpolation
+# FEMTISE adds a method `solve(::EigenProblem)` to Gridap's own `solve`, so that
+# `using FEMTISE, Gridap` exposes a single, unambiguous `solve` function.
+import Gridap.Algebra: solve
 
 include("functions/default_running_structures.jl")
 include("functions/post_proccesing_data_structures.jl")

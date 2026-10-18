@@ -130,40 +130,24 @@ end
                              different_masses = false, reduced_density = true)
             run_driver(folder, input)
 
-            # Known issue in v0.1.0: the containers of the "bin" format declare the
-            # eigenfunctions as Vector{CellField}, so `collect_result_data` cannot
-            # rebuild them from the sampled matrix. When fixed, replace
-            # @test_broken by @test and use `collect_result_data` below.
-            reload_works = try
-                collect_result_data(true, input)
-                true
-            catch
-                false
-            end
-            @test_broken reload_works
+            id, results = collect_result_data(true, input)
+            @test id isa InputData2D
+            @test results isa DefaultBinEigenProblemReducedDensity
 
-            # Documented workaround: read the binary files directly.
-            prefix = joinpath(folder, "qho2d")
-            nev = 3
-            ε = sort(real.(read_bin(prefix * "_eigen_values.bin")))
+            ε = sort(real.(results.ϵ))
             @test ε ≈ [1.0, 2.0, 2.0] rtol = 1e-3
 
             # Reduced density of the ground state, sampled on the output grid
             # (first coordinate column). Exact result: ρ⁽¹⁾(x) = e^{-x²}/√π.
-            ε_unsorted = real.(read_bin(prefix * "_eigen_values.bin"))
-            ground = argmin(ε_unsorted)
-            x = read_bin(prefix * "_coordinates.bin")[1:40]
+            ground = argmin(real.(results.ϵ))
+            x = results.r[1:40]
             Δx = x[2] - x[1]
-            ρ1 = read_bin(prefix * "_reduced_density_DOF1.bin"; matrix_data = true, c_dim = nev)[:, ground]
-            integral = sum(ρ1) * Δx
+            ρ1 = results.rhoDOF1[:, ground]
+            @test sum(ρ1) * Δx ≈ 1.0 atol = 2e-3
+            @test maximum(abs.(ρ1 .- exp.(-x .^ 2) ./ sqrt(π))) < 1e-2
 
-            # Shape: after normalization, ρ⁽¹⁾ matches the Gaussian.
-            @test maximum(abs.(ρ1 ./ integral .- exp.(-x .^ 2) ./ sqrt(π))) < 1e-2
-            # Known issue in v0.1.0: `reduced_integration` normalizes with the span of
-            # the sampling points, r[end] - r[1] = L - Δx, instead of the domain length
-            # L, so the integral is (L - Δx)/L = 0.975 instead of 1.
-            @test integral ≈ 1 - Δx / 12.0 atol = 2e-3
-            @test_broken integral ≈ 1.0 atol = 2e-3
+            # The same data can be read directly from the binary files.
+            @test read_bin(joinpath(folder, "qho2d_eigen_values.bin")) == results.ϵ
         end
     end
 end

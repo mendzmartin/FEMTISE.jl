@@ -38,7 +38,7 @@ Each object of the [Theory](@ref) has one function that builds it:
 | Test and trial spaces ``V_h``, ``U_h`` | [`fe_spaces`](@ref) | `V, U` |
 | Forms ``a(u,v)``, ``b(u,v)`` | [`bilineal_forms`](@ref) | two Julia functions |
 | Matrices ``\mathbb A``, ``\mathbb B`` and solver settings | [`eigen_problem`](@ref) | `EigenProblem` |
-| Eigenpairs ``(\varepsilon_n, u_{n,h})`` | [`FEMTISE.solve`](@ref) | eigenvalues, `Vector{CellField}` |
+| Eigenpairs ``(\varepsilon_n, u_{n,h})`` | `solve` | eigenvalues, `Vector{CellField}` |
 | All of the above in one call | [`eigen_values_and_eigen_vectors`](@ref) | eigenvalues, eigenfunctions |
 
 The eigenfunctions are Gridap `CellField`s: they can be evaluated at any point

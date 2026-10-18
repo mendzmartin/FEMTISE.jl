@@ -40,10 +40,10 @@ makedocs(
         ],
         "Tutorials" => [
             "Built-in potentials (console)"          => "examples/simulation_example.md",
-            "Symmetric finite 1D Kronig–Penney"      => "examples/symmetric_finite_1d_kronig_penney_potential.md",
+            "Finite Kronig–Penney chain"             => "examples/symmetric_finite_1d_kronig_penney_potential.md",
             "1D harmonic oscillator"                 => "examples/isotropic_1d_harmonic_oscillator_potential.md",
             "2D harmonic oscillator"                 => "examples/isotropic_2d_harmonic_oscillator_potential.md",
-            "Two electrons: helium-like model"       => "examples/coulomb_interaction_2d_potential.md",
+            "Two electrons: helium model"            => "examples/coulomb_interaction_2d_potential.md",
         ],
         "API reference" => "api.md",
         "Changelog"     => "changelog.md",

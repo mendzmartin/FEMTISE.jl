@@ -1,105 +1,82 @@
-# Tutorial To Simulate Coulomb 2D Interaction potential (Helium atom model)
+# Two electrons: a one-dimensional model of the helium atom
 
-!!! note "Installation"
-    The installation steps shown in this tutorial were written before the first
-    release. The recommended way to install a fixed version is described in
-    [Installation](../getting_started/installation.md); the rest of the tutorial
-    applies unchanged.
+This tutorial uses a two-dimensional mesh for a different purpose: the two
+coordinates are the positions $z_1$ and $z_2$ of **two electrons** moving along a
+line, bound to a nucleus of charge $Z = 2$ fixed at the origin. Because the full
+two-electron wave function $\Psi(z_1, z_2)$ is computed, electron correlation is
+included exactly within the model. In atomic units,
 
-### Create simulation directory
-First of all we need to create a specific directory to save this specific simulation results 
-
-```bash
-@prompt:~$ mkdir ~/my_directory_path/C2D
-@prompt:~$ cd ~/my_directory_path/C2D
+```math
+\hat H = -\frac{1}{2}\left(\frac{\partial^2}{\partial z_1^2}+\frac{\partial^2}{\partial z_2^2}\right)
++ \lambda\left[v(z_1-z_2;\,1) - v(z_1;\,Z) - v(z_2;\,Z)\right].
 ```
 
-### Create function potential
+The effective interaction $v$ results from integrating out a strong harmonic
+confinement in the two transverse directions. Unlike the bare one-dimensional
+Coulomb interaction, it is finite at $z = 0$ and behaves as $1/|z|$ at large
+distances. The factor $\lambda$ switches all interactions on, from free electrons
+in a box ($\lambda = 0$) to the full model ($\lambda = 1$).
 
-We need to create a specific function potential for coulomb potential interaction as following:
+All files are in `src/coulomb_interaction_2d_potential/` of the
+[FEMTISE_TUTORIAL](https://github.com/mendzmartin/FEMTISE_TUTORIAL) repository.
 
-```bash
-@prompt:~/my_directory_path/C2D$ vi adhoc_potential_function.jl
+## 1. The potential
+
+For two charges with product $Q$, transverse confinement length $l$ and Yukawa
+screening length $l_\alpha$,
+
+```math
+v(z) = \frac{\pi^{3/2}Q}{2l}\,\exp\!\left(\xi^2+\beta^2\right)\operatorname{erfc}(\xi+\beta),
+\qquad \xi = \frac{|z|}{l},\quad \beta = \frac{l}{2l_\alpha}.
 ```
 
-Inside `adhoc_potential_function` write the following:
+`adhoc_potential_function.jl` evaluates it without overflow, as
+$a\,e^{-2\xi\beta}\,h(\xi+\beta)$ with $h(u) = e^{u^2}\operatorname{erfc}(u)$ and
+the asymptotic form $h(u)\simeq 1/(\sqrt{\pi}\,u)$ for large $u$. It defines two
+potentials with parameters $(l, l_\alpha, z_{\rm nucleus}, Z, \lambda)$:
 
 ```julia
-distance(DOF1,DOF2)=abs(DOF2-DOF1)
-
-effective_interaction(DOF) = exp(DOF^2)*erfc(DOF)
-asymptotical_interaction(DOF) = 1.0/(sqrt(π)*DOF)
-
-function avoided_divergence(DOF,b)
-    DOF > 25.7 ? func=asymptotical_interaction(DOF+b) : func=effective_interaction(DOF+b)
-    return func
+# full model: e–e repulsion and attraction of both electrons to the nucleus
+function effective_Yukawa_potential_2e(x, params::Tuple)
+    confinement_length, Yukawa_length, nuclei_coord, atomic_number, switch_factor = params
+    return switch_factor * (
+        reduced_confinement_function(x[1], x[2], confinement_length, Yukawa_length, 1.0) -
+        reduced_confinement_function(x[1], nuclei_coord, confinement_length, Yukawa_length, atomic_number) -
+        reduced_confinement_function(nuclei_coord, x[2], confinement_length, Yukawa_length, atomic_number))
 end
-
-function reduced_confinement_function(DOF1,DOF2,confinement_length,Yukawa_length,
-atomic_number)
-    a=atomic_number*π*sqrt(π)*0.5*(1.0/confinement_length);
-    b=confinement_length*0.5*(1.0/abs(Yukawa_length));
-    coordinate=distance(DOF1,DOF2)*(1.0/confinement_length);
-    return a*exp((-2.0*coordinate+b)*b)*avoided_divergence(coordinate,b)
-end
-
-export effective_Yukawa_potential_2e
-"""
-    effective_Yukawa_potential_2e(x,params)
-
-# Aim:
-    This function calculates the effective Yukawa potential between two electrons in a 1D 
-    system. 
-    The potential is calculated using the reduced confinement function and the avoided 
-    divergence function.
-
-# Arguments
-    x::Array{Float64,1} : The position of the two electrons in 1D.
-    params::Tuple : A tuple containing the parameters of the potential. 
-        params[1]::Float64 : The confinement length of the potential.
-        params[2]::Float64 : The Yukawa length of the potential.
-        params[3]::Float64 : The position of the nuclei.
-        params[4]::Float64 : The atomic number of the nuclei.
-        params[5]::Float64 : The switch factor of the potential.
-
-# Returns
-    Float64 : The value of the effective Yukawa potential at the position x.
-"""
-function effective_Yukawa_potential_2e(x,params::Tuple)
-    confinement_length,Yukawa_length,nuclei_coord,atomic_number,switch_factor=params;
-    return (switch_factor*(reduced_confinement_function(x[1],x[2],confinement_length,
-    Yukawa_length,1.0)
-    -reduced_confinement_function(x[1],nuclei_coord,confinement_length,Yukawa_length,
-    atomic_number)
-    -reduced_confinement_function(nuclei_coord,x[2],confinement_length,Yukawa_length,
-    atomic_number)))
-end
+# effective_Yukawa_potential_2e_without_repulsion: the same without the first term
 ```
 
-### Input file
+## 2. The input files
 
-We need to create an input file to simulate using default solver function inside FEMTISE package
+Three calculations share the mesh, the square $(-5, 5)^2$ divided into
+$100\times100$ cells, and the parameters $l = 1$, $l_\alpha = 100$ (practically
+unscreened), $z_{\rm nucleus} = 0$, $Z = 2$, $\lambda = 1$. The shift
+`sigma = -10` is below all levels, so the 50 lowest eigenpairs are returned.
 
-```bash
-@prompt:~/my_directory_path/C2D$ vi input.dat
-```
-Inside `input.dat` we need to write the following.
+| File | Potential | Purpose |
+|---|---|---|
+| `input_01.dat` | `effective_Yukawa_potential_2e_without_repulsion` | reference without correlation |
+| `input_02.dat` | `effective_Yukawa_potential_2e` | full model at $\lambda = 1$ |
+| `input_03.dat` | `effective_Yukawa_potential_2e`, `analysis_param = 5 -0.01 1.0 0.01` | eigenvalues for $\lambda = 0, 0.01, \dots, 1$ |
 
-```plaintext
-full_path_name              = ~/my_directory_path/C2D/name_output_file
+`input_03.dat`, for example:
+
+```text
+full_path_name              = ./output/switch_sweep
 dom_type                    = s
 nev                         = 50
 dimension                   = 2D
 sigma                       = -10.0
-adhoc_file_name             = ~/my_directory_path/C2D/adhoc_potential_function
+adhoc_file_name             = ./adhoc_potential_function
 potential_function_name     = effective_Yukawa_potential_2e
 params_potential_types      = f f f f f
 params_potential            = 1.0 100.0 0.0 2 1.0
 analysis_param              = 5 -0.01 1.0 0.01
 output_format_type          = jld2 eigen
 ## ONLY FOR 1D EIGENPROBLEMS
-L                           = 
-Δx                          = 
+L                           =
+Δx                          =
 ## ONLY FOR 2D EIGENPROBLEMS
 Lx                          = 10
 Ly                          = 10
@@ -109,145 +86,67 @@ different_masses            = false
 reduced_density             = false
 ```
 
-Note that we are setting `analysis_param` keyword. The parameter that we are going to change is the number 5, from 0.01 value to 1.0 value with step 0.01 value.
+`analysis_param = 5 -0.01 1.0 0.01` sweeps the fifth parameter ($\lambda$). The
+driver computes the values $\lambda_i + k\,\Delta\lambda$ for $k\ge1$, so starting at
+$-0.01$ makes the first computed value exactly $\lambda = 0$. The mesh is built
+once and reused for all 101 values.
 
-### Run script
-
-Create Julia code as
-```bash
-@prompt:~/my_directory_path/C2D$ vi run.jl
-```
-Inside `run.jl` we need to write the following.
-
-```julia
-begin
-    using Pkg
-    Pkg.activate("../")
-    develop_package = true; develop_package ? Pkg.develop(path="~/my_path_repo/FEMTISE.jl") 
-    : nothing
-    Pkg.instantiate()
-    using FEMTISE;
-    run_default_eigen_problem(set_type_potential("~/my_directory_path/C2D/input.dat"))
-end
-```
-
-After this we can run the simulation using Julia compiler (for example: using multithread running with four threads)
+## 3. Running the tutorial
 
 ```bash
-@prompt:~/my_directory_path/C2D$ julia -t 4 run.jl 
+julia --project=. setup.jl        # once
+julia --project=. src/coulomb_interaction_2d_potential/run_tutorial.jl
 ```
 
-### Analysis
-
-After running we obtain an output data file in jld2 format called `name_output_file_eigen_data.jld2`.
-
-Then using Jupyter Notebook (by intermediate Visual Studio Code) we can analyse output file so:
-
-```bash
-@prompt:~/my_directory_path/C2D$ code C2D.ipynb
-```
-Inside `C2D.ipynb` we need to write the following:
-
-#### Environment
-
-Activate Julia environment
+The parameter sweep (101 eigenvalue problems with about $4\times10^4$ unknowns each)
+takes several minutes. Its results are reused on later runs.
 
 ```julia
-using Pkg
-Pkg.activate("./")
-Pkg.instantiate()
-```
-Is necessary to mark FEMTISE package as developed package using specific path repository:
+_, no_repulsion = simulate("input_01")
+_, full = simulate("input_02")
+_, sweep = simulate("input_03")
 
-```julia
-develop_package = true; develop_package ? Pkg.develop(path="~/my_path_repo/FEMTISE.jl") : nothing
-```
-
-Now we install package (if is nesseary) and use specific packages to analyse output data:
-
-```julia
-install_pkg = true
-if install_pkg
-    Pkg.add("Plots")
-    Pkg.add("PlotlyJS")
-end
-using FEMTISE;
-using Plots;
+λ = real.(sweep.λvector)
+levels = sort(real.(sweep.ϵ_matrix), dims = 1)     # ascending order at every λ
+save_figure(plot_parameter_sweep(λ, levels; states = 1:10,
+                                 parameter_name = "Interaction strength"),
+            "figures", "helium_model_sweep")
 ```
 
-#### Read output data
+## 4. Results
 
-All the information that we need to specify is where we find input file then using specific functions we can collect output data
+![Eigenvalues of the helium model as functions of the interaction strength](../assets/tutorials/helium_model_sweep.png)
 
-```julia
-path_input_file_name="~/my_directory_path/C2D/input.dat"
-simulation_info, output_data = collect_result_data(true,path_input_file_name)
-```
-#### Plotting figures
+**Switching on the interactions.** The ten lowest eigenvalues as functions of
+$\lambda$. At $\lambda = 0$ the electrons are free in the box, and the levels are
+small and positive. As the attraction to the nucleus grows, every level decreases,
+and the ground state separates from the rest. At $\lambda = 1$ it reaches
+$\varepsilon_0 = -5.1769$. Because the levels are sorted at every $\lambda$,
+crossings between levels of different symmetry appear as corners in the curves.
 
-Building functions to plot figures we have:
-```julia
-"""
-    plot_eigenvalues(id,results,range_to_show;<keyword arguments>)
+![Two-electron densities](../assets/tutorials/helium_model_densities.png)
 
-# Aim
-- Plot the eigenvalues of the Hamiltonian operator.
-The eigenvalues are plotted as a function of the parameter λ.
-The eigenvalues are obtained from the diagonalization of the Hamiltonian operator.
-The eigenvalues are plotted for the range of energy levels specified by the range_to_show 
-variable.
-The keyword arguments are used to set the title, xlabel, ylabel, and legend of the plot.
+**Correlation.** Two-electron densities $|\Psi(z_1,z_2)|^2$ of the two lowest states,
+(a, b) without and (c, d) with the electron–electron repulsion. The dashed line is
+$z_1 = z_2$ (both electrons at the same position).
+- **Without repulsion**, the ground state (a) is a product of one-electron orbitals.
+  Its energy, $-6.8697$, is twice the one-electron energy.
+- **The repulsion** (c) raises the ground-state energy by $1.69$ to $-5.1769$ and
+  deforms the density away from the diagonal. The electrons tend to be on opposite
+  sides of the nucleus.
+- **The first excited states** (b, d) vanish on the diagonal: they are antisymmetric
+  under the exchange $z_1\leftrightarrow z_2$, i.e. spin triplets, while the ground
+  state is symmetric (spin singlet).
 
-# Arguments
-- `id`: InputData or InputData1D or InputData2D object.
-- `results`: Results object.
-- `range_to_show::StepRange{Int, Int}`: Range of energy levels to plot.
-- `keyword arguments`:
-    - `set_title::String`: Title of the plot.
-    - `set_xlabel::String`: Label of the x-axis.
-    - `set_ylabel::String`: Label of the y-axis.
-    - `set_legend::Symbol`: Position of the legend.
-"""
-function plot_eigenvalues(id,results,range_to_show::StepRange{Int, Int};show_label=true)
-    if id.analysis_param == false
-        println("PLOT ERROR.")
-        println("Check attributes, you are using the wrong function method. Analysis 
-        parameter is not activated.")
-        figure = nothing
-    else
-        plotlyjs()
-        figure = plot(xlabel="Parameter λ",ylabel="Eigen-energies (ϵn(λ) [au])",ticks = 
-        :native)
-        for i in range_to_show
-            if show_label
-                figure = scatter!(real.(results.λvector),real(results.ϵ_matrix[i,:]), 
-                label="n=$(i)",legend=:top)
-            else
-                figure = scatter!(real.(results.λvector),real(results.ϵ_matrix[i,:]), 
-                label="")
-            end
-            figure = plot!(real.(results.λvector),real(results.ϵ_matrix[i,:]),label="")
-        end
-    end
-    return figure
-end
-```
+## 5. Going further
 
-Now we can plot eigenenergies:
-```julia
-fig1=plot_eigenvalues(simulation_info,output_data,1:1:10;show_label=true)
-display(fig1)
-```
-
-![figure](../assets/effec_Yukawa_pot_2e_eigenenergies_vs_param.jpg)
-
-Also, we can export figures as `*pdf` format using
-```julia
-savefig(fig1,"./eigen_energies_vs_parameter.pdf")
-```
-
-Following the same logic we can simulate for this coulombic potential and the eigenstates for the first two energy levels are:
-
-![figure](../assets/effec_Yukawa_pot_2e_eigenstate_energy_01.jpg)
-
-![figure](../assets/effec_Yukawa_pot_2e_eigenstate_energy_02.jpg)
+- **Exchange symmetry.** The Dirichlet problem on the square does not impose any
+  exchange symmetry, so singlet and triplet states appear in the same calculation.
+  Classify them by comparing $\Psi(z_1,z_2)$ with $\Psi(z_2,z_1)$.
+- **Correlation measures.** With `reduced_density = true` the driver computes the
+  one-electron densities, from which the Shannon entropies and the mutual
+  information between the electrons follow; see the
+  [post-processing guide](../manual/postprocessing.md).
+- **Other systems.** Changing $Z$, adding a second nucleus, or giving the two
+  coordinates different masses (`different_masses`) turns the same files into
+  models of ions, molecules or electron–nucleus systems.

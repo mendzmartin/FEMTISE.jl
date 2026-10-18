@@ -1,8 +1,5 @@
 module DefaultEigenProblem
 
-using Pkg
-Pkg.activate("../")
-Pkg.instantiate()
 
 # Load libraries
 using FEMTISE

@@ -1,5 +1,11 @@
 # How to run default eigen problems defined inside FEMTISE Package
 
+!!! note "Installation"
+    The installation steps shown in this tutorial were written before the first
+    release. The recommended way to install a fixed version is described in
+    [Installation](../getting_started/installation.md); the rest of the tutorial
+    applies unchanged.
+
 ## Clone FEMTISE package repository
 First of all you need to clone package from GitHub repository as follow
 ```bash

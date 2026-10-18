@@ -1,8 +1,5 @@
 module FiniteKronigPenneyPotential1D
 
-using Pkg
-Pkg.activate("../")
-Pkg.instantiate()
 
 # Load libraries
 using FEMTISE

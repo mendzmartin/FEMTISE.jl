@@ -1,5 +1,11 @@
 # Tutorial To Simulate Coulomb 2D Interaction potential (Helium atom model)
 
+!!! note "Installation"
+    The installation steps shown in this tutorial were written before the first
+    release. The recommended way to install a fixed version is described in
+    [Installation](../getting_started/installation.md); the rest of the tutorial
+    applies unchanged.
+
 ### Create simulation directory
 First of all we need to create a specific directory to save this specific simulation results 
 

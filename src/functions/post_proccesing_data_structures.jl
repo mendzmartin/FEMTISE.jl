@@ -74,3 +74,14 @@ struct AnalysisParams
     ϵ_matrix::Matrix{ComplexF64}
     λvector::Vector{ComplexF64}
 end
+"""
+    AnalysisParams2D
+
+Results of a two-parameter sweep: `ϵ_tensor[n, i, j]` is the `n`-th eigenvalue
+(ascending) for the parameter values `λvector[i]` and `μvector[j]`.
+"""
+struct AnalysisParams2D
+    ϵ_tensor::Array{Float64,3}
+    λvector::Vector{Float64}
+    μvector::Vector{Float64}
+end

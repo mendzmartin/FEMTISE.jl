@@ -11,12 +11,16 @@
 #       test_input_file_driver.jl        input-file driver end to end (1D, 2D, sweeps)
 #       test_post_processing.jl          densities, moments, entropies
 #       test_binary_io.jl                write_bin / read_bin round trip
+#       test_v020_features.jl            masses, tabulated potentials, sweeps,
+#                                        autocorrelation, Pauli–Fierz (3D), plots
+#       test_extended_driver.jl          optional settings of the input file
 #   * Example tests (test_*/ folders): complete worked examples kept from earlier
 #     versions; they run the package as a user would.
 
 using FEMTISE
 using Gridap
 using LinearAlgebra
+import Makie       # loads the plotting extension of FEMTISE (import avoids name clashes)
 using Test
 
 include("helpers.jl")
@@ -29,6 +33,11 @@ include("helpers.jl")
         include("test_post_processing.jl")
         include("test_binary_io.jl")
         include("test_input_file_driver.jl")
+    end
+
+    @testset "v0.2.0 features" begin
+        include("test_v020_features.jl")
+        include("test_extended_driver.jl")
     end
 
     @testset "Examples" begin

@@ -46,3 +46,45 @@ Modules = [FEMTISE]
 Pages   = ["functions/binary_file_io.jl", "functions/post_proccesing_data_function.jl",
            "functions/post_proccesing_data_structures.jl"]
 ```
+
+## General solver (v0.2.0)
+
+```@autodocs
+Modules = [FEMTISE]
+Pages   = ["functions/general_solver.jl"]
+```
+
+## Tabulated potentials (v0.2.0)
+
+```@autodocs
+Modules = [FEMTISE]
+Pages   = ["functions/tabulated_potentials.jl"]
+```
+
+## Autocorrelation and spectra (v0.2.0)
+
+```@autodocs
+Modules = [FEMTISE]
+Pages   = ["functions/autocorrelation.jl"]
+```
+
+## Pauli–Fierz Hamiltonian (v0.2.0)
+
+```@autodocs
+Modules = [FEMTISE]
+Pages   = ["functions/pauli_fierz.jl"]
+```
+
+## Extended input-file driver (v0.2.0)
+
+```@autodocs
+Modules = [FEMTISE]
+Pages   = ["functions/extended_driver.jl"]
+```
+
+## Plotting (v0.2.0, requires a Makie backend)
+
+```@autodocs
+Modules = [FEMTISE]
+Pages   = ["functions/plotting.jl"]
+```

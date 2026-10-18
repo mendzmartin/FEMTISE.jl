@@ -16,6 +16,11 @@ are part of the test suite.
    High-lying states and continuum states are always box states.
 3. **Number of eigenpairs and shift.** Check that `sigma` lies below the levels you
    want (or at the centre of your energy window) and that `nev` covers them all.
+   Krylov eigensolvers can miss members of a **degenerate level at the edge of the
+   requested window**. [`solve_tise`](@ref) and [`sweep_eigenvalues`](@ref) compute a few
+   extra eigenpairs (`guard_states`) to prevent this. With the original input-file
+   driver or `eigen_values_and_eigen_vectors`, ask for a few more eigenpairs than you
+   need.
 4. **Normalization and orthogonality.** `eigenstates_normalization` and
    `orthogonality_check` should return 1 and ≈0.
 

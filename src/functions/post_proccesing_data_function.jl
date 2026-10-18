@@ -110,6 +110,7 @@ end
 - `id::InputData1D`: input data
 """
 function load_results(id::InputData1D)
+    is_two_parameter_sweep(id) && return load_two_parameter_sweep(id)
     if id.analysis_param == false
         if id.output_format_type == ("bin","eigen") # use DelimitedFiles package
             eigen_vectors_output= id.full_path_name*"_eigen_vectors.bin"
@@ -160,6 +161,7 @@ end
 - `id::InputData2D`: input data
 """
 function load_results(id::InputData2D)
+    is_two_parameter_sweep(id) && return load_two_parameter_sweep(id)
     if id.analysis_param == false
         if id.output_format_type == ("bin","eigen") # use DelimitedFiles package
             eigen_vectors_output= id.full_path_name*"_eigen_vectors.bin"
@@ -215,6 +217,28 @@ function load_results(id::InputData2D)
         result = AnalysisParams(ϵ_matrix,λvector)
     end
     return result
+end
+
+is_two_parameter_sweep(id) = id.options.analysis_param_2 != false
+
+"Results of a two-parameter sweep written by the extended driver."
+function load_two_parameter_sweep(id)
+    file = "$(id.full_path_name)_eigen_data.jld2"
+    return AnalysisParams2D(load(file, "ϵ_tensor"), load(file, "λvector"), load(file, "μvector"))
+end
+
+"""
+    load_results(id::InputData3D)
+
+Results of a three-dimensional problem (extended driver, JLD2 output).
+"""
+function load_results(id::InputData3D)
+    is_two_parameter_sweep(id) && return load_two_parameter_sweep(id)
+    file = "$(id.full_path_name)_eigen_data.jld2"
+    if id.analysis_param != false
+        return AnalysisParams(load(file, "ϵ_matrix"), load(file, "λvector"))
+    end
+    return DefaultJLD2EigenProblem(load(file, "ϵ"), load(file, "ϕ"), load(file, "r"), load(file, "pts"))
 end
 
 """
